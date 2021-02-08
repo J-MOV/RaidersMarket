@@ -7,6 +7,8 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyPrefab;
     public Transform[] enemyPositions;
 
+    public Transform tempSpawnPoint;
+
     int currEnemy;
 
     private void Start()
@@ -17,7 +19,7 @@ public class EnemySpawner : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.S))
-            SpawnEnemy(enemyPositions[currEnemy]);
+            SpawnEnemy(tempSpawnPoint);
     }
 
 

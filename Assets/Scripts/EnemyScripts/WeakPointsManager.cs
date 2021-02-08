@@ -14,6 +14,7 @@ public class WeakPointsManager : MonoBehaviour
 
     private void Start()
     {
+        
         spawnAreaForWeakPoints = GameObject.FindGameObjectWithTag("WeakPointArea").GetComponent<Image>();
 
         SpawnWeakPoints(spawnAreaForWeakPoints);
@@ -22,7 +23,7 @@ public class WeakPointsManager : MonoBehaviour
 
     public void SpawnWeakPoints(Image weakPointsSpawnArea)
     {
-        for(int i = 0; i<amountOfWeakPoints; i++)
+        for (int i = 0; i<amountOfWeakPoints; i++)
         {
             //Get random position in 2d area
             float randomX = Random.Range(-weakPointsSpawnArea.GetComponent<RectTransform>().rect.width, weakPointsSpawnArea.GetComponent<RectTransform>().rect.width);
