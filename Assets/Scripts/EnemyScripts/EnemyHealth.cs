@@ -5,12 +5,11 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     public EnemySO enemyStats;
-    int enemyHealth;
-    private void Start()
+    public int enemyHealth;
+
+    private void Awake()
     {
         enemyHealth = enemyStats.enemyHealth;
-        TakeDamage(enemyStats.damage);
-        Debug.Log(enemyStats.enemyHealth);
     }
     
     public void TakeDamage(int damage)
@@ -18,14 +17,8 @@ public class EnemyHealth : MonoBehaviour
         enemyHealth -= damage;
         if (enemyHealth <= 0)
         {
-            StartCoroutine(Dead());
+            Destroy(gameObject);
         }
     }
-    
-    IEnumerator Dead()
-    {
-        //TODO: Create particle effect, play sound.
-        yield return new WaitForSeconds(enemyStats.waitUntilDeath);
-        Destroy(gameObject);
-    }
+
 }

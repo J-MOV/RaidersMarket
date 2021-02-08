@@ -14,6 +14,8 @@ public class EnemyBehaviour : MonoBehaviour
     {
         //TODO: Store reference to player health
         attackCooldown = enemyStats.attackCooldown;
+
+        playerHealth = FindObjectOfType<PlayerHealth>();
     }
 
     private void Update()
