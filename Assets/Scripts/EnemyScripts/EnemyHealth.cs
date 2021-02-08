@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -25,7 +26,8 @@ public class EnemyHealth : MonoBehaviour
         enemyHealth -= damage;
         healthSlider.value = enemyHealth;
         if (enemyHealth <= 0)
-        { 
+        {
+            FindObjectOfType<DungeonManager>().OnEnemyDeath();
             Destroy(gameObject);
         }
     }

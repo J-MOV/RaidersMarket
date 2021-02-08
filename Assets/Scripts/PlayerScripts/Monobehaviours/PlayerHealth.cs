@@ -10,17 +10,26 @@ public class PlayerHealth : MonoBehaviour
 
     public Slider healthSlider;
 
+    DungeonManager dungeonManager;
+
     private void Start()
     {
         healthSlider.maxValue = maxHealth;
         healthSlider.value = startingHealth;
         currentHealth = startingHealth;
+
+        dungeonManager = FindObjectOfType<DungeonManager>();
+        dungeonManager.EnemyDead += HealPlayer;
+    }
+
+    private void Update()
+    {
+        healthSlider.value = currentHealth;
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        healthSlider.value = currentHealth;
         //Audioclip?, particle effect?
 
         if(currentHealth <= 0)
@@ -30,6 +39,10 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    void HealPlayer()
+    {
+        currentHealth = maxHealth;
+    }
 
     void PlayerDeath()
     {
