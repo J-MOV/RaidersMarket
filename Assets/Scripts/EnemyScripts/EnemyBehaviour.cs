@@ -34,7 +34,7 @@ public class EnemyBehaviour : MonoBehaviour
     void Attack()
     {
         attackTimer = attackCooldown;
-        playerHealth.currentHealth -= enemyStats.damage;
+        playerHealth.TakeDamage(enemyStats.damage);
     }
 
     
