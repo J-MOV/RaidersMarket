@@ -25,9 +25,10 @@ public class WeakPointsManager : MonoBehaviour
     {
         for (int i = 0; i<amountOfWeakPoints; i++)
         {
+            
             //Get random position in 2d area
-            float randomX = Random.Range(-weakPointsSpawnArea.GetComponent<RectTransform>().rect.width, weakPointsSpawnArea.GetComponent<RectTransform>().rect.width);
-            float randomY = Random.Range(-weakPointsSpawnArea.GetComponent<RectTransform>().rect.height, weakPointsSpawnArea.GetComponent<RectTransform>().rect.height);
+            float randomX = Random.Range(weakPointsSpawnArea.rectTransform.rect.xMin, weakPointsSpawnArea.rectTransform.rect.xMax);
+            float randomY = Random.Range(weakPointsSpawnArea.rectTransform.rect.yMin, weakPointsSpawnArea.rectTransform.rect.yMax);
             Vector3 spawnPosition = new Vector3(randomX, randomY, 0f);
 
            

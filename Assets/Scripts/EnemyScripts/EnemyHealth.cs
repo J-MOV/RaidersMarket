@@ -25,7 +25,7 @@ public class EnemyHealth : MonoBehaviour
         enemyHealth -= damage;
         healthSlider.value = enemyHealth;
         if (enemyHealth <= 0)
-        {
+        { 
             Destroy(gameObject);
         }
     }
