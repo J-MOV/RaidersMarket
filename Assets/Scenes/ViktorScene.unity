@@ -1177,8 +1177,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2106900293}
-        m_MethodName: 
+      - m_Target: {fileID: 2106900298}
+        m_MethodName: RestartLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2218,8 +2218,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2106900293}
-        m_MethodName: 
+      - m_Target: {fileID: 2106900298}
+        m_MethodName: ReturnToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2729,7 +2729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7335b41b39ce854cb8dca43de6caec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setEnemyCount: 5
+  setEnemyCount: 1
   dungeonProgressText: {fileID: 1654480717}
   endScreenPanel: {fileID: 989378948}
   dungeonCompleteText: {fileID: 230284355}
