@@ -5,27 +5,11 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
-    public Transform[] enemyPositions;
 
     public Transform tempSpawnPoint;
 
-    int currEnemy;
-
-    private void Start()
+    public void SpawnEnemy()
     {
-        currEnemy = 0;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-            SpawnEnemy(tempSpawnPoint);
-    }
-
-
-    public void SpawnEnemy(Transform spawnPosition)
-    {
-        Instantiate(enemyPrefab, spawnPosition.position, Quaternion.identity);
-        currEnemy++;
+        Instantiate(enemyPrefab, tempSpawnPoint.position, Quaternion.identity);
     }
 }
