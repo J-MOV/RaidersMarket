@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class GameManager : MonoBehaviour
     int enemiesDefeated;
 
     public Text dungeonProgressText;
+    public GameObject endScreenPanel;
+
+    public Text dungeonCompleteText;
 
     EnemySpawner enemySpawner;
     DungeonManager dungeonManager;
@@ -34,6 +38,8 @@ public class GameManager : MonoBehaviour
         dungeonManager.EnemyDead += () => isFightingEnemy = false;
         dungeonManager.EnemyDead += SpawnNextEnemy;
         playerHealth.PlayerDead += StopDungeon;
+
+        endScreenPanel.SetActive(false);
 
         BeginDungeon(setEnemyCount);
     }
@@ -93,19 +99,35 @@ public class GameManager : MonoBehaviour
     public void EndDungeon(bool completed)
     {
         isPlaying = false;
+        endScreenPanel.SetActive(true);
+        
 
         if (completed)
         {
             //If dungeon was completed
             Debug.Log("Player completed dungeon with " + amountOfEnemies + " enemies");
             dungeonProgressText.text = "Dungeon Complete!";
+            dungeonCompleteText.text = "Dungeon Complete!";
+            
         }
         else
         {
             //If dungeon was NOT completed
             Debug.Log("Player failed dungeon and killed " + enemiesDefeated + " out of " + amountOfEnemies);
             dungeonProgressText.text = "Dungeon Failed!";
+            dungeonCompleteText.text = "Dungeon Failed!";
         }
+    }
+
+
+    public void Continue()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void Home()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
 
