@@ -38,7 +38,24 @@ public class MainMenuButtons : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+        Debug.Log("quit");
     }
+
+    public void LoadAnyScene()
+    {
+        SceneManager.LoadSceneAsync(sceneName);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
+    }
+
+    public void ReturnToMainMenu()
+    {
+        SceneManager.LoadSceneAsync("MehmetScene");
+    }
+    public void RestartLevel()
+    {
+        SceneManager.LoadSceneAsync("ViktorScene");
+    }
+
     IEnumerator RemovePanel()
     {
         //TODO: Play animation for closing the menu

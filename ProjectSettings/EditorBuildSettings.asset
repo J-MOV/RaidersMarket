@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MehmetScene.unity
     guid: 87aa18ca069700640a5d8e0990cf84ad
+  - enabled: 1
+    path: Assets/Scenes/ViktorScene.unity
+    guid: b57fcba885e59a041a20bc7ccef804e5
   m_configObjects: {}
