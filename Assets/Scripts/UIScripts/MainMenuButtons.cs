@@ -38,6 +38,13 @@ public class MainMenuButtons : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+        Debug.Log("quit");
+    }
+
+    public void LoadAnyScene()
+    {
+        SceneManager.LoadSceneAsync(sceneName);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
     }
     IEnumerator RemovePanel()
     {
