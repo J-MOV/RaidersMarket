@@ -4,26 +4,39 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
 {
-    public Enemy enemyStats;
-    float attackTimer;
-    //TODO: Reference the player health
-    // Start is called before the first frame update
+    [SerializeField] private EnemySO enemyStats;
+    [SerializeField] private PlayerHealth playerHealth;
+
+    float attackTimer = 0f;
+    float attackCooldown;
+
     void Start()
     {
         //TODO: Store reference to player health
-        attackTimer = enemyStats.AttackTimer;
-        Debug.Log(attackTimer);
+        attackCooldown = enemyStats.attackCooldown;
+        attackTimer = attackCooldown;
+
+        playerHealth = FindObjectOfType<PlayerHealth>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
+        if (attackTimer >= 0)
+        {
+            attackTimer -= Time.deltaTime;
+        }
+        else
+        {
+            //Attack
+            Attack();
+        }
     }
 
-    IEnumerator AttackThePlayer()
+    void Attack()
     {
-        //TODO: Make the player lose HP per X second
-        yield return new WaitForSeconds(enemyStats.AttackTimer);
+        attackTimer = attackCooldown;
+        playerHealth.TakeDamage(enemyStats.damage);
     }
+
+    
 }

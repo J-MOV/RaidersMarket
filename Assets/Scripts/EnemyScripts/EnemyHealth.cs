@@ -1,31 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public Enemy enemyStats;
-    int enemyHealth;
-    private void Start()
+    public EnemySO enemyStats;
+    public int enemyHealth;
+
+    public Slider healthSlider;
+
+    private void Awake()
     {
+        healthSlider = GameObject.FindGameObjectWithTag("EnemyHealthBar").GetComponent<Slider>();
+
+        healthSlider.maxValue = enemyStats.enemyHealth;
+        healthSlider.value = healthSlider.maxValue;
+
         enemyHealth = enemyStats.enemyHealth;
-        TakeDamage(enemyStats.damage);
-        Debug.Log(enemyStats.enemyHealth);
     }
     
     public void TakeDamage(int damage)
     {
         enemyHealth -= damage;
+        healthSlider.value = enemyHealth;
         if (enemyHealth <= 0)
         {
-            StartCoroutine(Dead());
+            FindObjectOfType<DungeonManager>().OnEnemyDeath();
+            Destroy(gameObject);
         }
     }
-    
-    IEnumerator Dead()
-    {
-        //TODO: Create particle effect, play sound.
-        yield return new WaitForSeconds(enemyStats.waitUntilDeath);
-        Destroy(gameObject);
-    }
+
 }
