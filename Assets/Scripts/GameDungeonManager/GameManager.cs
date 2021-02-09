@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -117,17 +116,6 @@ public class GameManager : MonoBehaviour
             dungeonProgressText.text = "Dungeon Failed!";
             dungeonCompleteText.text = "Dungeon Failed!";
         }
-    }
-
-
-    public void Continue()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void Home()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
 
