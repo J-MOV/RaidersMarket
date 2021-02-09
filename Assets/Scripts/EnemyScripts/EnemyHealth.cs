@@ -13,7 +13,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] ParticleSystem deathParticle;
     [SerializeField] ParticleSystem damageParticle;
 
-    private void Awake()
+    private void Start()
     {
         healthSlider = GameObject.FindGameObjectWithTag("EnemyHealthBar").GetComponent<Slider>();
 

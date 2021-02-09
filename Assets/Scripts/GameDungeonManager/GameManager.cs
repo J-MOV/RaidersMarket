@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public int setEnemyCount;
-    bool isPlaying;
+    public static bool isPlaying;
     int amountOfEnemies;
 
     int enemiesDefeated;
@@ -23,6 +23,11 @@ public class GameManager : MonoBehaviour
     DungeonManager dungeonManager;
     PlayerHealth playerHealth;
 
+    [Space]
+    public EnemySO easyEnemy, normalEnemy, hardEnemy, insaneEnemy;
+    [Space]
+
+    [SerializeField] EnemySO enemyVariantToSpawn;
 
     public float timeBetweenEnemies = 4f;
     float timeSinceLastEnemy;
@@ -44,6 +49,7 @@ public class GameManager : MonoBehaviour
         endScreenPanel.SetActive(false);
 
         BeginDungeon(setEnemyCount);
+
     }
 
     public void BeginDungeon(int enemyCount)
@@ -94,7 +100,7 @@ public class GameManager : MonoBehaviour
             isFightingEnemy = true;
             timeSinceLastEnemy = 0;
             spawnEnemy = false;
-            enemySpawner.SpawnEnemy();
+            enemySpawner.SpawnEnemy(enemyVariantToSpawn);
         }
     }
 

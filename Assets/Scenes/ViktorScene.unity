@@ -1545,7 +1545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.07058824}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2793,7 +2793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7335b41b39ce854cb8dca43de6caec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setEnemyCount: 1
+  setEnemyCount: 5
   dungeonProgressText: {fileID: 1654480717}
   endScreenPanel: {fileID: 989378948}
   dungeonCompleteText: {fileID: 230284355}
@@ -2801,6 +2801,12 @@ MonoBehaviour:
     type: 3}
   firework1Pos: {fileID: 1210378978}
   firework2Pos: {fileID: 2051193949}
+  easyEnemy: {fileID: 11400000, guid: 44ddad62d124108498b7de1836dbefdd, type: 2}
+  normalEnemy: {fileID: 11400000, guid: 2fa532e1cef0b454a8303e7613c1eb2b, type: 2}
+  hardEnemy: {fileID: 11400000, guid: 51820bb4707a4874b9165d72a5322249, type: 2}
+  insaneEnemy: {fileID: 11400000, guid: 6cc9bdae1905cb347aae13680f967169, type: 2}
+  enemyVariantToSpawn: {fileID: 11400000, guid: 2fa532e1cef0b454a8303e7613c1eb2b,
+    type: 2}
   timeBetweenEnemies: 3
 --- !u!4 &2089187785
 Transform:
