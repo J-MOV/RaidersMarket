@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     EnemySpawner enemySpawner;
     DungeonManager dungeonManager;
+    PlayerHealth playerHealth;
 
 
     public float timeBetweenEnemies = 4f;
@@ -27,10 +28,12 @@ public class GameManager : MonoBehaviour
     {
         enemySpawner = FindObjectOfType<EnemySpawner>();
         dungeonManager = FindObjectOfType<DungeonManager>();
+        playerHealth = FindObjectOfType<PlayerHealth>();
 
         dungeonManager.EnemyDead += () => enemiesDefeated++;
         dungeonManager.EnemyDead += () => isFightingEnemy = false;
         dungeonManager.EnemyDead += SpawnNextEnemy;
+        playerHealth.PlayerDead += StopDungeon;
 
         BeginDungeon(setEnemyCount);
     }
@@ -69,6 +72,11 @@ public class GameManager : MonoBehaviour
         {
             //Do stuff when not playing
         }
+    }
+
+    void StopDungeon()
+    {
+        EndDungeon(false);
     }
 
     void SpawnNextEnemy()
