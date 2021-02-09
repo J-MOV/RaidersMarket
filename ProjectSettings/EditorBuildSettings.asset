@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MehmetScene.unity
+    guid: 87aa18ca069700640a5d8e0990cf84ad
   m_configObjects: {}
