@@ -12,6 +12,7 @@ public class WeakPoint : MonoBehaviour
     int damagePerClick;
     [HideInInspector] public int totalDamage;
 
+
     private void Start()
     {
         damagePerClick = totalDamage / amountOfClicks;
@@ -24,6 +25,7 @@ public class WeakPoint : MonoBehaviour
         if(currentClickCount >= amountOfClicks)
         {
             Debug.Log("WeakPoint destroyed!");
+            
             enemyHealthScript.TakeDamage(totalDamage);
             Destroy(gameObject);
         }

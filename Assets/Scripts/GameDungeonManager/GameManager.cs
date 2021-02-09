@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
 
     public Text dungeonCompleteText;
 
+    [SerializeField] ParticleSystem fireWorks;
+    [SerializeField] Transform firework1Pos, firework2Pos;
+
     EnemySpawner enemySpawner;
     DungeonManager dungeonManager;
     PlayerHealth playerHealth;
@@ -107,7 +110,13 @@ public class GameManager : MonoBehaviour
             Debug.Log("Player completed dungeon with " + amountOfEnemies + " enemies");
             dungeonProgressText.text = "Dungeon Complete!";
             dungeonCompleteText.text = "Dungeon Complete!";
-            
+
+            ParticleSystem _fireWorks1 = Instantiate(fireWorks, firework1Pos.position, Quaternion.identity);
+            Destroy(_fireWorks1.gameObject, 3f);
+
+            ParticleSystem _fireWorks2 = Instantiate(fireWorks, firework2Pos.position, Quaternion.identity);
+            Destroy(_fireWorks2.gameObject, 3f);
+
         }
         else
         {
