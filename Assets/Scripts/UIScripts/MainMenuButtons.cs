@@ -7,6 +7,10 @@ using UnityEngine.SceneManagement;
 public class MainMenuButtons : MonoBehaviour
 {
     [SerializeField] GameObject mainPanel;
+    [SerializeField] GameObject optionsPanel;
+
+    [SerializeField] string sceneName;
+
     float waitTillAnimationFinished = 3f;
 
     public void StartGame()
@@ -15,19 +19,25 @@ public class MainMenuButtons : MonoBehaviour
         //TODO: Let the game begin.
     }
 
-
-
     public void MarketPlaceOpened()
     {
         //TODO: Play animation for closing the menu
         StartCoroutine(RemovePanel());
-        SceneManager.LoadSceneAsync("Marketplace");
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Marketplace"));
+        SceneManager.LoadSceneAsync(sceneName);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
+        Debug.Log("I loaded the Marketplace");
+        mainPanel.SetActive(true);
     }
-
     public void OptionsMenuOpened()
     {
-
+        StartCoroutine(RemovePanel());
+        optionsPanel.SetActive(true);
+        Debug.Log("You are now in the options menu");
+        mainPanel.SetActive(true);
+    }
+    public void ExitGame()
+    {
+        Application.Quit();
     }
     IEnumerator RemovePanel()
     {
