@@ -2838,7 +2838,9 @@ MonoBehaviour:
     type: 3}
   firework1Pos: {fileID: 1210378978}
   firework2Pos: {fileID: 2051193949}
-  easyEnemy: {fileID: 0}
+  playerHealthSlider: {fileID: 2100769543}
+  enemyHealthSlider: {fileID: 140243502}
+  easyEnemy: {fileID: 11400000, guid: f2959b4fd8126c446a9eec105b75fab3, type: 2}
   normalEnemy: {fileID: 11400000, guid: 2fa532e1cef0b454a8303e7613c1eb2b, type: 2}
   hardEnemy: {fileID: 11400000, guid: 51820bb4707a4874b9165d72a5322249, type: 2}
   insaneEnemy: {fileID: 11400000, guid: 6cc9bdae1905cb347aae13680f967169, type: 2}

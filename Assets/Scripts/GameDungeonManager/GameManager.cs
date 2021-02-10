@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     DungeonManager dungeonManager;
     PlayerHealth playerHealth;
 
+    public GameObject playerHealthSlider, enemyHealthSlider;
+
     [Space]
     public EnemySO easyEnemy, normalEnemy, hardEnemy, insaneEnemy;
     [Space]
@@ -65,6 +67,9 @@ public class GameManager : MonoBehaviour
     {
         if (isPlaying)
         {
+            playerHealthSlider.SetActive(true);
+            enemyHealthSlider.SetActive(true);
+
             dungeonProgressText.text = enemiesDefeated + "/" + amountOfEnemies;
             //Do stuff when playing
 
@@ -84,6 +89,8 @@ public class GameManager : MonoBehaviour
         else
         {
             //Do stuff when not playing
+            playerHealthSlider.SetActive(false);
+            enemyHealthSlider.SetActive(false);
         }
     }
 
