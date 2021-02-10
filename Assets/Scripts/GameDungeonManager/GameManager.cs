@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public int dungeonLevel;
     public int setEnemyCount;
     public static bool isPlaying;
     int amountOfEnemies;
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
     public EnemySO easyEnemy, normalEnemy, hardEnemy, insaneEnemy;
     [Space]
 
-    [SerializeField] EnemySO enemyVariantToSpawn;
+    public EnemySO enemyVariantToSpawn;
 
     public float timeBetweenEnemies = 4f;
     float timeSinceLastEnemy;
@@ -48,13 +49,12 @@ public class GameManager : MonoBehaviour
 
         endScreenPanel.SetActive(false);
 
-        BeginDungeon(setEnemyCount);
-
     }
 
-    public void BeginDungeon(int enemyCount)
+    public void BeginDungeon(int level ,int enemyCount)
     {
         isPlaying = true;
+        dungeonLevel = level;
 
         timeSinceLastEnemy = timeBetweenEnemies;
 
@@ -113,9 +113,9 @@ public class GameManager : MonoBehaviour
         if (completed)
         {
             //If dungeon was completed
-            Debug.Log("Player completed dungeon with " + amountOfEnemies + " enemies");
-            dungeonProgressText.text = "Dungeon Complete!";
-            dungeonCompleteText.text = "Dungeon Complete!";
+            Debug.Log("Player completed dungeon " + dungeonLevel + " with " + amountOfEnemies + " enemies");
+            dungeonProgressText.text = "Dungeon "+ dungeonLevel + " Complete!";
+            dungeonCompleteText.text = "Dungeon " + dungeonLevel + " Complete!";
 
             ParticleSystem _fireWorks1 = Instantiate(fireWorks, firework1Pos.position, Quaternion.identity);
             Destroy(_fireWorks1.gameObject, 3f);
@@ -123,13 +123,15 @@ public class GameManager : MonoBehaviour
             ParticleSystem _fireWorks2 = Instantiate(fireWorks, firework2Pos.position, Quaternion.identity);
             Destroy(_fireWorks2.gameObject, 3f);
 
+            PlayerPrefs.SetInt("currentLevel", dungeonLevel + 1);
+
         }
         else
         {
             //If dungeon was NOT completed
-            Debug.Log("Player failed dungeon and killed " + enemiesDefeated + " out of " + amountOfEnemies);
-            dungeonProgressText.text = "Dungeon Failed!";
-            dungeonCompleteText.text = "Dungeon Failed!";
+            Debug.Log("Player failed dungeon " + dungeonLevel + " and killed " + enemiesDefeated + " out of " + amountOfEnemies);
+            dungeonProgressText.text = "Dungeon " + dungeonLevel + " Failed!";
+            dungeonCompleteText.text = "Dungeon " + dungeonLevel + " Failed!";
         }
     }
 }
