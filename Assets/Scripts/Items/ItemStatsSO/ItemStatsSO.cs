@@ -11,7 +11,10 @@ public class ItemStatsSO : ScriptableObject
 
     public int itemCost = 20;
     public ItemRarity itemRarity;
-   
+
+    public int defenseBuffAmount;
+    public int attackBuffAmount;
+
 }
 public enum ItemRarity 
 { 

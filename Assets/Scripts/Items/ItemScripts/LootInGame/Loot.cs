@@ -9,34 +9,32 @@ public class Loot : MonoBehaviour, ILootInterface, IItemInterface
 
     [SerializeField] GameObject common, uncommon, rare, legendary;
 
-
     void Start()
     {
+
         itemRarity = itemStats.itemRarity;
 
         PlayGlowParticle(itemRarity);
     }
 
+ 
+
     void PlayGlowParticle(ItemRarity rarity)
     {
         if (itemRarity == ItemRarity.common)
         {
-            Debug.Log("COMMON");
             common.SetActive(true);
         }
         else if (itemRarity == ItemRarity.uncommon)
         {
-            Debug.Log("UNCOMMON");
             uncommon.SetActive(true);
         }
         else if (itemRarity == ItemRarity.rare)
         {
-            Debug.Log("RARE");
             rare.SetActive(true);
         }
         else if (itemRarity == ItemRarity.legendary)
         {
-            Debug.Log("LEGENDARY");
             legendary.SetActive(true);
         }
     }
@@ -46,12 +44,12 @@ public class Loot : MonoBehaviour, ILootInterface, IItemInterface
         FindObjectOfType<Inventory>().EquipItem(this);
     }
 
-    public void AddItemEffect()
+    public virtual void AddItemEffect()
     {
         Debug.Log(itemStats.itemName+" affecting player");
     }
 
-    public void RemoveItemEffect()
+    public virtual void RemoveItemEffect()
     {
         Debug.Log(itemStats.itemName + " no longer affecting player");
     }

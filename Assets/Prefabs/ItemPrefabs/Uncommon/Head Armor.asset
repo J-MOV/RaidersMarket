@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fc01ab33e49c254aac79b93ed780619, type: 3}
-  m_Name: Health Potion
+  m_Name: Head Armor
   m_EditorClassIdentifier: 
-  itemName: Health Potion
-  itemDescription: Heals player
-  itemCost: 15
-  itemRarity: 0
+  itemName: Head Armor
+  itemDescription: Grants player additional max health
+  itemCost: 65
+  itemRarity: 1
+  defenseBuffAmount: 25
+  attackBuffAmount: 0
