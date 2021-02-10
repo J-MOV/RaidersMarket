@@ -16,11 +16,21 @@ public class EnemyHealth : MonoBehaviour
     private void Start()
     {
         healthSlider = GameObject.FindGameObjectWithTag("EnemyHealthBar").GetComponent<Slider>();
+        if (!enemyStats)
+        {
+            Debug.LogWarning("No Enemy Stats were found!");
+        }
+        else 
+        { 
+            healthSlider.maxValue = enemyStats.enemyHealth;
+            healthSlider.value = healthSlider.maxValue;
 
-        healthSlider.maxValue = enemyStats.enemyHealth;
-        healthSlider.value = healthSlider.maxValue;
+            enemyHealth = enemyStats.enemyHealth;
 
-        enemyHealth = enemyStats.enemyHealth;
+            Debug.Log("Added stats to enemy");
+        }
+
+        
     }
     
     public void TakeDamage(int damage)
