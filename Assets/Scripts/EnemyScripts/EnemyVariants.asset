@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ffbb13c015cf5cf458a6619528e3665a, type: 3}
-  m_Name: HeavyEnemy
+  m_Name: EnemyVariants
   m_EditorClassIdentifier: 
   enemyHealth: 100
   damage: 20
-  waitUntilDeath: 2
   attackCooldown: 3
+  weakpoints: 1
