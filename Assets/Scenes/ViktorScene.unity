@@ -766,7 +766,7 @@ GameObject:
   - component: {fileID: 603873205}
   - component: {fileID: 603873204}
   m_Layer: 0
-  m_Name: LevelManager
+  m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -785,12 +785,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 1
-  maxEnemiesRaw: 30
-  enemyMultiplier: 1.5
-  easyEnemy: {fileID: 11400000, guid: f2959b4fd8126c446a9eec105b75fab3, type: 2}
-  normalEnemy: {fileID: 11400000, guid: 2fa532e1cef0b454a8303e7613c1eb2b, type: 2}
-  hardEnemy: {fileID: 11400000, guid: 51820bb4707a4874b9165d72a5322249, type: 2}
-  insaneEnemy: {fileID: 11400000, guid: 6cc9bdae1905cb347aae13680f967169, type: 2}
+  easy: {fileID: 0}
+  normal: {fileID: 0}
+  hard: {fileID: 0}
+  insane: {fileID: 0}
+  easyAmount: 0
+  normalAmount: 0
+  hardAmount: 0
+  insaneAmount: 0
 --- !u!4 &603873205
 Transform:
   m_ObjectHideFlags: 0
@@ -2843,7 +2845,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7335b41b39ce854cb8dca43de6caec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dungeonLevel: 0
   setEnemyCount: 5
   dungeonProgressText: {fileID: 1654480717}
   endScreenPanel: {fileID: 989378948}
