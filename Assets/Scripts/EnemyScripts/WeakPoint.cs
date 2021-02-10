@@ -5,24 +5,26 @@ using UnityEngine;
 public class WeakPoint : MonoBehaviour
 {
     [HideInInspector] public EnemyHealth enemyHealthScript;
+    PlayerCombat playerCombatScript;
 
-    public int amountOfClicks;
-    int currentClickCount = 0;
+    public int weakpointHealth;
+    int currentWeakPointDamageDealt = 0;
 
-    int damagePerClick;
+    public int damagePerClick;
     [HideInInspector] public int totalDamage;
-
 
     private void Start()
     {
-        damagePerClick = totalDamage / amountOfClicks;
+        playerCombatScript = FindObjectOfType<PlayerCombat>();
+
+        damagePerClick = playerCombatScript.baseDamage;
     }
 
     public void DealDamage()
     {
-        currentClickCount++;
+        currentWeakPointDamageDealt += damagePerClick;
 
-        if(currentClickCount >= amountOfClicks)
+        if(currentWeakPointDamageDealt >= weakpointHealth)
         {
             Debug.Log("WeakPoint destroyed!");
             
