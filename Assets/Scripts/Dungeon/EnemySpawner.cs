@@ -8,8 +8,8 @@ public class EnemySpawner : MonoBehaviour
 
     public Transform tempSpawnPoint;
 
-    public void SpawnEnemy(GameObject enemyType)
+    public void SpawnEnemy()
     {
-        Instantiate(enemyType, tempSpawnPoint.position, Quaternion.identity);
+        Instantiate(enemyPrefab, tempSpawnPoint.position, Quaternion.identity);
     }
 }
