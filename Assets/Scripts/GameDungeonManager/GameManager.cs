@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] List<GameObject> EnemyTypes = new List<GameObject>();
+
     public int setEnemyCount;
     bool isPlaying;
     int amountOfEnemies;
@@ -19,6 +21,7 @@ public class GameManager : MonoBehaviour
     EnemySpawner enemySpawner;
     DungeonManager dungeonManager;
     PlayerHealth playerHealth;
+
 
 
     public float timeBetweenEnemies = 4f;
@@ -86,12 +89,15 @@ public class GameManager : MonoBehaviour
 
     void SpawnNextEnemy()
     {
-        if (spawnEnemy)
+        for (int i = 0; i < EnemyTypes.Count; i++)
         {
-            isFightingEnemy = true;
-            timeSinceLastEnemy = 0;
-            spawnEnemy = false;
-            enemySpawner.SpawnEnemy();
+            if (spawnEnemy)
+            {
+                isFightingEnemy = true;
+                timeSinceLastEnemy = 0;
+                spawnEnemy = false;
+                enemySpawner.SpawnEnemy(EnemyTypes[i++]);
+            }
         }
     }
 
