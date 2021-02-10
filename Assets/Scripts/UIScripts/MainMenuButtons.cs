@@ -17,6 +17,7 @@ public class MainMenuButtons : MonoBehaviour
     {
         StartCoroutine(RemovePanel());
         //TODO: Let the game begin.
+        SceneManager.LoadSceneAsync("ViktorScene");
     }
 
     public void MarketPlaceOpened()
