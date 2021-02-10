@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
 {
-    [SerializeField] private EnemySO enemyStats;
+    public EnemySO enemyStats;
     [SerializeField] private PlayerHealth playerHealth;
 
     float attackTimer = 0f;
@@ -21,6 +21,8 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.isPlaying) return;
+
         if (attackTimer >= 0)
         {
             attackTimer -= Time.deltaTime;

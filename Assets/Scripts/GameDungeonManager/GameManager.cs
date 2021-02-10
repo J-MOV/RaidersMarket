@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public int setEnemyCount;
-    bool isPlaying;
+    public static bool isPlaying;
     int amountOfEnemies;
 
     int enemiesDefeated;
@@ -16,10 +16,18 @@ public class GameManager : MonoBehaviour
 
     public Text dungeonCompleteText;
 
+    [SerializeField] ParticleSystem fireWorks;
+    [SerializeField] Transform firework1Pos, firework2Pos;
+
     EnemySpawner enemySpawner;
     DungeonManager dungeonManager;
     PlayerHealth playerHealth;
 
+    [Space]
+    public EnemySO easyEnemy, normalEnemy, hardEnemy, insaneEnemy;
+    [Space]
+
+    [SerializeField] EnemySO enemyVariantToSpawn;
 
     public float timeBetweenEnemies = 4f;
     float timeSinceLastEnemy;
@@ -41,6 +49,7 @@ public class GameManager : MonoBehaviour
         endScreenPanel.SetActive(false);
 
         BeginDungeon(setEnemyCount);
+
     }
 
     public void BeginDungeon(int enemyCount)
@@ -91,7 +100,7 @@ public class GameManager : MonoBehaviour
             isFightingEnemy = true;
             timeSinceLastEnemy = 0;
             spawnEnemy = false;
-            enemySpawner.SpawnEnemy();
+            enemySpawner.SpawnEnemy(enemyVariantToSpawn);
         }
     }
 
@@ -107,7 +116,13 @@ public class GameManager : MonoBehaviour
             Debug.Log("Player completed dungeon with " + amountOfEnemies + " enemies");
             dungeonProgressText.text = "Dungeon Complete!";
             dungeonCompleteText.text = "Dungeon Complete!";
-            
+
+            ParticleSystem _fireWorks1 = Instantiate(fireWorks, firework1Pos.position, Quaternion.identity);
+            Destroy(_fireWorks1.gameObject, 3f);
+
+            ParticleSystem _fireWorks2 = Instantiate(fireWorks, firework2Pos.position, Quaternion.identity);
+            Destroy(_fireWorks2.gameObject, 3f);
+
         }
         else
         {

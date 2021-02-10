@@ -8,8 +8,10 @@ public class EnemySpawner : MonoBehaviour
 
     public Transform tempSpawnPoint;
 
-    public void SpawnEnemy()
+    public void SpawnEnemy(EnemySO _enemyStats)
     {
-        Instantiate(enemyPrefab, tempSpawnPoint.position, Quaternion.identity);
+        GameObject enemy = Instantiate(enemyPrefab, tempSpawnPoint.position, Quaternion.identity);
+        enemy.GetComponent<EnemyHealth>().enemyStats = _enemyStats;
+        enemy.GetComponent<EnemyBehaviour>().enemyStats = _enemyStats;
     }
 }

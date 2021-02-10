@@ -10,8 +10,10 @@ public class EnemyHealth : MonoBehaviour
     public int enemyHealth;
 
     public Slider healthSlider;
+    [SerializeField] ParticleSystem deathParticle;
+    [SerializeField] ParticleSystem damageParticle;
 
-    private void Awake()
+    private void Start()
     {
         healthSlider = GameObject.FindGameObjectWithTag("EnemyHealthBar").GetComponent<Slider>();
         if (!enemyStats)
@@ -35,9 +37,15 @@ public class EnemyHealth : MonoBehaviour
     {
         enemyHealth -= damage;
         healthSlider.value = enemyHealth;
+
+        ParticleSystem _damageParticle = Instantiate(damageParticle, transform.position, Quaternion.identity);
+        Destroy(_damageParticle.gameObject, 2f);
+
         if (enemyHealth <= 0)
         {
             FindObjectOfType<DungeonManager>().OnEnemyDeath();
+            ParticleSystem _deathParticle = Instantiate(deathParticle, transform.position, Quaternion.identity);
+            Destroy(_deathParticle.gameObject, 2f);
             Destroy(gameObject);
         }
     }

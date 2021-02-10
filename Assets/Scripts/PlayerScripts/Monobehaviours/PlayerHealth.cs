@@ -15,6 +15,9 @@ public class PlayerHealth : MonoBehaviour
 
     DungeonManager dungeonManager;
 
+    [SerializeField] ParticleSystem takeDamageParticle;
+    [SerializeField] ParticleSystem deathParticle;
+
     private void Start()
     {
         healthSlider.maxValue = maxHealth;
@@ -35,6 +38,9 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= damage;
         //Audioclip?, particle effect?
 
+        ParticleSystem _damageParticle = Instantiate(takeDamageParticle, transform.position, Quaternion.identity);
+        Destroy(_damageParticle.gameObject, 2f);
+
         if(currentHealth <= 0)
         {
             //Die
@@ -50,6 +56,9 @@ public class PlayerHealth : MonoBehaviour
     void PlayerDeath()
     {
         Debug.Log("Player died");
+        ParticleSystem _deathParticle = Instantiate(deathParticle, transform.position, Quaternion.identity);
+        Destroy(_deathParticle.gameObject, 2f);
+
         PlayerDead?.Invoke();
     }
 }
