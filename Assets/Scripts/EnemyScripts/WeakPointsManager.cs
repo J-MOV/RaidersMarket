@@ -11,30 +11,37 @@ public class WeakPointsManager : MonoBehaviour
 
     public WeakPoint weakPointPrefab;
 
-    public Image spawnAreaForWeakPoints;
+    public Transform spawnAreaForWeakPoints;
+    public float spawnAreaWidth, spawnAreaHeight;
 
     private void Start()
     {
         amountOfWeakPoints = enemyHealthScript.enemyStats.weakpoints;
-        spawnAreaForWeakPoints = GameObject.FindGameObjectWithTag("WeakPointArea").GetComponent<Image>();
+        spawnAreaForWeakPoints = GameObject.FindGameObjectWithTag("WeakPointArea").transform;
 
         SpawnWeakPoints(spawnAreaForWeakPoints);
     }
 
-
-    public void SpawnWeakPoints(Image weakPointsSpawnArea)
+    
+    public void SpawnWeakPoints(Transform weakPointsSpawnArea)
     {
         for (int i = 0; i<amountOfWeakPoints; i++)
         {
-            
-            //Get random position in 2d area
-            float randomX = UnityEngine.Random.Range(weakPointsSpawnArea.rectTransform.rect.xMin, weakPointsSpawnArea.rectTransform.rect.xMax);
-            float randomY = UnityEngine.Random.Range(weakPointsSpawnArea.rectTransform.rect.yMin, weakPointsSpawnArea.rectTransform.rect.yMax);
-            Vector3 spawnPosition = new Vector3(randomX, randomY, 0f);
 
-           
-            WeakPoint newWeakPoint = Instantiate(weakPointPrefab, weakPointsSpawnArea.transform.position + spawnPosition, Quaternion.identity);
-            newWeakPoint.transform.SetParent(weakPointsSpawnArea.transform);
+            //Get random position in 2d area
+            //float randomX = UnityEngine.Random.Range(weakPointsSpawnArea.rectTransform.rect.xMin, weakPointsSpawnArea.rectTransform.rect.xMax);
+            //float randomY = UnityEngine.Random.Range(weakPointsSpawnArea.rectTransform.rect.yMin, weakPointsSpawnArea.rectTransform.rect.yMax);
+
+            //Vector3 spawnPosition = new Vector3(randomX, randomY, 0f);
+
+            spawnAreaWidth = weakPointsSpawnArea.GetComponent<WeakPointSpawner>().width;
+            spawnAreaHeight = weakPointsSpawnArea.GetComponent<WeakPointSpawner>().height;
+            Debug.Log(spawnAreaWidth);
+            Debug.Log(spawnAreaHeight);
+
+            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(-spawnAreaWidth, spawnAreaWidth), UnityEngine.Random.Range(-spawnAreaHeight, spawnAreaHeight));
+
+            WeakPoint newWeakPoint = Instantiate(weakPointPrefab, weakPointsSpawnArea.position + spawnPosition, Quaternion.identity,weakPointsSpawnArea);
 
             //Assign values to weakpoint
             newWeakPoint.enemyHealthScript = enemyHealthScript;

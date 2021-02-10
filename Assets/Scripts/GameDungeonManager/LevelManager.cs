@@ -18,10 +18,15 @@ public class LevelManager : MonoBehaviour
     {
         gameManager = FindObjectOfType<GameManager>();
         maxEnemiesRaw = maxEnemiesRaw + level;
+        if (!PlayerPrefs.HasKey("currentLevel"))
+            PlayerPrefs.SetInt("currentLevel", 1);
+
         level = PlayerPrefs.GetInt("currentLevel");
 
         StartLevel(level);
     }
+
+    
 
     public void StartLevel(int _level)
     {

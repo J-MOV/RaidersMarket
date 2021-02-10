@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
         playerHealth.PlayerDead += StopDungeon;
 
         endScreenPanel.SetActive(false);
-
     }
 
     public void BeginDungeon(int level ,int enemyCount)
