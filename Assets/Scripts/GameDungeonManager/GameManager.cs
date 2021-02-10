@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
 
         uncommonText.text = uncommonLoot.ToString();
         commonText.text = commonLoot.ToString();
-        rareText.text = rareText.ToString();
+        rareText.text = rareLoot.ToString();
         legendaryText.text = legendaryLoot.ToString();
 
         if (completed)
