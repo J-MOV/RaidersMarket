@@ -14,6 +14,8 @@ public class MainMenuButtons : MonoBehaviour
 
     float waitTillAnimationFinished = 3f;
 
+    public Canvas levelSelectorPanel;
+
     public void StartGame()
     {
         StartCoroutine(RemovePanel());
@@ -67,5 +69,16 @@ public class MainMenuButtons : MonoBehaviour
         //TODO: Play animation for closing the menu
         yield return new WaitForSeconds(waitTillAnimationFinished);
         mainPanel.SetActive(false);
+    }
+
+
+    public void OpenLevelSelector()
+    {
+        levelSelectorPanel.gameObject.SetActive(true);
+    }
+
+    public void CloseLevelSelector()
+    {
+        levelSelectorPanel.gameObject.SetActive(false);
     }
 }
