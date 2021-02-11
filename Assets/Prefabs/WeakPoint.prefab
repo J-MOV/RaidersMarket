@@ -143,5 +143,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHealthScript: {fileID: 0}
-  amountOfClicks: 5
+  weakpointHealth: 0
+  damagePerClick: 0
   totalDamage: 0
+  popParticleSystem: {fileID: 5880561123525166970, guid: 43c1fba7f51c2da4cb6ec7212157c9c1,
+    type: 3}
