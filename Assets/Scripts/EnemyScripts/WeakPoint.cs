@@ -25,9 +25,7 @@ public class WeakPoint : MonoBehaviour
         currentWeakPointDamageDealt += damagePerClick;
 
         if(currentWeakPointDamageDealt >= weakpointHealth)
-        {
-            Debug.Log("WeakPoint destroyed!");
-            
+        { 
             enemyHealthScript.TakeDamage(totalDamage);
             Destroy(gameObject);
         }

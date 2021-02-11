@@ -2,25 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public int dungeonLevel;
     public int setEnemyCount;
-    public float lootChanceInPercentage;
     public static bool isPlaying;
     int amountOfEnemies;
     int enemiesDefeated;
 
-    public List<ItemStatsSO> randomLootDrops;
-    public GameObject lootPrefab;
-    [SerializeField] Transform lootDropPosition;
 
-    public List<Loot> collectedLoot;
-
-    int uncommonLoot, commonLoot, rareLoot, legendaryLoot; //Colleced in this dungeon
-    public TextMeshProUGUI uncommonText, commonText, rareText, legendaryText;
 
     public Text dungeonProgressText;
     public GameObject endScreenPanel;
@@ -57,7 +48,7 @@ public class GameManager : MonoBehaviour
         dungeonManager.EnemyDead += () => enemiesDefeated++;
         dungeonManager.EnemyDead += () => isFightingEnemy = false;
         dungeonManager.EnemyDead += SpawnNextEnemy;
-        dungeonManager.EnemyDead += DropRandomLoot;
+        dungeonManager.EnemyDead += FindObjectOfType<LootManager>().DropRandomLoot;
         playerHealth.PlayerDead += StopDungeon;
 
         endScreenPanel.SetActive(false);
@@ -67,15 +58,13 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = true;
         dungeonLevel = level;
-        uncommonLoot = 0;
-        commonLoot = 0;
-        rareLoot = 0;
-        legendaryLoot = 0;
+        endScreenPanel.SetActive(false);
 
         timeSinceLastEnemy = timeBetweenEnemies;
 
         enemiesDefeated = 0;
         amountOfEnemies = enemyCount;
+
     }
 
     private void Update()
@@ -125,44 +114,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void DropRandomLoot()
-    {
-        int rnd = Random.Range(0, 100);
-        if (rnd < lootChanceInPercentage) {
-
-            Vector3 randomOffsetPosition = new Vector3(Random.Range(-2f, 2f),Random.Range(-0.5f, 0.5f),Random.Range(-2f, 2f));
-
-           GameObject newLoot = Instantiate(lootPrefab, lootDropPosition.position + randomOffsetPosition, Quaternion.identity);
-            newLoot.GetComponent<Loot>().itemStats = randomLootDrops[Random.Range(0, randomLootDrops.Count)];
-
-            //Add loot to temporary loot list
-            collectedLoot.Add(newLoot.GetComponent<Loot>());
-            if (newLoot.GetComponent<Loot>().itemStats.itemRarity == ItemRarity.uncommon)
-                uncommonLoot++;
-            else if (newLoot.GetComponent<Loot>().itemStats.itemRarity == ItemRarity.common)
-                commonLoot++;
-            else if (newLoot.GetComponent<Loot>().itemStats.itemRarity == ItemRarity.rare)
-                rareLoot++;
-            else if (newLoot.GetComponent<Loot>().itemStats.itemRarity == ItemRarity.legendary)
-                legendaryLoot++;
-        }
-    }
-
-    IEnumerator waitForSeconds(float time)
-    {
-        yield return new WaitForSeconds(time);
-    }
 
     public void EndDungeon(bool completed)
     {
         isPlaying = false;
         endScreenPanel.SetActive(true);
+        FindObjectOfType<LevelManager>().startRaidButton.gameObject.SetActive(true);
 
-
-        uncommonText.text = uncommonLoot.ToString();
-        commonText.text = commonLoot.ToString();
-        rareText.text = rareText.ToString();
-        legendaryText.text = legendaryLoot.ToString();
+        FindObjectOfType<LootManager>().UpdateLootCollectedText();
 
         if (completed)
         {
@@ -179,11 +138,7 @@ public class GameManager : MonoBehaviour
 
             PlayerPrefs.SetInt("currentLevel", dungeonLevel + 1);
 
-            foreach (Loot loot in collectedLoot) //Add all loot collected in one dungeon to inventory
-            {
-                FindObjectOfType<Inventory>().EquipItem(loot);
-            }
-
+            FindObjectOfType<LootManager>().SendLootToInventory();
         }
         else
         {

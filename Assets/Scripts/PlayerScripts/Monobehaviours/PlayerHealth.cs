@@ -25,7 +25,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = startingHealth;
 
         dungeonManager = FindObjectOfType<DungeonManager>();
-        dungeonManager.EnemyDead += HealPlayer;
+        dungeonManager.EnemyDead += HealPlayerToFull;
     }
 
     private void Update()
@@ -48,7 +48,19 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    void HealPlayer()
+    public void AlterHealth(int amount)
+    {
+        if (currentHealth + amount > maxHealth)
+        {
+            HealPlayerToFull();
+        }
+        else
+        {
+            currentHealth += amount;
+        }
+    }
+
+    void HealPlayerToFull()
     {
         currentHealth = maxHealth;
     }

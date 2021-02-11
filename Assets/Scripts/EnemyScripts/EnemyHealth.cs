@@ -26,8 +26,6 @@ public class EnemyHealth : MonoBehaviour
             healthSlider.value = healthSlider.maxValue;
 
             enemyHealth = enemyStats.enemyHealth;
-
-            Debug.Log("Added stats to enemy");
         }
 
         

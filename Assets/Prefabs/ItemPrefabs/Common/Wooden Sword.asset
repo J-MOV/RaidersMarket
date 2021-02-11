@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fc01ab33e49c254aac79b93ed780619, type: 3}
-  m_Name: Energy Potion
+  m_Name: Wooden Sword
   m_EditorClassIdentifier: 
-  itemName: Energy Potion
-  itemDescription: Gives player more Energy
+  itemName: Wooden Sword
+  itemDescription: Grants additional base damage
   itemCost: 50
-  itemRarity: 1
+  itemRarity: 0
+  defenseBuffAmount: 0
+  attackBuffAmount: 15

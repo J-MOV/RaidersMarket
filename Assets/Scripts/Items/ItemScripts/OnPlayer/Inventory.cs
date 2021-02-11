@@ -22,6 +22,11 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void RemoveItemFromInventory(Loot loot)
+    {
+        itemsInInventory.Remove(loot);
+    }
+
     public void EquipItem(Loot newLoot)
     {
         itemsInInventory.Add(newLoot);
