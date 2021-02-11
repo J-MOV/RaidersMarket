@@ -30,8 +30,8 @@ public class WeakPointsManager : MonoBehaviour
 
             //Get random position in 2d area
 
-            spawnAreaWidth = weakPointsSpawnArea.GetComponent<WeakPointSpawner>().width;
-            spawnAreaHeight = weakPointsSpawnArea.GetComponent<WeakPointSpawner>().height;
+            spawnAreaWidth = weakPointsSpawnArea.GetComponent<WeakPointSpawner>().width * 0.5f;
+            spawnAreaHeight = weakPointsSpawnArea.GetComponent<WeakPointSpawner>().height * 0.5f;
 
             Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(-spawnAreaWidth, spawnAreaWidth), UnityEngine.Random.Range(-spawnAreaHeight, spawnAreaHeight));
 
