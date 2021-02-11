@@ -10,8 +10,7 @@ public class ReSwipeController : MonoBehaviour
     private List<Transform> listOfButtons;
 
     float buttonDistance;
-    float offset = 0;
-
+    //float offset = 0;
     private void Start()
     {
         listOfButtons = new List<Transform>();
