@@ -28,8 +28,5 @@ public class PlayerManager : MonoBehaviour
         //Player health
         playerHealth.startingHealth = playerStats.startingHealth;
         playerHealth.maxHealth = playerStats.maxHealth;
-
-
-        Debug.Log("Assigned stats to player");
     }
 }

@@ -9,8 +9,9 @@ public class GameManager : MonoBehaviour
     public int setEnemyCount;
     public static bool isPlaying;
     int amountOfEnemies;
-
     int enemiesDefeated;
+
+
 
     public Text dungeonProgressText;
     public GameObject endScreenPanel;
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
         dungeonManager.EnemyDead += () => enemiesDefeated++;
         dungeonManager.EnemyDead += () => isFightingEnemy = false;
         dungeonManager.EnemyDead += SpawnNextEnemy;
+        dungeonManager.EnemyDead += FindObjectOfType<LootManager>().DropRandomLoot;
         playerHealth.PlayerDead += StopDungeon;
 
         endScreenPanel.SetActive(false);
@@ -56,11 +58,13 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = true;
         dungeonLevel = level;
+        endScreenPanel.SetActive(false);
 
         timeSinceLastEnemy = timeBetweenEnemies;
 
         enemiesDefeated = 0;
         amountOfEnemies = enemyCount;
+
     }
 
     private void Update()
@@ -110,11 +114,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     public void EndDungeon(bool completed)
     {
         isPlaying = false;
         endScreenPanel.SetActive(true);
-        
+        FindObjectOfType<LevelManager>().startRaidButton.gameObject.SetActive(true);
+
+        FindObjectOfType<LootManager>().UpdateLootCollectedText();
 
         if (completed)
         {
@@ -131,6 +138,7 @@ public class GameManager : MonoBehaviour
 
             PlayerPrefs.SetInt("currentLevel", dungeonLevel + 1);
 
+            FindObjectOfType<LootManager>().SendLootToInventory();
         }
         else
         {
