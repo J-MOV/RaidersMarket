@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = false;
         endScreenPanel.SetActive(true);
-        FindObjectOfType<LevelManager>().startRaidButton.gameObject.SetActive(true);
+        
 
         FindObjectOfType<LootManager>().UpdateLootCollectedText();
 
