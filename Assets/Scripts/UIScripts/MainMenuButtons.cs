@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
 
 public class MainMenuButtons : MonoBehaviour
 {
@@ -51,10 +52,14 @@ public class MainMenuButtons : MonoBehaviour
     public void ReturnToMainMenu()
     {
         SceneManager.LoadSceneAsync("MehmetScene");
+        AnalyticsResult results = Analytics.CustomEvent("WentBackToMenu");
+        Debug.Log("Results: " + results);
     }
     public void RestartLevel()
     {
         SceneManager.LoadSceneAsync("ViktorScene");
+        AnalyticsResult results = Analytics.CustomEvent("ReplayedLevel");
+        Debug.Log("Results: " + results);
     }
 
     IEnumerator RemovePanel()
