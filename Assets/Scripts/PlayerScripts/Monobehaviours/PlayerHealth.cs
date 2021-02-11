@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
 
 public class PlayerHealth : MonoBehaviour
 {
     public delegate void OnPlayerDeath();
     public event OnPlayerDeath PlayerDead;
+
+    GameManager manager;
 
     public int startingHealth, maxHealth;
     public int currentHealth;
@@ -23,6 +26,8 @@ public class PlayerHealth : MonoBehaviour
         healthSlider.maxValue = maxHealth;
         healthSlider.value = startingHealth;
         currentHealth = startingHealth;
+
+        manager = GameObject.Find("--Gamemanager--").GetComponent<GameManager>();
 
         dungeonManager = FindObjectOfType<DungeonManager>();
         dungeonManager.EnemyDead += HealPlayerToFull;
@@ -70,6 +75,13 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player died");
         ParticleSystem _deathParticle = Instantiate(deathParticle, transform.position, Quaternion.identity);
         Destroy(_deathParticle.gameObject, 2f);
+
+        AnalyticsResult results = Analytics.CustomEvent("PlayerDied", new Dictionary<string, object>
+    {
+        {"LevelNumber", manager.dungeonLevel },
+        { "time_elapsed", Time.timeSinceLevelLoad }
+    });
+        Debug.Log(results);
 
         PlayerDead?.Invoke();
     }
