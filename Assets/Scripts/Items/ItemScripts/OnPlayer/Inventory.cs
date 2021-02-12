@@ -31,5 +31,6 @@ public class Inventory : MonoBehaviour
     {
         itemsInInventory.Add(newLoot);
         Debug.Log(newLoot.itemStats.itemRarity + " item looted with name: " + newLoot.itemStats.itemName);
+
     }
 }

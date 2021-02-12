@@ -20,6 +20,9 @@ public class LootManager : MonoBehaviour
 
     int uncommonLootCount, commonLootCount, rareLootCount, legendaryLootCount; //Colleced in this dungeon
 
+
+    [SerializeField] Transform dungeonTransform;
+
     private void Start()
     {
         uncommonLootCount = 0;
@@ -39,7 +42,7 @@ public class LootManager : MonoBehaviour
             Vector3 randomOffsetPosition = new Vector3(Random.Range(-2f, 2f), Random.Range(-0.5f, 0.5f), Random.Range(-2f, 2f));
 
             
-
+            
             float rnd2 = Random.Range(0, 100);
            
              Loot newLoot = Instantiate(lootTypes[Random.Range(0, lootTypes.Length)], lootDropPosition.position + randomOffsetPosition, Quaternion.identity);
