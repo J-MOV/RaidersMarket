@@ -17,7 +17,6 @@ public class Loot : MonoBehaviour, ILootInterface, IItemInterface
         PlayGlowParticle(itemRarity);
     }
 
- 
 
     void PlayGlowParticle(ItemRarity rarity)
     {
