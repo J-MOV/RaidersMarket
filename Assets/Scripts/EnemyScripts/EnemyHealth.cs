@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
@@ -9,6 +10,8 @@ public class EnemyHealth : MonoBehaviour
     public EnemySO enemyStats;
     public int enemyHealth;
 
+    int enemiesKilled;
+
     public Slider healthSlider;
     [SerializeField] ParticleSystem deathParticle;
     [SerializeField] ParticleSystem damageParticle;
@@ -16,6 +19,9 @@ public class EnemyHealth : MonoBehaviour
     private void Start()
     {
         healthSlider = GameObject.FindGameObjectWithTag("EnemyHealthBar").GetComponent<Slider>();
+
+        enemiesKilled = PlayerPrefs.GetInt("enemiesKilled");
+
         if (!enemyStats)
         {
             Debug.LogWarning("No Enemy Stats were found!");
@@ -41,6 +47,14 @@ public class EnemyHealth : MonoBehaviour
 
         if (enemyHealth <= 0)
         {
+            enemiesKilled++;
+            PlayerPrefs.SetInt("enemiesKilled", enemiesKilled);
+            AnalyticsResult results = Analytics.CustomEvent("Enemies Killed", new Dictionary<string, object>
+    {
+        {"Total Enemies Killed: ", enemiesKilled },
+    });
+            Debug.Log(results);
+
             FindObjectOfType<DungeonManager>().OnEnemyDeath();
             ParticleSystem _deathParticle = Instantiate(deathParticle, transform.position, Quaternion.identity);
             Destroy(_deathParticle.gameObject, 2f);

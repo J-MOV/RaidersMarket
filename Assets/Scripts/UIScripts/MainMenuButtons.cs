@@ -12,10 +12,18 @@ public class MainMenuButtons : MonoBehaviour
 
     [SerializeField] string sceneName;
 
+    int amountOfRestarts;
+
     float waitTillAnimationFinished = 3f;
 
     public Canvas levelSelectorPanel;
 
+
+    private void Start()
+    {
+        amountOfRestarts = PlayerPrefs.GetInt("TotalRestarts");
+        Debug.Log(amountOfRestarts);
+    }
     public void StartGame()
     {
         StartCoroutine(RemovePanel());
@@ -54,13 +62,16 @@ public class MainMenuButtons : MonoBehaviour
     public void ReturnToMainMenu()
     {
         SceneManager.LoadSceneAsync("MehmetScene");
-        AnalyticsResult results = Analytics.CustomEvent("WentBackToMenu");
-        Debug.Log("Results: " + results);
     }
     public void RestartLevel()
     {
+        amountOfRestarts++;
+        PlayerPrefs.SetInt("TotalRestarts", amountOfRestarts);
         SceneManager.LoadSceneAsync("ViktorScene");
-        AnalyticsResult results = Analytics.CustomEvent("ReplayedLevel");
+        AnalyticsResult results = Analytics.CustomEvent("AmountOfRestarts", new Dictionary<string, object>
+    {
+        {"Total Number Of Restarts: ", amountOfRestarts },
+    });
         Debug.Log("Results: " + results);
     }
 
