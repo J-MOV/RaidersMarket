@@ -147,6 +147,8 @@ public class GameManager : MonoBehaviour
             dungeonProgressText.text = "Dungeon " + dungeonLevel + " Failed!";
             dungeonCompleteText.text = "Dungeon " + dungeonLevel + " Failed!";
         }
+
+        
     }
 }
 

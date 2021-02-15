@@ -4152,6 +4152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemsInInventory: []
+  playerCombat: {fileID: 1856348270}
+  playerHealth: {fileID: 1856348271}
 --- !u!1 &1956360717
 GameObject:
   m_ObjectHideFlags: 0
@@ -4334,9 +4336,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lootTypes:
-  - {fileID: 3772901071043050922, guid: c805e23dcf168a447bcbfb11197d80da, type: 3}
-  - {fileID: -8421666026400542831, guid: 9fcce7985f47d7348a06d40324e17684, type: 3}
+  - {fileID: 8691121879291561548, guid: 5c5def3b9bb8ea84291616b729953546, type: 3}
   commonLootStats:
+  - {fileID: 11400000, guid: 9980ae2056626c44eafa9ea5479ff97b, type: 2}
+  - {fileID: 11400000, guid: 7775b3faa0ae2ce40ba2e7bd82bd87a4, type: 2}
+  - {fileID: 11400000, guid: b74a9f21ccc560342a99f96d67c77a59, type: 2}
   - {fileID: 11400000, guid: 0b2899fc74ae5b5438f6cf7ec4c8d938, type: 2}
   uncommonLootStats:
   - {fileID: 11400000, guid: 873a68695eea36b47ad1c37a77e71d17, type: 2}
