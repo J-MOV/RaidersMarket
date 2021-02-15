@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class Inventory : MonoBehaviour
 {
     [SerializeField]
@@ -14,6 +13,14 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
+        /*
+         * 
+         *  not working
+        PlayerSave data = SaveSystem.LoadInventory();
+        itemsInInventory = new List<Item>();
+        itemsInInventory = data.itemInventory;
+        */
+
         playerCombat = FindObjectOfType<PlayerCombat>();
         playerHealth = FindObjectOfType<PlayerHealth>();
     }
@@ -55,6 +62,8 @@ public class Inventory : MonoBehaviour
     {
         itemsInInventory.Add(newItem);
         Debug.Log("Picked up " + newItem.itemName);
+
+        //SaveSystem.SaveInventory(this);      not working
     }
 
 }
