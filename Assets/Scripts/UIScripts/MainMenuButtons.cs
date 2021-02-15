@@ -16,11 +16,25 @@ public class MainMenuButtons : MonoBehaviour
 
     float waitTillAnimationFinished = 3f;
 
+    Text goldText;
+    Text energyText;
+
     public Canvas levelSelectorPanel;
 
 
     private void Start()
     {
+        if(SceneManager.GetActiveScene().name == "MehmetScene")
+        {
+            goldText = GameObject.Find("GoldText").GetComponent<Text>();
+
+            energyText = GameObject.Find("EnergyText").GetComponent<Text>();
+
+            goldText.text = "GOLD: " + PlayerPrefs.GetInt("amountOfGoldPlayerHas");
+
+            energyText.text = "ENERGY: " + PlayerPrefs.GetInt("currentEnergy");
+        }
+
         amountOfRestarts = PlayerPrefs.GetInt("TotalRestarts");
     }
 
