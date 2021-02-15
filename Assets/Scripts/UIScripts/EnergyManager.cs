@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnergyManager : MonoBehaviour
 {
@@ -15,6 +18,7 @@ public class EnergyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         currentEnergy = PlayerPrefs.GetInt("currentEnergy");
 
         hasStartedGameForFirstTime = PlayerPrefs.GetInt("hasStartedGameForFirstTime") == 1;
@@ -33,7 +37,20 @@ public class EnergyManager : MonoBehaviour
 
     public void RemoveEnergy()
     {
-        currentEnergy -= lostEnergy;
-        PlayerPrefs.SetInt("currentEnergy",currentEnergy);
+        if(currentEnergy < lostEnergy)
+        {
+            Debug.Log("Sorry! You need more energy to play!");
+        }
+        else
+        {
+            currentEnergy -= lostEnergy;
+            PlayerPrefs.SetInt("currentEnergy", currentEnergy);
+            StartGame();
+        }
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadSceneAsync("ViktorScene");
     }
 }

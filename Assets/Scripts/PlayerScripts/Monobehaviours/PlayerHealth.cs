@@ -11,6 +11,9 @@ public class PlayerHealth : MonoBehaviour
 
     GameManager manager;
 
+    string playerName;
+
+    int amountOfDeaths;
     public int startingHealth, maxHealth;
     public int currentHealth;
 
@@ -28,6 +31,8 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = startingHealth;
 
         manager = GameObject.Find("--Gamemanager--").GetComponent<GameManager>();
+
+        amountOfDeaths = PlayerPrefs.GetInt("TotalDeaths");
 
         dungeonManager = FindObjectOfType<DungeonManager>();
         dungeonManager.EnemyDead += HealPlayerToFull;
@@ -73,13 +78,16 @@ public class PlayerHealth : MonoBehaviour
     void PlayerDeath()
     {
         Debug.Log("Player died");
+        amountOfDeaths++;
+        PlayerPrefs.SetInt("TotalDeaths", amountOfDeaths);
         ParticleSystem _deathParticle = Instantiate(deathParticle, transform.position, Quaternion.identity);
         Destroy(_deathParticle.gameObject, 2f);
 
         AnalyticsResult results = Analytics.CustomEvent("PlayerDied", new Dictionary<string, object>
     {
         {"LevelNumber", manager.dungeonLevel },
-        { "time_elapsed", Time.timeSinceLevelLoad }
+        { "time_elapsed", Time.timeSinceLevelLoad.ToString("F1") },
+        { "TotalDeaths", amountOfDeaths }
     });
         Debug.Log(results);
 
