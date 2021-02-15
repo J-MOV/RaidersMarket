@@ -22,7 +22,6 @@ public class MainMenuButtons : MonoBehaviour
     private void Start()
     {
         amountOfRestarts = PlayerPrefs.GetInt("TotalRestarts");
-        Debug.Log(amountOfRestarts);
     }
     public void StartGame()
     {

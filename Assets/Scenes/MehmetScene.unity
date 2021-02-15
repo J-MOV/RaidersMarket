@@ -795,6 +795,7 @@ GameObject:
   - component: {fileID: 684600149}
   - component: {fileID: 684600148}
   - component: {fileID: 684600153}
+  - component: {fileID: 684600154}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -817,6 +818,7 @@ MonoBehaviour:
   mainPanel: {fileID: 188312337}
   optionsPanel: {fileID: 0}
   sceneName: ViktorScene
+  levelSelectorPanel: {fileID: 0}
 --- !u!114 &684600149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -916,6 +918,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentEnergy: 0
   lostEnergy: 20
+--- !u!114 &684600154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684600147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a05b8f19c302e6f49897ce83eadee0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amountOfGoldPlayerHas: 0
+  startingGold: 500
 --- !u!1 &899915347
 GameObject:
   m_ObjectHideFlags: 0
