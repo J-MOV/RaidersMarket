@@ -21,7 +21,7 @@ public class EnergyManager : MonoBehaviour
     void Start()
     {
 
-        InvokeRepeating("RechargeEnergy", 0, 5);
+        InvokeRepeating("RechargeEnergy", 5, 5);
 
         currentEnergy = PlayerPrefs.GetInt("currentEnergy");
 
@@ -37,6 +37,14 @@ public class EnergyManager : MonoBehaviour
         }
         else
             Debug.Log("This player has started the game once!");        
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            RemoveAllEnergy();
+        }
     }
 
     public void RemoveEnergy()
@@ -67,6 +75,15 @@ public class EnergyManager : MonoBehaviour
         else
         {
             currentEnergy += chargedEnergy;
+            PlayerPrefs.SetInt("currentEnergy", currentEnergy);
         }
+    }
+
+    private void RemoveAllEnergy()
+    {
+        //THIS IS DEVELOPER THINGY NOT FOR IN GAME
+        currentEnergy = 0;
+        PlayerPrefs.SetInt("currentEnergy", currentEnergy);
+        Debug.Log("No Energy!");
     }
 }
