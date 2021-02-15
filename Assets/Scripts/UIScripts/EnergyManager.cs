@@ -10,12 +10,16 @@ public class EnergyManager : MonoBehaviour
 
     [SerializeField] int lostEnergy;
 
+    MainMenuButtons menuManager;
+
     bool hasStartedGameForFirstTime = false;
     
     // Start is called before the first frame update
     void Start()
     {
         currentEnergy = PlayerPrefs.GetInt("currentEnergy");
+
+        menuManager = FindObjectOfType<MainMenuButtons>();
 
         hasStartedGameForFirstTime = PlayerPrefs.GetInt("hasStartedGameForFirstTime") == 1;
         Debug.Log(hasStartedGameForFirstTime);
@@ -33,7 +37,15 @@ public class EnergyManager : MonoBehaviour
 
     public void RemoveEnergy()
     {
-        currentEnergy -= lostEnergy;
-        PlayerPrefs.SetInt("currentEnergy",currentEnergy);
+        if(currentEnergy < lostEnergy)
+        {
+            Debug.Log("Sorry! You need more energy to play!");
+        }
+        else
+        {
+            currentEnergy -= lostEnergy;
+            PlayerPrefs.SetInt("currentEnergy", currentEnergy);
+            menuManager.StartGame();
+        }
     }
 }

@@ -17,7 +17,7 @@ public class GoldObtained : MonoBehaviour
     {
         manager = FindObjectOfType<CurrencyManager>();
 
-        goldPlayerHas = manager.amountOfGoldPlayerHas;
+        goldPlayerHas = PlayerPrefs.GetInt("amountOfGoldPlayerHas");
     }
     private void Update()
     {
