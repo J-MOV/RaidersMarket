@@ -11,6 +11,8 @@ public class EnergyManager : MonoBehaviour
 
     [SerializeField] int currentEnergy;
 
+    [SerializeField] int chargedEnergy;
+
     [SerializeField] int lostEnergy;
 
     bool hasStartedGameForFirstTime = false;
@@ -18,6 +20,8 @@ public class EnergyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        InvokeRepeating("RechargeEnergy", 0, 5);
 
         currentEnergy = PlayerPrefs.GetInt("currentEnergy");
 
@@ -52,5 +56,17 @@ public class EnergyManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadSceneAsync("ViktorScene");
+    }
+
+    private void RechargeEnergy()
+    {
+        if(currentEnergy >= maxEnergy) 
+        {
+            Debug.Log("You have full energy!");
+        }
+        else
+        {
+            currentEnergy += chargedEnergy;
+        }
     }
 }
