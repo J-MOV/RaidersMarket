@@ -15,7 +15,9 @@ public class LevelManager : MonoBehaviour
 
     int enemyCount;
 
-    public Button startRaidButton;
+    public Button beginRaidButton;
+    public Canvas menuButtons;
+    public Button levelSelectButton;
 
     private void Start()
     {
@@ -41,7 +43,9 @@ public class LevelManager : MonoBehaviour
     public void StartLevel(int _level)
     {
         level = _level;
-        startRaidButton.gameObject.SetActive(false);
+        menuButtons.gameObject.SetActive(false);
+        beginRaidButton.gameObject.SetActive(false);
+        levelSelectButton.gameObject.SetActive(false);
 
         float enemyCountInFloat = level * enemyMultiplier;
         enemyCount = (int)Mathf.Ceil(enemyCountInFloat);

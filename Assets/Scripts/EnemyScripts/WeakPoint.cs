@@ -13,6 +13,8 @@ public class WeakPoint : MonoBehaviour
     public int damagePerClick;
     [HideInInspector] public int totalDamage;
 
+    [SerializeField] ParticleSystem popParticleSystem;
+
     private void Start()
     {
         playerCombatScript = FindObjectOfType<PlayerCombat>();
@@ -27,6 +29,8 @@ public class WeakPoint : MonoBehaviour
         if(currentWeakPointDamageDealt >= weakpointHealth)
         { 
             enemyHealthScript.TakeDamage(totalDamage);
+            GameObject particle = Instantiate(popParticleSystem.gameObject, transform.position, Quaternion.identity);
+            Destroy(particle, 2f);
             Destroy(gameObject);
         }
     }

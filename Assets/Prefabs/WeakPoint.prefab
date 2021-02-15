@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 75, y: 75}
+  m_SizeDelta: {x: 3, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6849132457743486491
 CanvasRenderer:
@@ -143,5 +143,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHealthScript: {fileID: 0}
-  amountOfClicks: 5
+  weakpointHealth: 0
+  damagePerClick: 0
   totalDamage: 0
+  popParticleSystem: {fileID: 5880561123525166970, guid: 43c1fba7f51c2da4cb6ec7212157c9c1,
+    type: 3}
