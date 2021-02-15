@@ -23,12 +23,6 @@ public class MainMenuButtons : MonoBehaviour
     {
         amountOfRestarts = PlayerPrefs.GetInt("TotalRestarts");
     }
-    public void StartGame()
-    {
-        StartCoroutine(RemovePanel());
-        //TODO: Let the game begin.
-        SceneManager.LoadSceneAsync("ViktorScene");
-    }
 
     public void MarketPlaceOpened()
     {
