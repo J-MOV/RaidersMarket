@@ -140,6 +140,8 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("currentLevel", dungeonLevel + 1);
 
             FindObjectOfType<LootManager>().SendLootToInventory();
+
+            Analytics.CustomEvent("LevelCompleted");
         }
         else
         {
@@ -147,6 +149,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Player failed dungeon " + dungeonLevel + " and killed " + enemiesDefeated + " out of " + amountOfEnemies);
             dungeonProgressText.text = "Dungeon " + dungeonLevel + " Failed!";
             dungeonCompleteText.text = "Dungeon " + dungeonLevel + " Failed!";
+            Analytics.CustomEvent("LevelLost");
         }
     }
 }
