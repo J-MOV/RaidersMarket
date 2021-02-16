@@ -16,13 +16,11 @@ public class LevelBar : MonoBehaviour
 
     private void setLevel()
     {
-        for(int i = 0; i < AccountLevelHandler.mileStones.Count; i++)
-        {
-            if(i == AccountLevelHandler.Level())
-            {
-                targetSlider.maxValue = AccountLevelHandler.mileStones[AccountLevelHandler.Level()];
-            }
-        }
+        //Check for how much Experience the Account has
+        //Check the level of the account
+        //Display the Level
+        //Display the Experience
+        //Calculate the ammount of Experience left to the next level
     }
 
     private void Update()
