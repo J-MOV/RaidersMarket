@@ -2783,6 +2783,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 3371202899946606878, guid: 809b883de89c9e94d91668ed8625b722,
     type: 3}
   tempSpawnPoint: {fileID: 741423661}
+  enemyHealthbar: {fileID: 140243504}
 --- !u!114 &1250912560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5915,7 +5916,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swipeBar: {fileID: 2501032441047526074}
-  levelsToDisplay: 10
+  levelsToDisplay: 20
   levelButtonPrefab: {fileID: 1527200454485085615, guid: e946c730cf015314eb04d8731af7bdff,
     type: 3}
 --- !u!224 &2501032442183609039

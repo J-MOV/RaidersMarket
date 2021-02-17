@@ -12,4 +12,13 @@ public class DungeonManager : MonoBehaviour
         if (EnemyDead != null)
             EnemyDead.Invoke();
     }
+
+    public delegate void WeakPointDestroyed();
+    public event WeakPointDestroyed onWeakPointDestroyed;
+
+    public void OnEnemyWeakpointDestroyed()
+    {
+        if (onWeakPointDestroyed != null)
+            onWeakPointDestroyed.Invoke();
+    }
 }
