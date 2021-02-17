@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     EnemySpawner enemySpawner;
     DungeonManager dungeonManager;
     PlayerHealth playerHealth;
+    GoldObtained goldManager;
 
     public GameObject playerHealthSlider, enemyHealthSlider;
 
@@ -53,6 +54,8 @@ public class GameManager : MonoBehaviour
         playerHealth.PlayerDead += StopDungeon;
 
         endScreenPanel.SetActive(false);
+
+        goldManager = FindObjectOfType<GoldObtained>();
     }
 
     public void BeginDungeon(int level ,int enemyCount)
@@ -138,6 +141,8 @@ public class GameManager : MonoBehaviour
             Destroy(_fireWorks2.gameObject, 3f);
 
             PlayerPrefs.SetInt("currentLevel", dungeonLevel + 1);
+
+            goldManager.FinishedDungeon();
 
             FindObjectOfType<LootManager>().SendLootToInventory();
 
