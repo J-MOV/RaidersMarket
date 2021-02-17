@@ -10,16 +10,30 @@ public static class AccountLevelHandler
 
     public static List<int> mileStones;
 
+    /// <summary>
+    /// Initializes the List of levels and their goals
+    /// </summary>
+    /// <param name="levelGoals"></param>
+    public static void Initzialize(List<int> levelGoals)
+    {
+        mileStones = levelGoals;
+    }
+
     public static void AddExperience(int ammount)
     {
         eXP += ammount;
+
+        if(eXP >= mileStones[accountLevel + 1])
+        {
+            eXP -= mileStones[accountLevel + 1];
+            LevelUp();
+        }
 
         foreach(var level in mileStones)
         {
             if(eXP >= level)
             {
-                eXP -= level;
-                LevelUp();
+
             }
         }
     }
