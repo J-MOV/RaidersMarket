@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new Item", menuName = "Item Stats")]
 public class ItemStatsSO : ScriptableObject
 {
+    
     public string itemName = "Item";
 
     public string itemDescription = "This is an item description";
@@ -12,8 +13,8 @@ public class ItemStatsSO : ScriptableObject
     public int itemCost = 20;
     public ItemRarity itemRarity;
 
-    public int defenseBuffAmount;
-    public int attackBuffAmount;
+    public int damageValue;
+    public int defenseValue;
 
 }
 public enum ItemRarity 

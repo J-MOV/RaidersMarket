@@ -25,10 +25,13 @@ public class WeakPoint : MonoBehaviour
     public void DealDamage()
     {
         currentWeakPointDamageDealt += damagePerClick;
+      
 
         if(currentWeakPointDamageDealt >= weakpointHealth)
-        { 
+        {
             enemyHealthScript.TakeDamage(totalDamage);
+            FindObjectOfType<DungeonManager>().OnEnemyWeakpointDestroyed();
+            
             GameObject particle = Instantiate(popParticleSystem.gameObject, transform.position, Quaternion.identity);
             Destroy(particle, 2f);
             Destroy(gameObject);

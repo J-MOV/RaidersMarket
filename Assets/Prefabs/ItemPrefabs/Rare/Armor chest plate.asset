@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fc01ab33e49c254aac79b93ed780619, type: 3}
   m_Name: Armor chest plate
   m_EditorClassIdentifier: 
+  itemSprite: {fileID: 21300004, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
   itemName: Armor chest plate
   itemDescription: Grants player additional maximum health
   itemCost: 125
   itemRarity: 2
-  defenseBuffAmount: 50
-  attackBuffAmount: 0
+  damageValue: 0
+  defenseValue: 50

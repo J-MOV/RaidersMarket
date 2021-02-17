@@ -4,7 +4,26 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public List<Loot> itemsInInventory;
+    [SerializeField]
+    public List<Item> itemsInInventory = new List<Item>();
+
+
+    [SerializeField] PlayerCombat playerCombat;
+    [SerializeField] PlayerHealth playerHealth;
+
+    private void Start()
+    {
+        /*
+         * 
+         *  not working
+        PlayerSave data = SaveSystem.LoadInventory();
+        itemsInInventory = new List<Item>();
+        itemsInInventory = data.itemInventory;
+        */
+
+        playerCombat = FindObjectOfType<PlayerCombat>();
+        playerHealth = FindObjectOfType<PlayerHealth>();
+    }
 
     private void Update()
     {
@@ -18,19 +37,33 @@ public class Inventory : MonoBehaviour
         Debug.Log("Number of items : " + itemsInInventory.Count);
         for(int i = 0; i<itemsInInventory.Count; i++)
         {
-            Debug.Log("Item : " + itemsInInventory[i].itemStats.itemName + ", cost: " + itemsInInventory[i].itemStats.itemCost + ", item rarity : " + itemsInInventory[i].itemStats.itemRarity);
+            Debug.Log("Item : " + itemsInInventory[i].itemName + ", cost: " + itemsInInventory[i].cost + ", item rarity : " + itemsInInventory[i].itemRarity);
         }
     }
 
-    public void RemoveItemFromInventory(Loot loot)
+    public void AddItemStatsToPlayer(int damage, int health)
     {
-        itemsInInventory.Remove(loot);
+        playerCombat.baseDamage += damage;
+        playerHealth.maxHealth += health;
     }
 
-    public void EquipItem(Loot newLoot)
+    public void RemoveItemStatsFromPlayer(int damage, int health)
     {
-        itemsInInventory.Add(newLoot);
-        Debug.Log(newLoot.itemStats.itemRarity + " item looted with name: " + newLoot.itemStats.itemName);
-
+        playerCombat.baseDamage -= damage;
+        playerHealth.maxHealth -= health;
     }
+
+    public void RemoveItemFromInventory(Item item)
+    {
+        itemsInInventory.Remove(item);
+    }
+
+    public void EquipItem(Item newItem)
+    {
+        itemsInInventory.Add(newItem);
+        Debug.Log("Picked up " + newItem.itemName);
+
+        //SaveSystem.SaveInventory(this);      not working
+    }
+
 }

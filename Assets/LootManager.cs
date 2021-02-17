@@ -45,35 +45,44 @@ public class LootManager : MonoBehaviour
             
             float rnd2 = Random.Range(0, 100);
            
-             Loot newLoot = Instantiate(lootTypes[Random.Range(0, lootTypes.Length)], lootDropPosition.position + randomOffsetPosition, Quaternion.identity);
+            Loot newLoot = Instantiate(lootTypes[Random.Range(0, lootTypes.Length)], lootDropPosition.position + randomOffsetPosition, Quaternion.identity);
 
 
             if (rnd2 <= legendaryDropRate)
             {
                 //legendary
-                newLoot.itemStats = legendaryLootStats[Random.Range(0, legendaryLootStats.Length)];
+                newLoot.itemStats = legendaryLootStats[Random.Range(0,legendaryLootStats.Length)];
+
+                
                 Debug.Log("Dropped legendary item with drop rate of " + legendaryDropRate+"%");
             }
             else if (rnd2 <= rareDropRate)
             {
                 //rare
                 newLoot.itemStats = rareLootStats[Random.Range(0, rareLootStats.Length)];
+
+               
                 Debug.Log("Dropped rare item with drop rate of " + rareDropRate + "%");
             }
             else if (rnd2<= uncommonDropRate)
             {
                 //uncommon
+
                 newLoot.itemStats = uncommonLootStats[Random.Range(0, uncommonLootStats.Length)];
+                
                 Debug.Log("Dropped uncommon item with drop rate of " + uncommonDropRate + "%");
             }
             else
             {
                 //common
                 newLoot.itemStats = commonLootStats[Random.Range(0, commonLootStats.Length)];
+
+               
                 Debug.Log("Dropped common item with drop rate of " + commonDropRate + "%");
             }
 
                 //Add loot to temporary loot list
+                collectedLoot.Add(newLoot);
 
                 if (newLoot.itemStats.itemRarity == ItemRarity.uncommon)
                     uncommonLootCount++;
@@ -91,8 +100,10 @@ public class LootManager : MonoBehaviour
     {
             foreach (Loot loot in collectedLoot) //Add all loot collected in one dungeon to inventory
             {
-                FindObjectOfType<Inventory>().EquipItem(loot);
+                FindObjectOfType<Inventory>().EquipItem(loot.item);
             }
+        
+        collectedLoot.Clear();
      }
 
     public void UpdateLootCollectedText()

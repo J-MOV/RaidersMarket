@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System.Linq;
 
 //Change some optimization to reduce the declaration of variables on update and for loops.
 //Like a check or a variable with the current level stored so that the program doesn’t loop through so much. 
@@ -10,6 +12,9 @@ using UnityEngine.UI;
 public class SwipeController : MonoBehaviour
 {
     public GameObject swipeBar;
+
+    public int levelsToDisplay;
+    public GameObject levelButtonPrefab;
 
     float swipePosition = 0; // <-- Where I am right now
     float divideDistance;
@@ -20,6 +25,8 @@ public class SwipeController : MonoBehaviour
     {
         setPosition = new float[transform.childCount];
         divideDistance = 1f / (setPosition.Length - 1f);
+
+        DisplayLevels(levelsToDisplay);
     }
 
     void Update()
@@ -60,5 +67,26 @@ public class SwipeController : MonoBehaviour
             }
         }
 
+    }
+
+  
+
+    void DisplayLevels(int amountOfLeves)
+    {
+        List<GameObject> levelButtonsDisplayed = new List<GameObject>();
+
+        for (int i = 0; i < amountOfLeves; i++)
+        {
+            GameObject button = Instantiate(levelButtonPrefab, transform.position, Quaternion.identity, transform);
+            levelButtonsDisplayed.Add(button);
+        }
+
+        for (int i = 0; i < levelButtonsDisplayed.Count; i++)
+        {
+            int levelNumber = i + 1;
+            levelButtonsDisplayed[i].GetComponent<LevelButton>().level = levelNumber;
+            levelButtonsDisplayed[i].GetComponentInChildren<TextMeshProUGUI>().text = "Level " + levelNumber.ToString();
+            levelButtonsDisplayed[i].GetComponent<Button>().onClick.AddListener(levelButtonsDisplayed[i].GetComponent<LevelButton>().LoadDungeon);
+        }
     }
 }
