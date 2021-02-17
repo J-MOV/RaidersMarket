@@ -1505,7 +1505,7 @@ GameObject:
   - component: {fileID: 1556267196}
   - component: {fileID: 1556267195}
   m_Layer: 5
-  m_Name: energyText
+  m_Name: EnergyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

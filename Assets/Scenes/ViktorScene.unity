@@ -4270,6 +4270,7 @@ GameObject:
   - component: {fileID: 2089187785}
   - component: {fileID: 2089187784}
   - component: {fileID: 2089187786}
+  - component: {fileID: 2089187787}
   m_Layer: 0
   m_Name: --Gamemanager--
   m_TagString: Untagged
@@ -4361,6 +4362,21 @@ MonoBehaviour:
   rareDropRate: 12
   legendaryDropRate: 3
   dungeonTransform: {fileID: 1250912558}
+--- !u!114 &2089187787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089187783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192bddc910f6df14b9d127d64628fd1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goldPlayerHas: 0
+  randomizedGoldMax: 9999
+  randomizedGoldMin: 0
 --- !u!1 &2100769543
 GameObject:
   m_ObjectHideFlags: 0
