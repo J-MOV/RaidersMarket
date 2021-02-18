@@ -30,7 +30,7 @@ public class Camera : MonoBehaviour
     private float cameraSpeed = .3f;
 
     private Vector3 dungeonVelocity = Vector3.zero;
-    private float dungeonPanSpeed = .3f;
+    [SerializeField] private float dungeonPanSpeed = .3f;
 
     public GameObject mainDungeon;
     public GameObject oldDungeon;
@@ -75,13 +75,13 @@ public class Camera : MonoBehaviour
     }
 
     GameObject GetRandomDugeonAsset() {
-        return dungeonAssets[Random.Range(0, dungeonAssets.Count - 1)];
+        return dungeonAssets[Random.Range(0, dungeonAssets.Count - 1)]; 
     }
 
 
     void Start()
     {
-        ChangeDesiredPosition(transform);
+        ChangeDesiredPosition(menuPosition);
     }
 
     // Update is called once per frame
@@ -89,12 +89,13 @@ public class Camera : MonoBehaviour
     {
 
         if (Input.GetKeyDown("p")) PanNext(monsterTest);
-
+/*
         if (TEST_CAMERA_CHANGE_VIEW_TO_RAID) {
             ChangeDesiredPosition(raidPosition);
         } else {
             ChangeDesiredPosition(menuPosition);
         }
+*/
 
         /*mainDungeon.transform.position = 
         oldDungeon.transform.position = mainDungeon.transform.position - dungeonOffset;*/

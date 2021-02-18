@@ -41,11 +41,19 @@ public class GameManager : MonoBehaviour
     bool spawnEnemy;
     bool isFightingEnemy;
 
+    bool canPan = true;
+
+    Camera gameCamera;
+
+       
+
     private void Start()
     {
         enemySpawner = FindObjectOfType<EnemySpawner>();
         dungeonManager = FindObjectOfType<DungeonManager>();
         playerHealth = FindObjectOfType<PlayerHealth>();
+
+        gameCamera = FindObjectOfType<Camera>();
 
         dungeonManager.EnemyDead += () => enemiesDefeated++;
         dungeonManager.EnemyDead += () => isFightingEnemy = false;
@@ -63,6 +71,8 @@ public class GameManager : MonoBehaviour
         isPlaying = true;
         dungeonLevel = level;
         endScreenPanel.SetActive(false);
+
+        gameCamera.EnterRaid();
 
         timeSinceLastEnemy = timeBetweenEnemies;
 
@@ -87,7 +97,14 @@ public class GameManager : MonoBehaviour
             //Spawn enemies
 
             if (timeSinceLastEnemy < timeBetweenEnemies && !isFightingEnemy)
+            {
                 timeSinceLastEnemy += Time.deltaTime;
+                if (canPan && isPlaying)
+                {
+                    gameCamera.PanNext();
+                    canPan = false;
+                }
+            }
 
             if (timeSinceLastEnemy >= timeBetweenEnemies)
                 spawnEnemy = true;
@@ -105,6 +122,7 @@ public class GameManager : MonoBehaviour
     void StopDungeon()
     {
         EndDungeon(false);
+        gameCamera.ExitRaid();
     }
 
     void SpawnNextEnemy()
@@ -115,6 +133,7 @@ public class GameManager : MonoBehaviour
             timeSinceLastEnemy = 0;
             spawnEnemy = false;
             enemySpawner.SpawnEnemy(enemyVariantToSpawn);
+            canPan = true;
         }
     }
 
