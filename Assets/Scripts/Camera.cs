@@ -12,8 +12,8 @@ public class Camera : MonoBehaviour
     // TODO: delete this
     public GameObject monsterTest;
 
-    Vector3 dungeonPosition = new Vector3(0f, 0f, 2.2f);
-    Vector3 dungeonOffset = new Vector3(0f, 0f, -29.91f);
+    [SerializeField] Vector3 dungeonPosition = new Vector3(0f, 0f, 2.2f);
+    [SerializeField] Vector3 dungeonOffset = new Vector3(0f, 0f, -29.91f);
 
     public List<Transform> dungeons = new List<Transform>();
 
