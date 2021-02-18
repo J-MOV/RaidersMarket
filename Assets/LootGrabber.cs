@@ -14,14 +14,12 @@ public class LootGrabber : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger");
-        if(other.transform.tag == "Loot")
+        if(other.CompareTag("Loot"))
         {
-            Debug.Log("Trigger with loot");
             Loot loot = other.GetComponentInParent<Loot>();
             loot.LootItem();
+            Destroy(other.gameObject);
 
-            Debug.LogWarning("Loot picked up, but not working :)");
         }
     }
 }

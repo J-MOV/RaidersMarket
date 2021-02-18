@@ -12,14 +12,11 @@ public class EnemyHealth : MonoBehaviour
 
     int enemiesKilled;
 
-    public Slider healthSlider;
     [SerializeField] ParticleSystem deathParticle;
     [SerializeField] ParticleSystem damageParticle;
 
     private void Start()
     {
-        healthSlider = GameObject.FindGameObjectWithTag("EnemyHealthBar").GetComponent<Slider>();
-
         enemiesKilled = PlayerPrefs.GetInt("enemiesKilled");
 
         if (!enemyStats)
@@ -28,9 +25,6 @@ public class EnemyHealth : MonoBehaviour
         }
         else 
         { 
-            healthSlider.maxValue = enemyStats.enemyHealth;
-            healthSlider.value = healthSlider.maxValue;
-
             enemyHealth = enemyStats.enemyHealth;
         }
 
@@ -39,8 +33,9 @@ public class EnemyHealth : MonoBehaviour
     
     public void TakeDamage(int damage)
     {
+       
+        Debug.Log("Enemy took damage");
         enemyHealth -= damage;
-        healthSlider.value = enemyHealth;
 
         ParticleSystem _damageParticle = Instantiate(damageParticle, transform.position, Quaternion.identity);
         Destroy(_damageParticle.gameObject, 2f);
@@ -55,11 +50,16 @@ public class EnemyHealth : MonoBehaviour
     });
             Debug.Log(results);
 
-            FindObjectOfType<DungeonManager>().OnEnemyDeath();
+            
             ParticleSystem _deathParticle = Instantiate(deathParticle, transform.position, Quaternion.identity);
             Destroy(_deathParticle.gameObject, 2f);
-            Destroy(gameObject);
+            transform.position = new Vector3(0, -50, 0);
         }
+    }
+
+    public void DestroyObject()
+    {
+        Destroy(gameObject);
     }
 
 }

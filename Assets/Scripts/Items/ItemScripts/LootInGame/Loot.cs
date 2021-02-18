@@ -2,37 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Loot : MonoBehaviour, ILootInterface, IItemInterface
+public class Loot : MonoBehaviour
 {
+    public Item item;
     public ItemStatsSO itemStats;
-    ItemRarity itemRarity;
 
     [SerializeField] GameObject common, uncommon, rare, legendary;
 
     void Start()
     {
+        item = new Item(itemStats, FindObjectOfType<Inventory>());
+        PlayGlowParticle();
 
-        itemRarity = itemStats.itemRarity;
-
-        PlayGlowParticle(itemRarity);
+        item.AddStatsToPlayer();
     }
 
-
-    void PlayGlowParticle(ItemRarity rarity)
+    void PlayGlowParticle()
     {
-        if (itemRarity == ItemRarity.common)
+        if (itemStats.itemRarity == ItemRarity.common)
         {
             common.SetActive(true);
         }
-        else if (itemRarity == ItemRarity.uncommon)
+        else if (itemStats.itemRarity == ItemRarity.uncommon)
         {
             uncommon.SetActive(true);
         }
-        else if (itemRarity == ItemRarity.rare)
+        else if (itemStats.itemRarity == ItemRarity.rare)
         {
             rare.SetActive(true);
         }
-        else if (itemRarity == ItemRarity.legendary)
+        else if (itemStats.itemRarity == ItemRarity.legendary)
         {
             legendary.SetActive(true);
         }
@@ -40,16 +39,19 @@ public class Loot : MonoBehaviour, ILootInterface, IItemInterface
 
     public void LootItem()
     {
-        FindObjectOfType<Inventory>().EquipItem(this);
+        FindObjectOfType<Inventory>().EquipItem(item);
     }
 
     public virtual void AddItemEffect()
     {
-        Debug.Log(itemStats.itemName+" affecting player");
+        item.AddStatsToPlayer();
+        Debug.Log("Added " + item.itemName + " to equiped items");
     }
 
     public virtual void RemoveItemEffect()
     {
-        Debug.Log(itemStats.itemName + " no longer affecting player");
+        item.RemoveStatsFromPlayer();
+        Debug.Log("Removed " + item.itemName + " from equiped items");
     }
+
 }

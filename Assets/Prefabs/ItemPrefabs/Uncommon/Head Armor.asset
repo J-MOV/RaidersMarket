@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fc01ab33e49c254aac79b93ed780619, type: 3}
   m_Name: Head Armor
   m_EditorClassIdentifier: 
+  itemSprite: {fileID: 21300006, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
   itemName: Head Armor
   itemDescription: Grants player additional max health
   itemCost: 65
   itemRarity: 1
-  defenseBuffAmount: 25
-  attackBuffAmount: 0
+  damageValue: 0
+  defenseValue: 100
