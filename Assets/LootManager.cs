@@ -21,7 +21,7 @@ public class LootManager : MonoBehaviour
     int uncommonLootCount, commonLootCount, rareLootCount, legendaryLootCount; //Colleced in this dungeon
 
 
-    [SerializeField] Transform dungeonTransform;
+    public Transform dungeonTransform;
 
     private void Start()
     {
@@ -46,6 +46,8 @@ public class LootManager : MonoBehaviour
             float rnd2 = Random.Range(0, 100);
            
             Loot newLoot = Instantiate(lootTypes[Random.Range(0, lootTypes.Length)], lootDropPosition.position + randomOffsetPosition, Quaternion.identity);
+
+            newLoot.transform.SetParent(dungeonTransform);
 
 
             if (rnd2 <= legendaryDropRate)
