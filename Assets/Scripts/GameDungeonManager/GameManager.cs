@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
 
     bool canPan = true;
 
-    Camera gameCamera;
+    DungeonCamera gameCamera;
 
        
 
@@ -53,12 +53,12 @@ public class GameManager : MonoBehaviour
         dungeonManager = FindObjectOfType<DungeonManager>();
         playerHealth = FindObjectOfType<PlayerHealth>();
 
-        gameCamera = FindObjectOfType<Camera>();
+        gameCamera = FindObjectOfType<DungeonCamera>();
 
         dungeonManager.EnemyDead += () => enemiesDefeated++;
         dungeonManager.EnemyDead += () => isFightingEnemy = false;
         dungeonManager.EnemyDead += SpawnNextEnemy;
-        dungeonManager.EnemyDead += FindObjectOfType<LootManager>().DropRandomLoot;
+
         playerHealth.PlayerDead += StopDungeon;
 
         endScreenPanel.SetActive(false);
@@ -144,8 +144,6 @@ public class GameManager : MonoBehaviour
         endScreenPanel.SetActive(true);
         
 
-        FindObjectOfType<LootManager>().UpdateLootCollectedText();
-
         if (completed)
         {
             //If dungeon was completed
@@ -163,7 +161,6 @@ public class GameManager : MonoBehaviour
 
             goldManager.FinishedDungeon();
 
-            FindObjectOfType<LootManager>().SendLootToInventory();
 
             Analytics.CustomEvent("LevelCompleted");
         }
