@@ -7,6 +7,3 @@ public class ItemsList : MonoBehaviour
     
 }
 
-public class Item {
-    //public Item(string name, )
-}
