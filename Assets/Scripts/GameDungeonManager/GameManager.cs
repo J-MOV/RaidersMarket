@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -45,6 +46,15 @@ public class GameManager : MonoBehaviour
 
     DungeonCamera gameCamera;
 
+    public GameObject lootPrefab;
+
+    [SerializeField] Transform lootDropPosition;
+
+    int commonLoot, uncommonLoot, rareLoot, legendaryLoot, mythicLoot;
+
+    [SerializeField] TextMeshProUGUI commonLootText, unCommonLootText, rareLootText, 
+        legendaryLootText, mythicLootText;
+
        
 
     private void Start()
@@ -58,6 +68,7 @@ public class GameManager : MonoBehaviour
         dungeonManager.EnemyDead += () => enemiesDefeated++;
         dungeonManager.EnemyDead += () => isFightingEnemy = false;
         dungeonManager.EnemyDead += SpawnNextEnemy;
+        dungeonManager.EnemyDead += DropLoot;
 
         playerHealth.PlayerDead += StopDungeon;
 
@@ -137,12 +148,41 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void DropLoot()
+    {
+        if (ShouldDropLoot() == false) return;
+
+        //TO DO: get random item stats
+        Loot newLoot = Instantiate(lootPrefab.GetComponent<Loot>(), lootDropPosition.position, Quaternion.identity);
+
+        //TO DO: apply : newLoot.itemStats = random item stats
+        ItemRarity itemRarity = ItemRarity.Common; //Replace with actual item rarity
+
+        if (itemRarity == ItemRarity.Common)
+            commonLoot++;
+        else if (itemRarity == ItemRarity.Uncommon)
+            uncommonLoot++;
+        else if (itemRarity == ItemRarity.Rare)
+            rareLoot++;
+        else if (itemRarity == ItemRarity.Legendary)
+            legendaryLoot++;
+        else if (itemRarity == ItemRarity.Mythic)
+            mythicLoot++;
+    }
+
+    bool ShouldDropLoot()
+    {
+        //somehow determine if loot should drop or not
+        return true;
+    }
+
 
     public void EndDungeon(bool completed)
     {
         isPlaying = false;
         endScreenPanel.SetActive(true);
-        
+
+        UpdateLootText();
 
         if (completed)
         {
@@ -161,6 +201,8 @@ public class GameManager : MonoBehaviour
 
             goldManager.FinishedDungeon();
 
+            //Send loot to inventory
+            SendLootToInventory();
 
             Analytics.CustomEvent("LevelCompleted");
         }
@@ -171,9 +213,40 @@ public class GameManager : MonoBehaviour
             dungeonProgressText.text = "Dungeon " + dungeonLevel + " Failed!";
             dungeonCompleteText.text = "Dungeon " + dungeonLevel + " Failed!";
             Analytics.CustomEvent("LevelLost");
+
+            //Remove all loot collected
+            ClearLootCollected();
         }
 
         
+    }
+
+    void ClearLootCollected()
+    {
+        FindObjectOfType<LootCollected>().ClearLootCollected();
+    }
+
+    void SendLootToInventory()
+    {
+        Debug.Log("Items sent to inventory (NOT IMPLEMENTED YET)");
+        ClearLootCollected();
+    }
+
+    void UpdateLootText()
+    {
+        commonLootText.text = commonLoot.ToString();
+        unCommonLootText.text = uncommonLoot.ToString();
+        rareLootText.text = rareLoot.ToString();
+        legendaryLootText.text = legendaryLoot.ToString();
+        mythicLootText.text = mythicLoot.ToString();
+
+        //reset loot count for next dungeon
+        commonLoot = 0;
+        uncommonLoot = 0;
+        rareLoot = 0;
+        legendaryLoot = 0;
+        mythicLoot = 0;
+
     }
 }
 

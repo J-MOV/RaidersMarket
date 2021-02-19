@@ -63,7 +63,7 @@ Material:
     - _DirectLightingRamp: 1
     - _DissolveSmooth: 0.1
     - _Distort: 0.1
-    - _DstBlend: 1
+    - _DstBlend: 10
     - _EdgeFadePow: 1
     - _FadeAlongU: 0
     - _HdrBoost: 0
