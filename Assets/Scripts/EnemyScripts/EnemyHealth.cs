@@ -44,10 +44,7 @@ public class EnemyHealth : MonoBehaviour
         {
             enemiesKilled++;
             PlayerPrefs.SetInt("enemiesKilled", enemiesKilled);
-            AnalyticsResult results = Analytics.CustomEvent("Enemies Killed", new Dictionary<string, object>
-    {
-        {"Total Enemies Killed: ", enemiesKilled },
-    });
+            AnalyticsResult results = Analytics.CustomEvent("Enemies Killed");
             Debug.Log(results);
 
             
