@@ -6,7 +6,7 @@ using UnityEngine;
 
 
 
-public class Camera : MonoBehaviour
+public class DungeonCamera : MonoBehaviour
 {
 
     // TODO: delete this
@@ -32,9 +32,6 @@ public class Camera : MonoBehaviour
     private Vector3 dungeonVelocity = Vector3.zero;
     [SerializeField] private float dungeonPanSpeed = .3f;
 
-    public GameObject mainDungeon;
-    public GameObject oldDungeon;
-
 
     // TODO: Delete this
     public bool TEST_CAMERA_CHANGE_VIEW_TO_RAID = false;
@@ -54,17 +51,13 @@ public class Camera : MonoBehaviour
 
     void AddDungeon() {
 
-        while(dungeons.Count > 1) {
+        if(dungeons.Count > 1) {
             Destroy(dungeons[0].gameObject);
             dungeons.RemoveAt(0);
         }
-        dungeons.Add(Instantiate(GetRandomDugeonAsset()).transform);
-        
 
-        /*DestroyImmediate(oldDungeon);
-        oldDungeon = mainDungeon;
-        mainDungeon = Instantiate(GetRandomDugeonAsset());
-        mainDungeon.transform.position = dungeonPosition + dungeonOffset;*/
+
+        dungeons.Add(Instantiate(GetRandomDugeonAsset()).transform);
     }
 
     // Changes to the next enemy.
