@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public Text dungeonProgressText;
     public GameObject endScreenPanel;
 
+    [SerializeField] GameObject topDungeonProgress;
+
     public Text dungeonCompleteText;
 
     [SerializeField] ParticleSystem fireWorks;
@@ -73,6 +75,7 @@ public class GameManager : MonoBehaviour
         playerHealth.PlayerDead += StopDungeon;
 
         endScreenPanel.SetActive(false);
+        topDungeonProgress.SetActive(false);
 
         goldManager = FindObjectOfType<GoldObtained>();
     }
@@ -82,6 +85,8 @@ public class GameManager : MonoBehaviour
         isPlaying = true;
         dungeonLevel = level;
         endScreenPanel.SetActive(false);
+
+        topDungeonProgress.SetActive(true);
 
         gameCamera.EnterRaid();
 
