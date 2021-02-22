@@ -22,8 +22,28 @@ public class InventoryNavigation : MonoBehaviour
 {
 
     public List<Navigation> navigationLinks;
-    public GameObject inventoryAndMarket;
+    public GameObject inventoryAndNavigation;
     public MarketManager market;
+
+    public RotateInspectedItem rotation;
+
+    const float COUNT_DOWN_TIME = 5f; // Seconds
+    public bool countingDown = false;
+    public float countdown = 0;
+
+    public Button startRaidButton;
+
+    public void Update() {
+        if (countingDown) {
+            countdown -= Time.deltaTime;
+            if (countdown <= 0) {
+                countingDown = false;
+                // Start raid here
+            }
+            startRaidButton.GetComponentInChildren<Text>().text = countingDown ? "STARTING IN " + countdown.ToString("0.00")  + "s" : "STARTING!";
+            
+        }
+    }
 
     public void OpenInventory() {
         OpenTab("inventory");
@@ -32,6 +52,24 @@ public class InventoryNavigation : MonoBehaviour
     public void OpenMarket() {
         OpenTab("market");
         
+    }
+
+    public void StartRaidButtonClick() {
+        if (!countingDown) {
+            StartRaidCountdown();
+        } else {
+            CancelRaidCountdown();
+        }
+    }
+
+    public void StartRaidCountdown() {
+        countingDown = true;
+        countdown = COUNT_DOWN_TIME;
+    }
+
+    public void CancelRaidCountdown() {
+        countingDown = false;
+        startRaidButton.GetComponentInChildren<Text>().text = "READY UP FOR RAID!";
     }
 
 
@@ -45,6 +83,8 @@ public class InventoryNavigation : MonoBehaviour
     }
 
     public void OpenTab(string title) {
+        if (countingDown) return;
+        rotation.inMainMenu = false;
         foreach (Navigation nav in navigationLinks) {
             if(nav.title == title) {
 
@@ -53,7 +93,7 @@ public class InventoryNavigation : MonoBehaviour
                 DisableAllWindows();
                 nav.window.gameObject.SetActive(true);
                 SetNavigationLinkColor(nav, new Color32(0, 0, 0, 119));
-                inventoryAndMarket.SetActive(true);
+                Open();
                 return;
             }            
         }
@@ -61,11 +101,14 @@ public class InventoryNavigation : MonoBehaviour
 
   
     public void Open() {
-        inventoryAndMarket.SetActive(true);
+        rotation.inMainMenu = false;
+        inventoryAndNavigation.SetActive(true);
     }
 
     public void Close() {
-        inventoryAndMarket.SetActive(false);
+        inventoryAndNavigation.SetActive(false);
+        rotation.inMainMenu = true;
+
     }
 
     void DisableAllWindows() {

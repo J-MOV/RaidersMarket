@@ -9,6 +9,7 @@ using UnityEngine;
 
 public class RotateInspectedItem : MonoBehaviour
 {
+    public bool inMainMenu = false;
     public bool inGame = false;
     public bool inspecting = false;
 
@@ -18,7 +19,11 @@ public class RotateInspectedItem : MonoBehaviour
     public Transform itemContainer;
     public Transform playerModel;
 
+
     void Update() {
+
+
+        //Debug.Log("INSPECTING: " + inspecting);
 
         // Rotate character in Inventory menu
         if (Input.touchCount > 0) {
@@ -27,7 +32,7 @@ public class RotateInspectedItem : MonoBehaviour
             if (touch.phase == TouchPhase.Moved) {
                 if (rotating && !inGame && !inspecting) {
                     playerModel.Rotate(new Vector3(0, -(touch.deltaPosition.x / Screen.width) * rotationSpeed, 0));
-                } else if(rotating && inspecting) {
+                } else if (rotating && inspecting) {
                     itemContainer.Rotate(new Vector3(0, -(touch.deltaPosition.x / Screen.width) * rotationSpeed, 0));
                 }
             }
@@ -38,6 +43,7 @@ public class RotateInspectedItem : MonoBehaviour
 
             if (touch.phase == TouchPhase.Ended) rotating = false;
             else if (touch.phase == TouchPhase.Began) {
+                if (inMainMenu && !inGame && xPositionPercentage < .5f) rotating = true;
                 if (!inGame && !inspecting && xPositionPercentage > .11f && xPositionPercentage < .44f) rotating = true;
                 if (inspecting && yPositionPercentage > .3f && yPositionPercentage < .85f) rotating = true;
             }

@@ -38,7 +38,7 @@ public class InspectManager : MonoBehaviour
 
     public void CloseInspectWindow() {
         inspectWindow.gameObject.SetActive(false);
-        rotateManager.inspecting = false;
+        rotateManager.inspecting = (false);
     }
 
     public void Inspect(Item item) {
@@ -101,8 +101,7 @@ public class InspectManager : MonoBehaviour
         }
 
 
-
-            rotateManager.inspecting = true;
+        rotateManager.inspecting = (true);
         inspectWindow.gameObject.SetActive(true);
     }
 
