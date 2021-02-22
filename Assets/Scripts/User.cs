@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class User
 {
+    public int id;
     public int gold;
     public int lvl;
+    public string username;
 }
