@@ -57,6 +57,9 @@ public class OnlineConnection : MonoBehaviour
     float animateGoldChangeTime = 2;
     int previousGoldAmount = 0;
 
+    public Text playerDmg;
+    public Text playerHp;
+
 
     async void Start() {
         
@@ -193,10 +196,17 @@ public class OnlineConnection : MonoBehaviour
 
         foreach(Item item in inventory) {
             if (item.equipped == 1) {
+                IndexedItem origin = GetIndexedItem(item.item);
+
+                user.hp += origin.hp;
+                user.dmg += origin.dmg;
+
                 renderer.InitiateFinishedItem(item, playerContainer);
             }
         }
 
+        playerDmg.text = user.dmg.ToString();
+        playerHp.text = user.hp.ToString();
 
         Debug.Log("Dressed character");
     }
@@ -265,6 +275,7 @@ public class OnlineConnection : MonoBehaviour
             item.rarity = rarities[jsonItem.rarity];
             item.model = Resources.Load<GameObject>("Items/" + jsonItem.model);
             item.hp = jsonItem.hp;
+            item.dmg = jsonItem.dmg;
 
 
             item.pattern = jsonItem.pattern == 1;
@@ -279,6 +290,10 @@ public class OnlineConnection : MonoBehaviour
 
         // Parse user info
         user = JsonUtility.FromJson<User>(data);
+
+        
+       
+
         if(user.gold == previousGoldAmount) goldAmountText.text = user.gold.ToString();
         SetVisualStatus("Logged in as " + user.username, new Color32(14, 238, 140, 255));
        

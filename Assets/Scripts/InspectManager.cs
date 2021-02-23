@@ -27,6 +27,9 @@ public class InspectManager : MonoBehaviour
     public GameObject ListedItemButtons;
     public GameObject OwnListingButtons;
 
+    public Text itemDmg;
+    public Text itemHp;
+
     public int inspectedItemId;
 
     public Transform createListingWindow;
@@ -56,6 +59,9 @@ public class InspectManager : MonoBehaviour
         itemName.text = origin.name;
         itemRarity.text = origin.rarity.title.ToUpper();
         itemRarity.color = origin.rarity.color;
+
+        itemDmg.text = origin.dmg.ToString();
+        itemHp.text = origin.hp.ToString();
 
         itemDescription.text = origin.description;
         itemType.text = char.ToUpper(origin.type[0]) + origin.type.Substring(1);
