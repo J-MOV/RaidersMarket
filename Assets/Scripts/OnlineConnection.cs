@@ -63,7 +63,7 @@ public class OnlineConnection : MonoBehaviour
         previousGoldAmount = PlayerPrefs.GetInt("gold");
         token = PlayerPrefs.GetString("token");
 
-        ws = new WebSocket("ws://localhost:1113");
+        ws = new WebSocket("wss://dungeon.ygstr.com");
 
          ws.OnOpen += () => {
              SetVisualStatus("Logging in...", new Color32(255, 173, 69, 255));
@@ -110,6 +110,7 @@ public class OnlineConnection : MonoBehaviour
 
 
         ws.OnClose += (e) => {
+            Debug.Log("Connection closed");
             SetVisualStatus("Offline", new Color32(240, 2, 34, 255));
             StartCoroutine(Reconnect());
         };
@@ -309,7 +310,7 @@ public class OnlineConnection : MonoBehaviour
 
         #if !UNITY_WEBGL || UNITY_EDITOR
             ws.DispatchMessageQueue();
-#endif
+        #endif
 
         
         if(user != null && (previousGoldAmount != user.gold)) {
