@@ -18,7 +18,8 @@ public class IndexedItem {
     public Rarity rarity;
     public GameObject model;
     public bool pattern;
-    public float hp;
+    public int hp;
+    public int dmg;
 }
 
 [Serializable]
@@ -31,5 +32,6 @@ public class SerializedIndexedItem {
     public int rarity;
     public float loot;
     public int pattern;
-    public float hp;
+    public int hp;
+    public int dmg;
 }
