@@ -22,6 +22,7 @@ public class OnlineConnection : MonoBehaviour
 
     public ItemRenderer renderer;
     public InspectManager im;
+    public OnlineRaidManager onlineRaid;
 
     public Rarity[] rarities = {
         new Rarity("Common", new Color32(199, 199, 199, 255)),
@@ -106,6 +107,9 @@ public class OnlineConnection : MonoBehaviour
                 break;
             case "username_availability":
                 OnUsernameAvailability(package.data);
+                break;
+            case "start_raid":
+                onlineRaid.OnRaidGranted();
                 break;
             }
 
@@ -292,12 +296,10 @@ public class OnlineConnection : MonoBehaviour
         // Parse user info
         user = JsonUtility.FromJson<User>(data);
 
-        
-       
-
         if(user.gold == previousGoldAmount) goldAmountText.text = user.gold.ToString();
         SetVisualStatus("Logged in as " + user.username, new Color32(14, 238, 140, 255));
-       
+
+        onlineRaid.UpdateRaidButtonText();
     }
 
     void SetVisualStatus(string status, Color32 color) {

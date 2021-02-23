@@ -71,6 +71,7 @@ public class MainMenuButtons : MonoBehaviour
     }
     public void RestartLevel()
     {
+        return;
         amountOfRestarts++;
         PlayerPrefs.SetInt("TotalRestarts", amountOfRestarts);
         SceneManager.LoadSceneAsync("ViktorScene");

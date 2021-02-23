@@ -185,6 +185,7 @@ public class GameManager : MonoBehaviour
     public void EndDungeon(bool completed)
     {
         isPlaying = false;
+        return;
         endScreenPanel.SetActive(true);
 
         UpdateLootText();
@@ -223,7 +224,6 @@ public class GameManager : MonoBehaviour
             ClearLootCollected();
         }
 
-        
     }
 
     void ClearLootCollected()

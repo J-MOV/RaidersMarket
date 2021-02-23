@@ -24,12 +24,13 @@ public class InventoryNavigation : MonoBehaviour
     public List<Navigation> navigationLinks;
     public GameObject inventoryAndNavigation;
     public MarketManager market;
+    public OnlineRaidManager raidManager;
 
     public RotateInspectedItem rotation;
 
-    const float COUNT_DOWN_TIME = 5f; // Seconds
-    public bool countingDown = false;
-    public float countdown = 0;
+    const float COUNT_DOWN_TIME = 1f; // Seconds
+    private bool countingDown = false;
+    private float countdown = 0;
 
     public Button startRaidButton;
 
@@ -38,10 +39,9 @@ public class InventoryNavigation : MonoBehaviour
             countdown -= Time.deltaTime;
             if (countdown <= 0) {
                 countingDown = false;
-                // Start raid here
+                raidManager.StartRaid();
             }
             startRaidButton.GetComponentInChildren<Text>().text = countingDown ? "STARTING IN " + countdown.ToString("0.00")  + "s" : "STARTING!";
-            
         }
     }
 
@@ -69,7 +69,7 @@ public class InventoryNavigation : MonoBehaviour
 
     public void CancelRaidCountdown() {
         countingDown = false;
-        startRaidButton.GetComponentInChildren<Text>().text = "READY UP FOR RAID!";
+        raidManager.UpdateRaidButtonText();
     }
 
 

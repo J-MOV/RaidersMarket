@@ -6,9 +6,11 @@ public class DungeonManager : MonoBehaviour
 {
     public delegate void EnemyDeath();
     public event EnemyDeath EnemyDead;
+    public OnlineRaidManager onlineRaid;
 
     public void OnEnemyDeath()
     {
+        onlineRaid.KilledEnemy();
         if (EnemyDead != null)
             EnemyDead.Invoke();
     }
