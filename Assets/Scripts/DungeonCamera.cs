@@ -12,8 +12,8 @@ public class DungeonCamera : MonoBehaviour
     // TODO: delete this
     public GameObject monsterTest;
 
-    Vector3 dungeonPosition = new Vector3(0f, 0f, 2.2f);
-    Vector3 dungeonOffset = new Vector3(0f, 0f, -29.91f);
+    [SerializeField] Vector3 dungeonPosition = new Vector3(0f, 0f, 2.2f);
+    [SerializeField] Vector3 dungeonOffset = new Vector3(0f, 0f, -29.91f);
 
     public List<Transform> dungeons = new List<Transform>();
 
@@ -30,7 +30,7 @@ public class DungeonCamera : MonoBehaviour
     private float cameraSpeed = .3f;
 
     private Vector3 dungeonVelocity = Vector3.zero;
-    private float dungeonPanSpeed = .3f;
+    [SerializeField] private float dungeonPanSpeed = .3f;
 
 
     // TODO: Delete this
@@ -68,13 +68,13 @@ public class DungeonCamera : MonoBehaviour
     }
 
     GameObject GetRandomDugeonAsset() {
-        return dungeonAssets[Random.Range(0, dungeonAssets.Count - 1)];
+        return dungeonAssets[Random.Range(0, dungeonAssets.Count - 1)]; 
     }
 
 
     void Start()
     {
-        ChangeDesiredPosition(transform);
+        ChangeDesiredPosition(menuPosition);
     }
 
     // Update is called once per frame
@@ -82,12 +82,13 @@ public class DungeonCamera : MonoBehaviour
     {
 
         if (Input.GetKeyDown("p")) PanNext(monsterTest);
-
+/*
         if (TEST_CAMERA_CHANGE_VIEW_TO_RAID) {
             ChangeDesiredPosition(raidPosition);
         } else {
             ChangeDesiredPosition(menuPosition);
         }
+*/
 
         /*mainDungeon.transform.position = 
         oldDungeon.transform.position = mainDungeon.transform.position - dungeonOffset;*/
