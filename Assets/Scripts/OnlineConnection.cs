@@ -174,6 +174,7 @@ public class OnlineConnection : MonoBehaviour
     public void OnNewLogin(string new_token) {
         // Save new login authentication token
         PlayerPrefs.SetString("token", new_token);
+        token = new_token;
         Login();
     }
 
@@ -298,9 +299,6 @@ public class OnlineConnection : MonoBehaviour
         SetVisualStatus("Logged in as " + user.username, new Color32(14, 238, 140, 255));
        
     }
-
-
-    
 
     void SetVisualStatus(string status, Color32 color) {
         loggedInStatusText.text = status;
