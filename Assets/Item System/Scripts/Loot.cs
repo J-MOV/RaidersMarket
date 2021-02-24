@@ -28,7 +28,6 @@ public class Loot : MonoBehaviour
     {
         if(rarity == ItemRarity.Common)
         {
-            //Common
             commonParticle.gameObject.SetActive(true);
         }
         else if(rarity == ItemRarity.Uncommon)
