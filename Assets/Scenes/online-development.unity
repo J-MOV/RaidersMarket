@@ -797,6 +797,7 @@ RectTransform:
   - {fileID: 1069310189}
   - {fileID: 1194778443}
   - {fileID: 1382105573}
+  - {fileID: 1628707375}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2486,6 +2487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aa4a1032c545cf498d95ee93457b9ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onlineRaid: {fileID: 1936830724}
 --- !u!114 &345587503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9992,7 +9994,7 @@ RectTransform:
   m_Children:
   - {fileID: 2019602702}
   m_Father: {fileID: 1661140182}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11882,7 +11884,7 @@ RectTransform:
   m_Children:
   - {fileID: 1281062720}
   m_Father: {fileID: 1661140182}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13062,7 +13064,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1628707375
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13070,19 +13072,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1628707374}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.36814252, y: 0.36814252, z: 0.36814252}
   m_Children:
   - {fileID: 894835780}
   - {fileID: 1889306939}
-  m_Father: {fileID: 1661140182}
-  m_RootOrder: 1
+  m_Father: {fileID: 145797523}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 138.86475}
+  m_AnchoredPosition: {x: -5, y: -8}
+  m_SizeDelta: {x: -800, y: 138.86475}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1628707376
 MonoBehaviour:
@@ -13592,7 +13594,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1443526796}
-  - {fileID: 1628707375}
   - {fileID: 1289164468}
   - {fileID: 1484670783}
   m_Father: {fileID: 0}
@@ -14801,7 +14802,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 26, y: 34.717}
+  m_AnchoredPosition: {x: 26, y: 46}
   m_SizeDelta: {x: 510.27673, y: 69.43164}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1889306940
@@ -14824,11 +14825,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 50
+    m_Font: {fileID: 12800000, guid: 4e62e1dac2d24124791ebf309ba5dabc, type: 3}
+    m_FontSize: 45
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 5
+    m_MinSize: 4
     m_MaxSize: 50
     m_Alignment: 1
     m_AlignByGeometry: 0
@@ -15217,6 +15218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connection: {fileID: 1936830719}
   levelManager: {fileID: 1469190375}
+  rotate: {fileID: 1540566839}
   mainMenu: {fileID: 795163812}
   ingamePlayer: {fileID: 2086028895}
   raidButtonText: {fileID: 860635878}
@@ -16504,7 +16506,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0.000030517578, y: -40.9}
+  m_AnchoredPosition: {x: 0, y: -40.9}
   m_SizeDelta: {x: 392.34717, y: 470.8167}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &2086028896
