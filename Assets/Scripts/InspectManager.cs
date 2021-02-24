@@ -13,6 +13,11 @@ using UnityEngine.UI;
 public class InspectManager : MonoBehaviour
 {
 
+    public Transform historyContainer;
+    public Transform historyWindow;
+    public GameObject historyCreatedPrefab;
+    public GameObject historyBoughtPrefab;
+
     public Transform inspectWindow;
     public RotateInspectedItem rotateManager;
     public OnlineConnection connection;
@@ -30,21 +35,55 @@ public class InspectManager : MonoBehaviour
     public Text itemDmg;
     public Text itemHp;
 
+    public Button openHistoryButton;
+
     public int inspectedItemId;
 
     public Transform createListingWindow;
 
-    void Start()
-    {
-        
-    }
 
     public void CloseInspectWindow() {
         inspectWindow.gameObject.SetActive(false);
         rotateManager.inspecting = (false);
     }
 
-    public void Inspect(Item item) {
+    public void ExitHistory() {
+        historyWindow.gameObject.SetActive(false);
+
+    }
+
+    public void OnHistory(string json) {
+
+        while(historyContainer.childCount > 0) {
+            DestroyImmediate(historyContainer.GetChild(0).gameObject);
+        }
+
+        historyWindow.gameObject.SetActive(true);
+
+        ItemHistory history = JsonConvert.DeserializeObject<ItemHistory>(json);
+
+        foreach (MarketTransaction transaction in history.transactions) {
+            Transform entry = Instantiate(historyBoughtPrefab, historyContainer).transform;
+
+            entry.Find("Seller").GetComponent<Text>().text = transaction.seller;
+            entry.Find("Buyer").GetComponent<Text>().text = transaction.buyer;
+            entry.Find("Price").GetComponent<Text>().text = transaction.price.ToString();
+            entry.Find("Date").GetComponent<Text>().text = transaction.date.ToString();
+        }
+
+        Transform creation = Instantiate(historyCreatedPrefab, historyContainer).transform;
+        
+        creation.Find("Creator").GetComponent<Text>().text = history.creator;
+        creation.Find("Date").GetComponent<Text>().text = history.created.ToString();
+
+        historyWindow.gameObject.SetActive(true);
+    }
+
+    public void OpenHistory(Item item) {
+        connection.Send("history", item.id.ToString());
+    }
+
+    public void Inspect(Item item, bool noOptions = false) {
 
         inspectedItemId = item.id;
 
@@ -66,44 +105,55 @@ public class InspectManager : MonoBehaviour
         itemDescription.text = origin.description;
         itemType.text = char.ToUpper(origin.type[0]) + origin.type.Substring(1);
 
-        if(item.owner == connection.user.id && item.for_sale == 0) {
-            OwnedItemButtons.SetActive(true);
-            Transform equipButton = OwnedItemButtons.transform.Find("EquipButton");
-            // Set the text of the equip button
-            equipButton.GetComponentInChildren<Text>().text = item.equipped == 1 ? "UNEQUIP" : "EQUIP";
+        openHistoryButton.gameObject.SetActive(!noOptions);
+        openHistoryButton.onClick.RemoveAllListeners();
+        openHistoryButton.onClick.AddListener(() => {
+            OpenHistory(item);
+        });
 
-            Button sellButton = OwnedItemButtons.transform.Find("SellButton").GetComponent<Button>();
 
-            sellButton.onClick.RemoveAllListeners();
-            sellButton.onClick.AddListener(() => {
-                CloseInspectWindow();
-                OpenCreateListingWindow(item);
-            });
 
-        } else if (item.owner == connection.user.id && item.for_sale == 1) {
-            OwnListingButtons.SetActive(true);
+        if (!noOptions) {
+            if (item.owner == connection.user.id && item.for_sale == 0) {
+                OwnedItemButtons.SetActive(true);
+                Transform equipButton = OwnedItemButtons.transform.Find("EquipButton");
+                // Set the text of the equip button
+                equipButton.GetComponentInChildren<Text>().text = item.equipped == 1 ? "UNEQUIP" : "EQUIP";
 
-            Button removeListingButton = OwnListingButtons.transform.Find("RemoveListingButton").GetComponent<Button>();
+                Button sellButton = OwnedItemButtons.transform.Find("SellButton").GetComponent<Button>();
 
-            removeListingButton.onClick.RemoveAllListeners();
-            removeListingButton.onClick.AddListener(() => {
-                connection.Send("remove_listing", item.id.ToString());
-                CloseInspectWindow();
-            });
-        } else {;
-            ListedItemButtons.SetActive(true);
-            Button buyButton = ListedItemButtons.transform.Find("BuyButton").GetComponent<Button>();
-            buyButton.onClick.RemoveAllListeners();
+                sellButton.onClick.RemoveAllListeners();
+                sellButton.onClick.AddListener(() => {
+                    CloseInspectWindow();
+                    OpenCreateListingWindow(item);
+                });
 
-            Text listedPrice = ListedItemButtons.transform.Find("ListingPrice").GetComponentInChildren<Text>();
+            } else if (item.owner == connection.user.id && item.for_sale == 1) {
+                OwnListingButtons.SetActive(true);
 
-            listedPrice.text = item.price.ToString();
+                Button removeListingButton = OwnListingButtons.transform.Find("RemoveListingButton").GetComponent<Button>();
 
-            buyButton.interactable = item.price <= connection.user.gold;
-            buyButton.onClick.AddListener(() => {
-                connection.Send("buy", item.id.ToString());
-                CloseInspectWindow();
-            });
+                removeListingButton.onClick.RemoveAllListeners();
+                removeListingButton.onClick.AddListener(() => {
+                    connection.Send("remove_listing", item.id.ToString());
+                    CloseInspectWindow();
+                });
+            } else {
+                ;
+                ListedItemButtons.SetActive(true);
+                Button buyButton = ListedItemButtons.transform.Find("BuyButton").GetComponent<Button>();
+                buyButton.onClick.RemoveAllListeners();
+
+                Text listedPrice = ListedItemButtons.transform.Find("ListingPrice").GetComponentInChildren<Text>();
+
+                listedPrice.text = item.price.ToString();
+
+                buyButton.interactable = item.price <= connection.user.gold;
+                buyButton.onClick.AddListener(() => {
+                    connection.Send("buy", item.id.ToString());
+                    CloseInspectWindow();
+                });
+            }
         }
 
 

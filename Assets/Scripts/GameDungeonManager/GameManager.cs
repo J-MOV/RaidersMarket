@@ -13,7 +13,9 @@ public class GameManager : MonoBehaviour
     int amountOfEnemies;
     int enemiesDefeated;
 
+    public OnlineRaidManager onlineRaid;
 
+    public Text gameVersion;
 
     public Text dungeonProgressText;
     public GameObject endScreenPanel;
@@ -61,6 +63,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+
+        gameVersion.text = "V." + Application.version;
+
         enemySpawner = FindObjectOfType<EnemySpawner>();
         dungeonManager = FindObjectOfType<DungeonManager>();
         playerHealth = FindObjectOfType<PlayerHealth>();
@@ -70,12 +75,11 @@ public class GameManager : MonoBehaviour
         dungeonManager.EnemyDead += () => enemiesDefeated++;
         dungeonManager.EnemyDead += () => isFightingEnemy = false;
         dungeonManager.EnemyDead += SpawnNextEnemy;
-        dungeonManager.EnemyDead += DropLoot;
+        //dungeonManager.EnemyDead += DropLoot;
 
         playerHealth.PlayerDead += StopDungeon;
 
-        endScreenPanel.SetActive(false);
-        topDungeonProgress.SetActive(false);
+        dungeonProgressText.gameObject.SetActive(false);
 
         goldManager = FindObjectOfType<GoldObtained>();
     }
@@ -84,9 +88,9 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = true;
         dungeonLevel = level;
-        endScreenPanel.SetActive(false);
 
-        topDungeonProgress.SetActive(true);
+
+        dungeonProgressText.gameObject.SetActive(true);
 
         gameCamera.EnterRaid();
 
@@ -97,6 +101,10 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public bool isEnding() {
+        return enemiesDefeated == amountOfEnemies;
+    }
+
     private void Update()
     {
         if (isPlaying)
@@ -104,12 +112,10 @@ public class GameManager : MonoBehaviour
             playerHealthSlider.SetActive(true);
             enemyHealthSlider.SetActive(true);
 
-            dungeonProgressText.text = enemiesDefeated + "/" + amountOfEnemies;
+            dungeonProgressText.text = (enemiesDefeated + 1) + "/" + amountOfEnemies;
             //Do stuff when playing
 
-            if (enemiesDefeated == amountOfEnemies)
-                EndDungeon(true);
-
+            
             //Spawn enemies
 
             if (timeSinceLastEnemy < timeBetweenEnemies && !isFightingEnemy)
@@ -153,15 +159,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void DropLoot()
+    public void DropLoot(ItemRarity rarity)
     {
-        if (ShouldDropLoot() == false) return;
+        //if (ShouldDropLoot() == false) return;
+        Debug.Log("Dropped loot with rarity: " + rarity);
 
         //TO DO: get random item stats
-        Loot newLoot = Instantiate(lootPrefab.GetComponent<Loot>(), lootDropPosition.position, Quaternion.identity);
+        Loot newLoot = Instantiate(lootPrefab, lootDropPosition.position, Quaternion.identity).GetComponent<Loot>();
+
+        newLoot.itemStatsSO.itemRarity = rarity;
+        newLoot.SetRarityColor(rarity);
 
         //TO DO: apply : newLoot.itemStats = random item stats
-        ItemRarity itemRarity = ItemRarity.Common; //Replace with actual item rarity
+        /*ItemRarity itemRarity = ItemRarity.Common; //Replace with actual item rarity
+
+        newLoot.itemStatsSO.itemRarity = 0;*/
+        
+
+        /*ItemRarity[] itemRarities = new ItemRarity[] {ItemRarity.Common, ItemRarity.}
 
         if (itemRarity == ItemRarity.Common)
             commonLoot++;
@@ -172,7 +187,7 @@ public class GameManager : MonoBehaviour
         else if (itemRarity == ItemRarity.Legendary)
             legendaryLoot++;
         else if (itemRarity == ItemRarity.Mythic)
-            mythicLoot++;
+            mythicLoot++;*/
     }
 
     bool ShouldDropLoot()
@@ -185,6 +200,10 @@ public class GameManager : MonoBehaviour
     public void EndDungeon(bool completed)
     {
         isPlaying = false;
+        dungeonProgressText.gameObject.SetActive(false);
+
+        onlineRaid.EndRaid(completed);
+
         return;
         endScreenPanel.SetActive(true);
 

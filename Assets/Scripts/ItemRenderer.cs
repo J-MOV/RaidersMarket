@@ -36,13 +36,13 @@ public class ItemRenderer : MonoBehaviour
         containerDefaultRotation.eulerAngles = new Vector3(0f, -118.463f, 0f);
 
         containers = new Dictionary<string, Transform> {
-            { "helmet", headContainer },
+            { "head", headContainer },
             { "hair", headContainer },
-            { "mouth", headContainer },
+            { "face", headContainer },
             { "feet", feetContainer },
             { "torso",torsoContainer },
             { "weapon", weaponContainer },
-            { "sheild", sheildContainer }
+            { "defense", sheildContainer }
         };
     }
 

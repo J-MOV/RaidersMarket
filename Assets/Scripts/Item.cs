@@ -14,9 +14,11 @@ public class Item
 {
     public int id;
     public int item;
-    public double unique;
+    public double pattern;
     public int owner;
     public int for_sale;
     public int equipped;
     public int price;
+    public DateTime created;
+    public int creator;
 }

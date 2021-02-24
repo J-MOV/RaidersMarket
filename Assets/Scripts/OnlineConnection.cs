@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 using NativeWebSocket;
 using Newtonsoft.Json;
-
+using System;
 
 public class UsernameAvailability{
     public string username;
@@ -60,6 +60,7 @@ public class OnlineConnection : MonoBehaviour
 
     public Text playerDmg;
     public Text playerHp;
+    public Text highestLvlClearedText;
 
 
     async void Start() {
@@ -111,7 +112,17 @@ public class OnlineConnection : MonoBehaviour
             case "start_raid":
                 onlineRaid.OnRaidGranted();
                 break;
+            case "loot_rarity":
+                onlineRaid.OnLootDrop(Int32.Parse(package.data));
+                break;
+            case "post_raid_info":
+                onlineRaid.OnRaidEnd(package.data);
+                break;
+            case "history":
+                im.OnHistory(package.data);
+                break;
             }
+
 
         };
 
@@ -297,9 +308,13 @@ public class OnlineConnection : MonoBehaviour
         user = JsonUtility.FromJson<User>(data);
 
         if(user.gold == previousGoldAmount) goldAmountText.text = user.gold.ToString();
+        
+        highestLvlClearedText.text = "Lvl " + user.lvl;
+
         SetVisualStatus("Logged in as " + user.username, new Color32(14, 238, 140, 255));
 
         onlineRaid.UpdateRaidButtonText();
+      
     }
 
     void SetVisualStatus(string status, Color32 color) {

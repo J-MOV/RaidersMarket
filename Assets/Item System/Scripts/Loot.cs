@@ -10,7 +10,7 @@ public class Loot : MonoBehaviour
 
     Rigidbody rb;
 
-    public ParticleSystem commonParticle, uncommonParticle, rareParticle, 
+    public ParticleSystem commonParticle, rareParticle, epicParticle, 
         legendaryParticle, mythicParticle;
 
     private void Start()
@@ -19,25 +19,25 @@ public class Loot : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void OnEnable()
+   /* private void OnEnable()
     {
         SetRarityColor(itemStatsSO.itemRarity);
-    }
+    }*/
 
-    void SetRarityColor(ItemRarity rarity)
+    public void SetRarityColor(ItemRarity rarity)
     {
         if(rarity == ItemRarity.Common)
         {
             //Common
             commonParticle.gameObject.SetActive(true);
         }
-        else if(rarity == ItemRarity.Uncommon)
-        {
-            uncommonParticle.gameObject.SetActive(true);
-        }
-        else if (rarity == ItemRarity.Rare)
+        else if(rarity == ItemRarity.Rare)
         {
             rareParticle.gameObject.SetActive(true);
+        }
+        else if (rarity == ItemRarity.Epic)
+        {
+            epicParticle.gameObject.SetActive(true);
         }
         else if (rarity == ItemRarity.Legendary)
         {

@@ -16,6 +16,6 @@ public abstract class BaseItem : ScriptableObject
     public ItemType itemType;
 }
 
-public enum ItemRarity { Common, Uncommon, Rare, Legendary, Mythic}
+public enum ItemRarity { Common, Rare, Epic, Legendary, Mythic}
 
 public enum ItemType { Skin, StatBuff}
