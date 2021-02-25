@@ -125,19 +125,22 @@ public class InventoryNavigation : MonoBehaviour
             DestroyImmediate(leaderboardContent.GetChild(0).gameObject);
         }
 
-        foreach(PublicUser user in users) {
+        for(int i = 0; i < users.Length; i++) {
+            PublicUser user = users[i];
+
             Transform entry = Instantiate(leaderboardEntry, leaderboardContent);
+            
             entry.Find("Username").GetComponent<Text>().text = user.username;
-            entry.Find("Gold").GetComponent<Text>().text = user.gold.ToString();
             entry.Find("Level").GetComponent<Text>().text = "Lvl " + user.lvl;
+            entry.Find("Gold").GetComponent<Text>().text = user.gold.ToString();
             
             entry.GetComponent<Button>().onClick.AddListener(() => {
                 InspectPlayer(user.id);
             });
 
-            if (user.id == connection.user.id) entry.GetComponent<Image>().color = new Color32(11, 11, 11, 255);
-
-            if (user == users[0]) entry.Find("Crown").gameObject.SetActive(true);
+            if (user.id == connection.user.id) entry.GetComponent<Image>().color = new Color32(20, 20, 20, 255);
+            if (i == 0) entry.Find("Crown").gameObject.SetActive(true);
+            else entry.Find("Position").GetComponent<Text>().text = (i+1).ToString();
         }
     }
 
