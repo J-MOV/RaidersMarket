@@ -33,9 +33,9 @@ public class EnemySpawner : MonoBehaviour
         enemy2.GetComponent<EnemyBehaviour>().enemyStats = _enemyStats;
         _enemy2 = enemy2.GetComponent<EnemyHealth>();
 
-        enemy.transform.SetParent(enemy2.transform);
+       
 
-        dungeonCamera.PanNext(enemy2.transform);
+        dungeonCamera.PanNext(new GameObject[] { enemy, enemy2 });
         
 
         totalHealth = _enemy1.GetComponent<EnemyHealth>().enemyStats.enemyHealth + _enemy2.GetComponent<EnemyHealth>().enemyStats.enemyHealth;
