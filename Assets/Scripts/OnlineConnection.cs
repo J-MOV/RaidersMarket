@@ -11,7 +11,6 @@ using UnityEngine.UI;
 using NativeWebSocket;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 
 public class UsernameAvailability{
     public string username;
@@ -205,37 +204,27 @@ public class OnlineConnection : MonoBehaviour
         LoadInventory();
     }
 
-    public void DressCharacter(List<Item> items) {
+    void DressCharacter() {
 
         while(playerContainer.childCount > 1) {
             DestroyImmediate(playerContainer.GetChild(playerContainer.childCount-1).gameObject);
         }
 
-        foreach(Item item in items) {
-            renderer.InitiateFinishedItem(item, playerContainer);
-        }
-
-        Debug.Log("Dressed character");
-    }
-
-    public void DressMyself() {
-        List<Item> items = new List<Item>();
-
-        foreach (Item item in inventory) {
+        foreach(Item item in inventory) {
             if (item.equipped == 1) {
                 IndexedItem origin = GetIndexedItem(item.item);
 
                 user.hp += origin.hp;
                 user.dmg += origin.dmg;
 
-                items.Add(item);
+                renderer.InitiateFinishedItem(item, playerContainer);
             }
         }
 
         playerDmg.text = user.dmg.ToString();
         playerHp.text = user.hp.ToString();
 
-        DressCharacter(items);
+        Debug.Log("Dressed character");
     }
 
     public void ToggleEquip() {
@@ -272,8 +261,7 @@ public class OnlineConnection : MonoBehaviour
 
 
         Debug.Log("Loaded inventory");
-
-        DressMyself();
+        DressCharacter();
     }
 
     public IndexedItem GetIndexedItem(int id) {

@@ -14,12 +14,7 @@ public class PostRaidInfo {
 public class OnlineRaidManager : MonoBehaviour
 {
 
-
-    bool canFastPrevLevel = false;
-    bool canFastNextLevel = false;
-
-    float timer = 0;
-    [SerializeField] float toHoldTimer = 0.5f;
+    
 
 
     public InspectManager im;
@@ -48,9 +43,6 @@ public class OnlineRaidManager : MonoBehaviour
     public GameObject earnedLootSlotPrefab;
     public Text goldEarnedText;
 
-    public Transform playerRender;
-    Vector3 inGameRotation = new Vector3(0f, -125.021f, 0f);
-    float swingAnimationRotation = 0;
 
     [HideInInspector] public int raidLvl = -1;
     [HideInInspector] public int maxRaidLvl;
@@ -59,16 +51,7 @@ public class OnlineRaidManager : MonoBehaviour
     int goldEarned = 0;
     int goldDispalyed = 0;
 
-
-
-    private void Start()
-    {
-        timer = toHoldTimer;
-    }
     public void OnRaidGranted() {
-
-        ingamePlayer.gameObject.SetActive(true);
-
         levelManager.StartLevel(raidLvl);
         mainMenu.gameObject.SetActive(false);
         //ingamePlayer.gameObject.SetActive(true);
@@ -86,10 +69,6 @@ public class OnlineRaidManager : MonoBehaviour
         connection.Send("raid_ended", JsonConvert.SerializeObject(completed));
     }
 
-    public void AnimateSwing() {
-        swingAnimationRotation += 2f;
-    }
-
     public void KilledEnemy() {
         connection.Send("killed_enemy");
     }
@@ -102,7 +81,6 @@ public class OnlineRaidManager : MonoBehaviour
         rotate.inGame = false;
         rotate.inMainMenu = true;
         UpdateRaidButtonText();
-        ingamePlayer.gameObject.SetActive(false);
     }
 
     public void OnRaidEnd(string json) {
@@ -170,29 +148,6 @@ public class OnlineRaidManager : MonoBehaviour
         ChangeRaidLevel(-1);
     }
 
-
-    public void FastPrevLevelUp()
-    {
-        timer = toHoldTimer;
-        canFastPrevLevel = false;
-    }
-
-    public void FastPrevLevelDown()
-    {
-        canFastPrevLevel = true;
-    }
-
-    public void FastNextLevelDown()
-    {
-        canFastNextLevel = true;
-    }
-
-    public void FastNextLevelUp()
-    {
-        timer = toHoldTimer;
-        canFastNextLevel = false;
-    }
-
     public void ChangeRaidLevel(int change) {
         raidLvl += change;
         if (raidLvl > maxRaidLvl) raidLvl = maxRaidLvl;
@@ -215,32 +170,10 @@ public class OnlineRaidManager : MonoBehaviour
  
     void Update()
     {
-        
-        if(swingAnimationRotation != 0)
-        {
-            swingAnimationRotation -= .5f;
-            if (swingAnimationRotation < 0) swingAnimationRotation = 0;
-            playerRender.rotation = Quaternion.Euler(inGameRotation + new Vector3(0f, swingAnimationRotation, 0f));
-        }
-        
      
         if(goldDispalyed < goldEarned) {
             goldDispalyed++;
             goldEarnedText.text = goldDispalyed.ToString();
-        }
-    }
-    private void LateUpdate()
-    {
-        if (timer > 0)
-        {
-            timer -= Time.deltaTime;
-        }
-        else
-        {
-            if (canFastPrevLevel)
-                PrevLevl();
-            else if (canFastNextLevel)
-                NextLvl();
         }
     }
 }
