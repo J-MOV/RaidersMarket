@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
             playerHealthSlider.SetActive(true);
             enemyHealthSlider.SetActive(true);
 
-            dungeonProgressText.text = (enemiesDefeated + 1) + "/" + amountOfEnemies;
+            if(enemiesDefeated < amountOfEnemies) dungeonProgressText.text = (enemiesDefeated + 1) + "/" + amountOfEnemies;
             //Do stuff when playing
 
             

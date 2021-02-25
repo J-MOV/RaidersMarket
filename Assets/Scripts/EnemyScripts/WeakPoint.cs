@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WeakPoint : MonoBehaviour
 {
+    public OnlineRaidManager onlineRaid;
     [HideInInspector] public EnemyHealth enemyHealthScript;
     PlayerCombat playerCombatScript;
 
@@ -17,6 +18,7 @@ public class WeakPoint : MonoBehaviour
 
     private void Start()
     {
+        onlineRaid = GameObject.Find("OnlineCommunications").GetComponent<OnlineRaidManager>();
         playerCombatScript = FindObjectOfType<PlayerCombat>();
 
         damagePerClick = playerCombatScript.baseDamage;
@@ -24,6 +26,7 @@ public class WeakPoint : MonoBehaviour
 
     public void DealDamage()
     {
+        onlineRaid.AnimateSwing();
         currentWeakPointDamageDealt += damagePerClick;
       
 
