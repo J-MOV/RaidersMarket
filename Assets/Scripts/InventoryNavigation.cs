@@ -42,6 +42,7 @@ public class InventoryNavigation : MonoBehaviour
     private bool countingDown = false;
     private float countdown = 0;
 
+    public Transform BuyCoinsView;
     public Button startRaidButton;
 
     public Transform playerInspectView;
@@ -92,6 +93,14 @@ public class InventoryNavigation : MonoBehaviour
                 OpenTab(nav.title);   
             });
         }
+    }
+
+    public void BuyCoins() {
+        BuyCoinsView.gameObject.SetActive(true);
+    }
+
+    public void CloseBuyCoins() {
+        BuyCoinsView.gameObject.SetActive(false);
     }
 
     public void LoadLeaderboard() {
