@@ -204,6 +204,22 @@ public class GameManager : MonoBehaviour
 
         onlineRaid.EndRaid(completed);
 
+
+        WeakPoint[] weakPoints = FindObjectsOfType<WeakPoint>();
+
+        WeakPointsManager[] enemies = FindObjectsOfType<WeakPointsManager>();
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            Destroy(enemies[i].gameObject);
+        }
+
+
+        for (int i = 0; i < weakPoints.Length; i++)
+        {
+            Destroy(weakPoints[i].gameObject);
+        }
+
         return;
         endScreenPanel.SetActive(true);
 
@@ -224,10 +240,6 @@ public class GameManager : MonoBehaviour
 
             PlayerPrefs.SetInt("currentLevel", dungeonLevel + 1);
 
-            goldManager.FinishedDungeon();
-
-            //Send loot to inventory
-            SendLootToInventory();
 
             Analytics.CustomEvent("LevelCompleted");
         }
@@ -238,22 +250,8 @@ public class GameManager : MonoBehaviour
             dungeonProgressText.text = "Dungeon " + dungeonLevel + " Failed!";
             dungeonCompleteText.text = "Dungeon " + dungeonLevel + " Failed!";
             Analytics.CustomEvent("LevelLost");
-
-            //Remove all loot collected
-            ClearLootCollected();
         }
 
-    }
-
-    void ClearLootCollected()
-    {
-        FindObjectOfType<LootCollected>().ClearLootCollected();
-    }
-
-    void SendLootToInventory()
-    {
-        Debug.Log("Items sent to inventory (NOT IMPLEMENTED YET)");
-        ClearLootCollected();
     }
 
     void UpdateLootText()
