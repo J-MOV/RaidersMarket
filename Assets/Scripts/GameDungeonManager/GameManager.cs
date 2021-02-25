@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
 
     public OnlineRaidManager onlineRaid;
 
-    public Text gameVersion;
 
     public Text dungeonProgressText;
     public GameObject endScreenPanel;
@@ -64,7 +63,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
 
-        gameVersion.text = "V." + Application.version;
 
         enemySpawner = FindObjectOfType<EnemySpawner>();
         dungeonManager = FindObjectOfType<DungeonManager>();
@@ -123,7 +121,7 @@ public class GameManager : MonoBehaviour
                 timeSinceLastEnemy += Time.deltaTime;
                 if (canPan && isPlaying)
                 {
-                    gameCamera.PanNext();
+                    //gameCamera.PanNext();
                     canPan = false;
                 }
             }

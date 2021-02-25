@@ -54,7 +54,7 @@ public class OnlineRaidManager : MonoBehaviour
     public void OnRaidGranted() {
         levelManager.StartLevel(raidLvl);
         mainMenu.gameObject.SetActive(false);
-        ingamePlayer.gameObject.SetActive(true);
+        //ingamePlayer.gameObject.SetActive(true);
 
         playerDamage.baseDamage = baseStats.baseDamage + connection.user.dmg;
         playerHealth.maxHealth = baseStats.maxHealth + connection.user.hp;
@@ -76,7 +76,7 @@ public class OnlineRaidManager : MonoBehaviour
     public void BackToMenu() {
         mainMenu.gameObject.SetActive(true);
         EndRaidScreenCompleted.gameObject.SetActive(false);
-        ingamePlayer.gameObject.SetActive(false);
+        //ingamePlayer.gameObject.SetActive(false);
         EndRaidFailed.gameObject.SetActive(false);
         UpdateRaidButtonText();
     }
@@ -119,7 +119,7 @@ public class OnlineRaidManager : MonoBehaviour
             EndRaidFailed.gameObject.SetActive(true);
             endRaidFailedTitle.text = "Raid Lvl " + postRaid.lvl + " failed";
 
-            string[] failMessages = new string[] {"Oop.", "Better luck next time.", "You got this", "Try again", "I belive in you", "Third time's the charm", "Keep trying..", "Don't give up!" };
+            string[] failMessages = new string[] {"Oop.", "Better luck next time.", "You got this!", "Try again!", "I belive in you!", "Third time's the charm!", "Keep trying..", "Don't give up!" };
 
             endRaidFailedBody.text = "You took too much damage and died.\n" + failMessages[Random.Range(0, failMessages.Length - 1)];
         }

@@ -32,9 +32,6 @@ public class DungeonCamera : MonoBehaviour
     private Vector3 dungeonVelocity = Vector3.zero;
     [SerializeField] private float dungeonPanSpeed = .3f;
 
-
-    // TODO: Delete this
-    public bool TEST_CAMERA_CHANGE_VIEW_TO_RAID = false;
    
     public void EnterRaid() {
         ChangeDesiredPosition(raidPosition);
@@ -56,14 +53,17 @@ public class DungeonCamera : MonoBehaviour
             dungeons.RemoveAt(0);
         }
 
-
         dungeons.Add(Instantiate(GetRandomDugeonAsset()).transform);
     }
 
     // Changes to the next enemy.
-    public void PanNext(GameObject monster = null) {
+    public void PanNext(Transform monsters = null) {
         AddDungeon();
-        if (monster != null) Instantiate(monster, dungeons[1].Find("MonsterSpawn"));
+        if (monsters != null) {
+            monsters.SetParent(dungeons[1].Find("MonsterSpawn"));
+            Debug.Log(monsters);
+            monsters.position = dungeons[1].Find("MonsterSpawn").position;
+        }
         dungeons[1].position = dungeonPosition + dungeonOffset;
     }
 
@@ -74,6 +74,7 @@ public class DungeonCamera : MonoBehaviour
 
     void Start()
     {
+        menuPosition = transform;
         ChangeDesiredPosition(menuPosition);
     }
 
@@ -81,25 +82,11 @@ public class DungeonCamera : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown("p")) PanNext(monsterTest);
-/*
-        if (TEST_CAMERA_CHANGE_VIEW_TO_RAID) {
-            ChangeDesiredPosition(raidPosition);
-        } else {
-            ChangeDesiredPosition(menuPosition);
-        }
-*/
-
-        /*mainDungeon.transform.position = 
-        oldDungeon.transform.position = mainDungeon.transform.position - dungeonOffset;*/
-
         if(dungeons.Count > 1) {
             dungeons[1].position = Vector3.SmoothDamp(dungeons[1].transform.position, dungeonPosition, ref dungeonVelocity, dungeonPanSpeed);
             dungeons[0].position = dungeons[1].position - dungeonOffset;
         }
         
-
-
         transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref cameraVelocity, cameraSpeed);
     }
 }

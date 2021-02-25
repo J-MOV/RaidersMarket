@@ -22,9 +22,6 @@ public class RotateInspectedItem : MonoBehaviour
 
     void Update() {
 
-
-        //Debug.Log("INSPECTING: " + inspecting);
-
         // Rotate character in Inventory menu
         if (Input.touchCount > 0) {
             Touch touch = Input.GetTouch(0);
