@@ -92,7 +92,7 @@ public class OnlineRaidManager : MonoBehaviour
     }
 
     public void AnimateSwing() {
-        swingAnimationRotation += 2f;
+        swingAnimationRotation += 10f;
     }
 
     public void KilledEnemy() {
