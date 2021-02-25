@@ -4,6 +4,7 @@
  *  view from anywhere in the game
  */
 
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,6 +19,11 @@ public class Navigation {
     public Transform window;
 }
 
+public class PublicUser {
+    public string username;
+    public int gold, id, lvl;
+}
+
 public class InventoryNavigation : MonoBehaviour
 {
 
@@ -25,6 +31,10 @@ public class InventoryNavigation : MonoBehaviour
     public GameObject inventoryAndNavigation;
     public MarketManager market;
     public OnlineRaidManager raidManager;
+    public OnlineConnection connection;
+
+    public Transform leaderboardContent;
+    public Transform leaderboardEntry;
 
     public RotateInspectedItem rotation;
 
@@ -33,6 +43,8 @@ public class InventoryNavigation : MonoBehaviour
     private float countdown = 0;
 
     public Button startRaidButton;
+
+    public Transform playerInspectView;
 
     public void Update() {
         if (countingDown) {
@@ -82,6 +94,34 @@ public class InventoryNavigation : MonoBehaviour
         }
     }
 
+    public void LoadLeaderboard() {
+        connection.Send("leaderboard");
+    }
+
+    public void InspectPlayer() {
+
+    }
+
+    public void ClosePlayerInspect() {
+
+    }
+
+    public void OnLeaderboard(string json) {
+        PublicUser[] users = JsonConvert.DeserializeObject<PublicUser[]>(json);
+        
+        while(leaderboardContent.childCount > 0) {
+            DestroyImmediate(leaderboardContent.GetChild(0).gameObject);
+        }
+
+        foreach(PublicUser user in users) {
+            Transform entry = Instantiate(leaderboardEntry, leaderboardContent);
+            entry.Find("Username").GetComponent<Text>().text = user.username;
+            entry.Find("Gold").GetComponent<Text>().text = user.gold.ToString();
+            entry.Find("Level").GetComponent<Text>().text = "Lvl " + user.lvl;
+            if (user == users[0]) entry.Find("Crown").gameObject.SetActive(true);
+        }
+    }
+
     public void OpenTab(string title) {
         if (countingDown) return;
         rotation.inMainMenu = false;
@@ -89,6 +129,7 @@ public class InventoryNavigation : MonoBehaviour
             if(nav.title == title) {
 
                 if(title == "market") market.UpdateMarketFront();
+                if (title == "leaderboard") LoadLeaderboard();
 
                 DisableAllWindows();
                 nav.window.gameObject.SetActive(true);

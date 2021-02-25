@@ -122,6 +122,9 @@ public class OnlineConnection : MonoBehaviour
             case "history":
                 im.OnHistory(package.data);
                 break;
+            case "leaderboard":
+                navigation.OnLeaderboard(package.data);
+                break;
             }
 
 
