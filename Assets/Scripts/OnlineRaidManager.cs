@@ -13,6 +13,15 @@ public class PostRaidInfo {
 
 public class OnlineRaidManager : MonoBehaviour
 {
+
+
+    bool canFastPrevLevel = false;
+    bool canFastNextLevel = false;
+
+    float timer = 0;
+    [SerializeField] float toHoldTimer = 0.5f;
+
+
     public InspectManager im;
 
     public PlayerHealth playerHealth;
@@ -50,6 +59,12 @@ public class OnlineRaidManager : MonoBehaviour
     int goldEarned = 0;
     int goldDispalyed = 0;
 
+
+
+    private void Start()
+    {
+        timer = toHoldTimer;
+    }
     public void OnRaidGranted() {
 
         ingamePlayer.gameObject.SetActive(true);
@@ -155,6 +170,29 @@ public class OnlineRaidManager : MonoBehaviour
         ChangeRaidLevel(-1);
     }
 
+
+    public void FastPrevLevelUp()
+    {
+        timer = toHoldTimer;
+        canFastPrevLevel = false;
+    }
+
+    public void FastPrevLevelDown()
+    {
+        canFastPrevLevel = true;
+    }
+
+    public void FastNextLevelDown()
+    {
+        canFastNextLevel = true;
+    }
+
+    public void FastNextLevelUp()
+    {
+        timer = toHoldTimer;
+        canFastNextLevel = false;
+    }
+
     public void ChangeRaidLevel(int change) {
         raidLvl += change;
         if (raidLvl > maxRaidLvl) raidLvl = maxRaidLvl;
@@ -189,6 +227,20 @@ public class OnlineRaidManager : MonoBehaviour
         if(goldDispalyed < goldEarned) {
             goldDispalyed++;
             goldEarnedText.text = goldDispalyed.ToString();
+        }
+    }
+    private void LateUpdate()
+    {
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+        }
+        else
+        {
+            if (canFastPrevLevel)
+                PrevLevl();
+            else if (canFastNextLevel)
+                NextLvl();
         }
     }
 }
