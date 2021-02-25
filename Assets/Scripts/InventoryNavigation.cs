@@ -135,6 +135,8 @@ public class InventoryNavigation : MonoBehaviour
                 InspectPlayer(user.id);
             });
 
+            if (user.id == connection.user.id) entry.GetComponent<Image>().color = new Color32(11, 11, 11, 255);
+
             if (user == users[0]) entry.Find("Crown").gameObject.SetActive(true);
         }
     }
