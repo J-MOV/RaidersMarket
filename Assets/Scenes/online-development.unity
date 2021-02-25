@@ -5361,7 +5361,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 811e5c5f96de02a49ab55dbf6a5dc889, type: 2}
   m_TargetDisplay: 0
@@ -11554,8 +11554,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -16575,7 +16575,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 5e7d914b6e3cffc4c811bfea4e7d2cb7, type: 2}
   m_TargetDisplay: 0
