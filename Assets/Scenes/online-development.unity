@@ -12802,6 +12802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3f8c75605aa704db5562a0ffac1e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toHoldTimer: 0.5
   im: {fileID: 1936830721}
   playerHealth: {fileID: 1092629408}
   playerDamage: {fileID: 1092629406}
@@ -12823,6 +12824,7 @@ MonoBehaviour:
   earnedLootSlotPrefab: {fileID: 1219724048426638815, guid: 89d92f81d6681eb44ae2ef9830c86d80,
     type: 3}
   goldEarnedText: {fileID: 561670388}
+  playerRender: {fileID: 763954110}
   raidLvl: -1
   maxRaidLvl: 0
 --- !u!1 &1941328940
