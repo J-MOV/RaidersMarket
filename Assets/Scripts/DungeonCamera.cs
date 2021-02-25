@@ -57,12 +57,11 @@ public class DungeonCamera : MonoBehaviour
     }
 
     // Changes to the next enemy.
-    public void PanNext(Transform monsters = null) {
+    public void PanNext(GameObject[] monsters) {
         AddDungeon();
-        if (monsters != null) {
-            monsters.SetParent(dungeons[1].Find("MonsterSpawn"));
-            Debug.Log(monsters);
-            monsters.position = dungeons[1].Find("MonsterSpawn").position;
+        foreach(GameObject monster in monsters) { 
+            monster.transform.SetParent(dungeons[1].Find("MonsterSpawn"));
+            monster.transform.position = monster.transform.position + dungeons[1].Find("MonsterSpawn").position;
         }
         dungeons[1].position = dungeonPosition + dungeonOffset;
     }
