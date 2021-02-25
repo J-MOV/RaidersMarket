@@ -159,33 +159,13 @@ public class GameManager : MonoBehaviour
 
     public void DropLoot(ItemRarity rarity)
     {
-        //if (ShouldDropLoot() == false) return;
-        Debug.Log("Dropped loot with rarity: " + rarity);
 
-        //TO DO: get random item stats
+
         Loot newLoot = Instantiate(lootPrefab, lootDropPosition.position, Quaternion.identity).GetComponent<Loot>();
 
         newLoot.itemStatsSO.itemRarity = rarity;
         newLoot.SetRarityColor(rarity);
 
-        //TO DO: apply : newLoot.itemStats = random item stats
-        /*ItemRarity itemRarity = ItemRarity.Common; //Replace with actual item rarity
-
-        newLoot.itemStatsSO.itemRarity = 0;*/
-        
-
-        /*ItemRarity[] itemRarities = new ItemRarity[] {ItemRarity.Common, ItemRarity.}
-
-        if (itemRarity == ItemRarity.Common)
-            commonLoot++;
-        else if (itemRarity == ItemRarity.Uncommon)
-            uncommonLoot++;
-        else if (itemRarity == ItemRarity.Rare)
-            rareLoot++;
-        else if (itemRarity == ItemRarity.Legendary)
-            legendaryLoot++;
-        else if (itemRarity == ItemRarity.Mythic)
-            mythicLoot++;*/
     }
 
     bool ShouldDropLoot()

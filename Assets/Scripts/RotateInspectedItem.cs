@@ -22,7 +22,6 @@ public class RotateInspectedItem : MonoBehaviour
     Vector3 lastPosition;
     Vector3 deltaPosition;
 
-
     void Update() {
 
         // Rotate character in Inventory menu

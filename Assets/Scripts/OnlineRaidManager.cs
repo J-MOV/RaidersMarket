@@ -78,6 +78,8 @@ public class OnlineRaidManager : MonoBehaviour
         EndRaidScreenCompleted.gameObject.SetActive(false);
         //ingamePlayer.gameObject.SetActive(false);
         EndRaidFailed.gameObject.SetActive(false);
+        rotate.inGame = false;
+        rotate.inMainMenu = true;
         UpdateRaidButtonText();
     }
 
@@ -127,7 +129,6 @@ public class OnlineRaidManager : MonoBehaviour
     }
 
     public void OnLootDrop(int rarity) {
-        Debug.Log("Got item drop from server, rarity: " + rarity);
         ItemRarity itemRarity = (ItemRarity) rarity;
         gm.DropLoot(itemRarity);
 
