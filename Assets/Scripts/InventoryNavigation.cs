@@ -98,12 +98,24 @@ public class InventoryNavigation : MonoBehaviour
         connection.Send("leaderboard");
     }
 
-    public void InspectPlayer() {
+    public void InspectPlayer(int id) {
+        connection.Send("get_player_model", id.ToString());
+    }
 
+    public void OnInspectPlayer(string json) {
+        List<Item> items = JsonConvert.DeserializeObject<List<Item>>(json);
+
+        Debug.Log(json);
+
+        connection.DressCharacter(items);
+        playerInspectView.gameObject.SetActive(true);
+        rotation.inspectingPlayer = true;
     }
 
     public void ClosePlayerInspect() {
-
+        playerInspectView.gameObject.SetActive(false);
+        rotation.inspectingPlayer = false;
+        connection.DressMyself();
     }
 
     public void OnLeaderboard(string json) {
@@ -118,6 +130,11 @@ public class InventoryNavigation : MonoBehaviour
             entry.Find("Username").GetComponent<Text>().text = user.username;
             entry.Find("Gold").GetComponent<Text>().text = user.gold.ToString();
             entry.Find("Level").GetComponent<Text>().text = "Lvl " + user.lvl;
+            
+            entry.GetComponent<Button>().onClick.AddListener(() => {
+                InspectPlayer(user.id);
+            });
+
             if (user == users[0]) entry.Find("Crown").gameObject.SetActive(true);
         }
     }

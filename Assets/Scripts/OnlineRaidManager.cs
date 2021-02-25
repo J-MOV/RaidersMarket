@@ -70,12 +70,6 @@ public class OnlineRaidManager : MonoBehaviour
         timer = toHoldTimer;
     }
 
-
-
-
-
-
-
     public void OnRaidGranted() {
 
         ingamePlayer.gameObject.SetActive(true);

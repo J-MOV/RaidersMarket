@@ -125,6 +125,9 @@ public class OnlineConnection : MonoBehaviour
             case "leaderboard":
                 navigation.OnLeaderboard(package.data);
                 break;
+            case "player_model":
+                navigation.OnInspectPlayer(package.data);
+                break;
             }
 
 
