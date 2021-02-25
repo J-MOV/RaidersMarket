@@ -60,7 +60,7 @@ public class GraphDrawer : MonoBehaviour
         GameObject anchorPoint = new GameObject("AnchorPoint");
 
         anchorPoint.transform.SetParent(graphContainer, false);
-        anchorPoint.transform.localPosition = new Vector3(anchorLocation.x, anchorLocation.y, -10);
+        anchorPoint.transform.localPosition = new Vector3(anchorLocation.x, anchorLocation.y, -32);
 
         transformList.Add(anchorPoint.transform);
     }
