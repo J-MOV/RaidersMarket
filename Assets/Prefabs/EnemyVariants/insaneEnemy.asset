@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffbb13c015cf5cf458a6619528e3665a, type: 3}
   m_Name: insaneEnemy
   m_EditorClassIdentifier: 
-  enemyHealth: 225
+  enemyHealth: 300
   damage: 25
   attackCooldown: 0.75
-  weakpoints: 8
+  weakpoints: 16
