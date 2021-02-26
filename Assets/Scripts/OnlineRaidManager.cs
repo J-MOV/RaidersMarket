@@ -228,7 +228,7 @@ public class OnlineRaidManager : MonoBehaviour
 
             if (swingAnimationRotation != 0)
             {
-                swingAnimationRotation -= .5f;
+                swingAnimationRotation -= 50f * Time.deltaTime;
                 if (swingAnimationRotation < 0) swingAnimationRotation = 0;
                 playerRender.rotation = Quaternion.Euler(inGameRotation + new Vector3(0f, swingAnimationRotation, 0f));
             }
