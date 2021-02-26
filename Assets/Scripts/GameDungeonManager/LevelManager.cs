@@ -42,7 +42,22 @@ public class LevelManager : MonoBehaviour
         float enemyCountInFloat = level * enemyMultiplier;
         enemyCount = (int)Mathf.Ceil(enemyCountInFloat);
 
-        gameManager.enemyVariantToSpawn = normalEnemy;
+        if(level < 10)
+        {
+            gameManager.enemyVariantToSpawn = easyEnemy;
+        }
+        else if(level < 15)
+        {
+            gameManager.enemyVariantToSpawn = normalEnemy;
+        }
+        else if(level < 30)
+        {
+            gameManager.enemyVariantToSpawn = hardEnemy;
+        }
+        else
+        {
+            gameManager.enemyVariantToSpawn = insaneEnemy;
+        }
 
         gameManager.BeginDungeon(_level, enemyCount);
     }
