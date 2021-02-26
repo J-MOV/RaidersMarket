@@ -39,8 +39,6 @@ public class LevelManager : MonoBehaviour
     {
         level = _level;
 
-        Debug.Log(level);
-
         float enemyCountInFloat = level * enemyMultiplier;
         enemyCount = (int)Mathf.Ceil(enemyCountInFloat);
 
