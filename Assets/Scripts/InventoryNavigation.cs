@@ -162,6 +162,9 @@ public class InventoryNavigation : MonoBehaviour
 
                 if(title == "market") market.UpdateMarketFront();
                 if (title == "leaderboard") LoadLeaderboard();
+                if (title == "inventory") {
+                    rotation.inInventory = true;
+                } else rotation.inInventory = false;
 
                 DisableAllWindows();
                 nav.window.gameObject.SetActive(true);
@@ -181,7 +184,7 @@ public class InventoryNavigation : MonoBehaviour
     public void Close() {
         inventoryAndNavigation.SetActive(false);
         rotation.inMainMenu = true;
-
+        rotation.inInventory = false;
     }
 
     void DisableAllWindows() {

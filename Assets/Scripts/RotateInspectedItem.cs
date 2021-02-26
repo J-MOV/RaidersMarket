@@ -12,7 +12,8 @@ public class RotateInspectedItem : MonoBehaviour
     public bool inMainMenu = false;
     public bool inGame = false;
     public bool inspecting = false;
-    public bool inspectingPlayer;
+    public bool inInventory = false;
+    public bool inspectingPlayer = false;
 
     private bool rotating = false;
     float rotationSpeed = 250;
@@ -45,7 +46,7 @@ public class RotateInspectedItem : MonoBehaviour
             else if (touch.phase == TouchPhase.Began) {
                 if (inspectingPlayer) rotating = true;
                 if (inMainMenu && !inGame && xPositionPercentage < .5f) rotating = true;
-                if (!inGame && !inspecting && xPositionPercentage > .11f && xPositionPercentage < .44f) rotating = true;
+                if (inInventory && xPositionPercentage > .11f && xPositionPercentage < .44f) rotating = true;
                 if (inspecting && yPositionPercentage > .3f && yPositionPercentage < .85f) rotating = true;
             }
         }
@@ -56,9 +57,7 @@ public class RotateInspectedItem : MonoBehaviour
         }
     }
 
-    
-
-
+   
     void MouseRotation()
     {
         if (Input.GetMouseButton(0))
@@ -87,7 +86,7 @@ public class RotateInspectedItem : MonoBehaviour
 
             if (inspectingPlayer) rotating = true;
             if (inMainMenu && !inGame && xPositionPercentage < .5f) rotating = true;
-            if (!inGame && !inspecting && xPositionPercentage > .11f && xPositionPercentage < .44f) rotating = true;
+            if (inInventory && xPositionPercentage > .11f && xPositionPercentage < .44f) rotating = true;
             if (inspecting && yPositionPercentage > .3f && yPositionPercentage < .85f) rotating = true;
         } else {
             rotating = false;
