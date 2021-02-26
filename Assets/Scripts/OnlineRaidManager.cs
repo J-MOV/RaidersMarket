@@ -80,6 +80,8 @@ public class OnlineRaidManager : MonoBehaviour
 
         playerDamage.baseDamage = baseStats.baseDamage + connection.user.dmg;
         playerHealth.maxHealth = baseStats.maxHealth + connection.user.hp;
+        playerHealth.startingHealth = playerHealth.maxHealth;
+        playerHealth.healthSlider.maxValue = playerHealth.maxHealth;
 
         playerHealth.HealPlayerToFull();
 

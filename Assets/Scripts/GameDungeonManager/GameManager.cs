@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
 
     public void BeginDungeon(int level ,int enemyCount)
     {
+        
         isPlaying = true;
         dungeonLevel = level;
 

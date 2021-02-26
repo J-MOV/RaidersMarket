@@ -26,10 +26,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Start()
     {
-        healthSlider.maxValue = maxHealth;
-        healthSlider.value = startingHealth;
-        currentHealth = startingHealth;
-
+        currentHealth = 1;
         manager = GameObject.Find("--Gamemanager--").GetComponent<GameManager>();
 
         amountOfDeaths = PlayerPrefs.GetInt("TotalDeaths");
