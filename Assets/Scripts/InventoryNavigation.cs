@@ -96,6 +96,7 @@ public class InventoryNavigation : MonoBehaviour
     }
 
     public void BuyCoins() {
+        if(!rotation.inGame)
         BuyCoinsView.gameObject.SetActive(true);
     }
 
