@@ -121,6 +121,8 @@ public class OnlineRaidManager : MonoBehaviour
                 DestroyImmediate(earnedLootList.GetChild(0).gameObject);
             }
 
+            if (raidLvl == connection.user.lvl) raidLvl++;
+
             foreach (Item item in postRaid.earnedLoot) {
                 IndexedItem origin = connection.GetIndexedItem(item.item);
 
