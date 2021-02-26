@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class LevelManager : MonoBehaviour
 {
     public int level = 1;
-    public int maxEnemiesRaw = 30; //without adding 1 enemy per level
     public float enemyMultiplier = 1.5f;
 
     GameManager gameManager;
@@ -15,14 +14,10 @@ public class LevelManager : MonoBehaviour
 
     int enemyCount;
 
-    public Button beginRaidButton;
-    public Canvas menuButtons;
-    public Button levelSelectButton;
 
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
-        maxEnemiesRaw = maxEnemiesRaw + level;
         if (!PlayerPrefs.HasKey("currentLevel"))
             PlayerPrefs.SetInt("currentLevel", 1);
 
@@ -44,23 +39,24 @@ public class LevelManager : MonoBehaviour
     {
         level = _level;
 
-        //levelSelectButton.gameObject.SetActive(false);
-
         float enemyCountInFloat = level * enemyMultiplier;
         enemyCount = (int)Mathf.Ceil(enemyCountInFloat);
 
-        if(enemyCount < maxEnemiesRaw * 0.5f && enemyCount > 5)
+        if(level < 10)
+        {
+            gameManager.enemyVariantToSpawn = easyEnemy;
+        }
+        else if(level < 15)
         {
             gameManager.enemyVariantToSpawn = normalEnemy;
         }
-        else if(enemyCount >= maxEnemiesRaw * 0.5f && enemyCount < maxEnemiesRaw)
+        else if(level < 30)
         {
             gameManager.enemyVariantToSpawn = hardEnemy;
         }
-        else if (enemyCount > maxEnemiesRaw)
+        else
         {
-            enemyCount = maxEnemiesRaw;
-            gameManager.enemyVariantToSpawn = hardEnemy;
+            gameManager.enemyVariantToSpawn = insaneEnemy;
         }
 
         gameManager.BeginDungeon(_level, enemyCount);

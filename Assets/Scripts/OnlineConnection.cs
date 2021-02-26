@@ -11,6 +11,7 @@ using UnityEngine.UI;
 using NativeWebSocket;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 public class UsernameAvailability{
     public string username;
@@ -121,6 +122,12 @@ public class OnlineConnection : MonoBehaviour
             case "history":
                 im.OnHistory(package.data);
                 break;
+            case "leaderboard":
+                navigation.OnLeaderboard(package.data);
+                break;
+            case "player_model":
+                navigation.OnInspectPlayer(package.data);
+                break;
             }
 
 
@@ -204,31 +211,40 @@ public class OnlineConnection : MonoBehaviour
         LoadInventory();
     }
 
-    void DressCharacter() {
+    public void DressCharacter(List<Item> items) {
 
         while(playerContainer.childCount > 1) {
             DestroyImmediate(playerContainer.GetChild(playerContainer.childCount-1).gameObject);
         }
 
-        foreach(Item item in inventory) {
+        foreach(Item item in items) {
+            renderer.InitiateFinishedItem(item, playerContainer);
+        }
+
+        Debug.Log("Dressed character");
+    }
+
+    public void DressMyself() {
+        List<Item> items = new List<Item>();
+
+        foreach (Item item in inventory) {
             if (item.equipped == 1) {
                 IndexedItem origin = GetIndexedItem(item.item);
 
                 user.hp += origin.hp;
                 user.dmg += origin.dmg;
 
-                renderer.InitiateFinishedItem(item, playerContainer);
+                items.Add(item);
             }
         }
 
         playerDmg.text = user.dmg.ToString();
         playerHp.text = user.hp.ToString();
 
-        Debug.Log("Dressed character");
+        DressCharacter(items);
     }
 
     public void ToggleEquip() {
-        Debug.Log("Called toggle equip");
         Send("equip", im.inspectedItemId.ToString());
         im.CloseInspectWindow();
     }
@@ -261,7 +277,8 @@ public class OnlineConnection : MonoBehaviour
 
 
         Debug.Log("Loaded inventory");
-        DressCharacter();
+
+        DressMyself();
     }
 
     public IndexedItem GetIndexedItem(int id) {

@@ -12,6 +12,8 @@ public class RotateInspectedItem : MonoBehaviour
     public bool inMainMenu = false;
     public bool inGame = false;
     public bool inspecting = false;
+    public bool inInventory = false;
+    public bool inspectingPlayer = false;
 
     private bool rotating = false;
     float rotationSpeed = 250;
@@ -19,6 +21,8 @@ public class RotateInspectedItem : MonoBehaviour
     public Transform itemContainer;
     public Transform playerModel;
 
+    Vector3 lastPosition;
+    Vector3 deltaPosition;
 
     void Update() {
 
@@ -40,10 +44,53 @@ public class RotateInspectedItem : MonoBehaviour
 
             if (touch.phase == TouchPhase.Ended) rotating = false;
             else if (touch.phase == TouchPhase.Began) {
+                if (inspectingPlayer) rotating = true;
                 if (inMainMenu && !inGame && xPositionPercentage < .5f) rotating = true;
-                if (!inGame && !inspecting && xPositionPercentage > .11f && xPositionPercentage < .44f) rotating = true;
+                if (inInventory && xPositionPercentage > .11f && xPositionPercentage < .44f) rotating = true;
                 if (inspecting && yPositionPercentage > .3f && yPositionPercentage < .85f) rotating = true;
             }
         }
+        
+        
+        if(Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer || Application.isEditor) {
+            MouseRotation();
+        }
+    }
+
+   
+    void MouseRotation()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            Vector3 mouse = Input.mousePosition;
+
+            deltaPosition = mouse - lastPosition;
+            lastPosition = mouse;
+
+            if (Input.GetAxis("Mouse X") < 0 || Input.GetAxis("Mouse X") > 0)
+            {
+
+                if (rotating && !inGame && !inspecting)
+                {
+                    playerModel.Rotate(new Vector3(0, -(deltaPosition.x / Screen.width) * rotationSpeed, 0));
+                }
+                else if (rotating && inspecting)
+                {
+                    itemContainer.Rotate(new Vector3(0, -(deltaPosition.x / Screen.width) * rotationSpeed, 0));
+                }
+            }
+
+
+            float xPositionPercentage = mouse.x / Screen.width;
+            float yPositionPercentage = mouse.y / Screen.height;
+
+            if (inspectingPlayer) rotating = true;
+            if (inMainMenu && !inGame && xPositionPercentage < .5f) rotating = true;
+            if (inInventory && xPositionPercentage > .11f && xPositionPercentage < .44f) rotating = true;
+            if (inspecting && yPositionPercentage > .3f && yPositionPercentage < .85f) rotating = true;
+        } else {
+            rotating = false;
+        }
     }
 }
+

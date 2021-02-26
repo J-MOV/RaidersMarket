@@ -55,16 +55,20 @@ public class ItemRenderer : MonoBehaviour
 
         IndexedItem origin = online.GetIndexedItem(item.item);
 
-        GameObject renderItem = InitiateFinishedItem(item, containers[origin.type]);
+        /*GameObject renderItem = */InitiateFinishedItem(item, containers[origin.type]);
     }
 
 
     // Get a final model with unique pattern applied.
     public GameObject InitiateFinishedItem(Item item, Transform parent) {
         IndexedItem origin = online.GetIndexedItem(item.item);
+
         GameObject model = Instantiate(origin.model, parent);
 
-        // TODO APPLY UNIQUE PATTERN
+        if (origin.pattern) {
+            Color color = Color.HSVToRGB((float)item.pattern, 1, 1, false);
+            model.GetComponent<Renderer>().material.color = color;
+        }
 
         return model;
     }

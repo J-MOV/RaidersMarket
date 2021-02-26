@@ -176,7 +176,6 @@ public class InspectManager : MonoBehaviour
         priceInput.text = 10.ToString();
 
         priceInput.onValidateInput = (string input, int index, char character) => {
-            Debug.Log("Validate input");
             if (!char.IsNumber(character)) return '\0';
             return character;
         };

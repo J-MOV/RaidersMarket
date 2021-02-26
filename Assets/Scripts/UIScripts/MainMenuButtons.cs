@@ -69,15 +69,6 @@ public class MainMenuButtons : MonoBehaviour
     {
         SceneManager.LoadSceneAsync("MehmetScene");
     }
-    public void RestartLevel()
-    {
-        return;
-        amountOfRestarts++;
-        PlayerPrefs.SetInt("TotalRestarts", amountOfRestarts);
-        SceneManager.LoadSceneAsync("ViktorScene");
-        AnalyticsResult results = Analytics.CustomEvent("AmountOfRestarts");
-        Debug.Log("Results: " + results);
-    }
 
     IEnumerator RemovePanel()
     {

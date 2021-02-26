@@ -14,7 +14,15 @@ public class PostRaidInfo {
 public class OnlineRaidManager : MonoBehaviour
 {
 
-    
+
+
+    bool canFastPrevLevel = false;
+    bool canFastNextLevel = false;
+
+    float timer = 0;
+    [SerializeField] float toHoldTimer = 0.5f;
+
+
 
 
     public InspectManager im;
@@ -43,6 +51,9 @@ public class OnlineRaidManager : MonoBehaviour
     public GameObject earnedLootSlotPrefab;
     public Text goldEarnedText;
 
+    public Transform playerRender;
+    Vector3 inGameRotation = new Vector3(0f, -125.021f, 0f);
+    float swingAnimationRotation = 0;
 
     [HideInInspector] public int raidLvl = -1;
     [HideInInspector] public int maxRaidLvl;
@@ -51,14 +62,25 @@ public class OnlineRaidManager : MonoBehaviour
     int goldEarned = 0;
     int goldDispalyed = 0;
 
+
+
+
+    private void Start()
+    {
+        timer = toHoldTimer;
+    }
+
     public void OnRaidGranted() {
+
+        ingamePlayer.gameObject.SetActive(true);
+
         levelManager.StartLevel(raidLvl);
         mainMenu.gameObject.SetActive(false);
         //ingamePlayer.gameObject.SetActive(true);
 
         playerDamage.baseDamage = baseStats.baseDamage + connection.user.dmg;
         playerHealth.maxHealth = baseStats.maxHealth + connection.user.hp;
-        
+
         playerHealth.HealPlayerToFull();
 
         rotate.inGame = true;
@@ -67,6 +89,10 @@ public class OnlineRaidManager : MonoBehaviour
 
     public void EndRaid(bool completed) {
         connection.Send("raid_ended", JsonConvert.SerializeObject(completed));
+    }
+
+    public void AnimateSwing() {
+        swingAnimationRotation += 10f;
     }
 
     public void KilledEnemy() {
@@ -78,11 +104,14 @@ public class OnlineRaidManager : MonoBehaviour
         EndRaidScreenCompleted.gameObject.SetActive(false);
         //ingamePlayer.gameObject.SetActive(false);
         EndRaidFailed.gameObject.SetActive(false);
+        rotate.inGame = false;
+        rotate.inMainMenu = true;
         UpdateRaidButtonText();
+        ingamePlayer.gameObject.SetActive(false);
     }
 
     public void OnRaidEnd(string json) {
-        
+
         PostRaidInfo postRaid = JsonConvert.DeserializeObject<PostRaidInfo>(json);
 
         if (postRaid.completed) {
@@ -91,6 +120,8 @@ public class OnlineRaidManager : MonoBehaviour
             while (earnedLootList.childCount > 0) {
                 DestroyImmediate(earnedLootList.GetChild(0).gameObject);
             }
+
+            if (raidLvl == connection.user.lvl) raidLvl++;
 
             foreach (Item item in postRaid.earnedLoot) {
                 IndexedItem origin = connection.GetIndexedItem(item.item);
@@ -119,16 +150,15 @@ public class OnlineRaidManager : MonoBehaviour
             EndRaidFailed.gameObject.SetActive(true);
             endRaidFailedTitle.text = "Raid Lvl " + postRaid.lvl + " failed";
 
-            string[] failMessages = new string[] {"Oop.", "Better luck next time.", "You got this!", "Try again!", "I belive in you!", "Third time's the charm!", "Keep trying..", "Don't give up!" };
+            string[] failMessages = new string[] { "Oop.", "Better luck next time.", "You got this!", "Try again!", "I belive in you!", "Third time's the charm!", "Keep trying..", "Don't give up!" };
 
             endRaidFailedBody.text = "You took too much damage and died.\n" + failMessages[Random.Range(0, failMessages.Length - 1)];
         }
-        
+
     }
 
     public void OnLootDrop(int rarity) {
-        Debug.Log("Got item drop from server, rarity: " + rarity);
-        ItemRarity itemRarity = (ItemRarity) rarity;
+        ItemRarity itemRarity = (ItemRarity)rarity;
         gm.DropLoot(itemRarity);
 
         if (gm.isEnding()) {
@@ -147,32 +177,84 @@ public class OnlineRaidManager : MonoBehaviour
         ChangeRaidLevel(-1);
     }
 
-    public void ChangeRaidLevel(int change) {
-        raidLvl += change;
-        if (raidLvl > maxRaidLvl) raidLvl = maxRaidLvl;
-        else if (raidLvl < 1) raidLvl = 1;
-        UpdateRaidButtonText();
+
+    public void FastPrevLevelUp()
+    {
+        timer = toHoldTimer;
+
+        canFastPrevLevel = false;
     }
 
-    public void UpdateRaidButtonText() {
-        if(connection.user != null) {
-            
-            maxRaidLvl = connection.user.lvl;
-            if(raidLvl == -1) {
-                raidLvl = maxRaidLvl;
+        public void FastPrevLevelDown()
+        {
+            canFastPrevLevel = true;
+        }
+
+        public void FastNextLevelDown()
+        {
+            canFastNextLevel = true;
+        }
+
+        public void FastNextLevelUp()
+        {
+
+            timer = toHoldTimer;
+
+            canFastNextLevel = false;
+        }
+
+        public void ChangeRaidLevel(int change) {
+            raidLvl += change;
+            if (raidLvl > maxRaidLvl) raidLvl = maxRaidLvl;
+            else if (raidLvl < 1) raidLvl = 1;
+            UpdateRaidButtonText();
+        }
+
+        public void UpdateRaidButtonText() {
+            if (connection.user != null) {
+
+                maxRaidLvl = connection.user.lvl;
+                if (raidLvl == -1) {
+                    raidLvl = maxRaidLvl;
+                }
+
+                raidButtonText.text = "START RAID LVL " + raidLvl;
+            }
+        }
+
+
+        void Update()
+        {
+
+            if (swingAnimationRotation != 0)
+            {
+                swingAnimationRotation -= .5f;
+                if (swingAnimationRotation < 0) swingAnimationRotation = 0;
+                playerRender.rotation = Quaternion.Euler(inGameRotation + new Vector3(0f, swingAnimationRotation, 0f));
             }
 
-            raidButtonText.text = "START RAID LVL " + raidLvl;
+
+            if (goldDispalyed < goldEarned) {
+                goldDispalyed++;
+                goldEarnedText.text = goldDispalyed.ToString();
+            }
+        }
+        private void LateUpdate()
+        {
+
+            if (timer > 0)
+            {
+                timer -= Time.deltaTime;
+            }
+            else
+            {
+                if (canFastPrevLevel)
+                    PrevLevl();
+                else if (canFastNextLevel)
+                    NextLvl();
+            }
+        
         }
     }
 
- 
-    void Update()
-    {
-     
-        if(goldDispalyed < goldEarned) {
-            goldDispalyed++;
-            goldEarnedText.text = goldDispalyed.ToString();
-        }
-    }
-}
+

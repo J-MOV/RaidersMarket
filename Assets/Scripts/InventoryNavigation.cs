@@ -4,6 +4,7 @@
  *  view from anywhere in the game
  */
 
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,6 +19,11 @@ public class Navigation {
     public Transform window;
 }
 
+public class PublicUser {
+    public string username;
+    public int gold, id, lvl;
+}
+
 public class InventoryNavigation : MonoBehaviour
 {
 
@@ -25,6 +31,10 @@ public class InventoryNavigation : MonoBehaviour
     public GameObject inventoryAndNavigation;
     public MarketManager market;
     public OnlineRaidManager raidManager;
+    public OnlineConnection connection;
+
+    public Transform leaderboardContent;
+    public Transform leaderboardEntry;
 
     public RotateInspectedItem rotation;
 
@@ -32,7 +42,10 @@ public class InventoryNavigation : MonoBehaviour
     private bool countingDown = false;
     private float countdown = 0;
 
+    public Transform BuyCoinsView;
     public Button startRaidButton;
+
+    public Transform playerInspectView;
 
     public void Update() {
         if (countingDown) {
@@ -82,6 +95,65 @@ public class InventoryNavigation : MonoBehaviour
         }
     }
 
+    public void BuyCoins() {
+        if(!rotation.inGame)
+        BuyCoinsView.gameObject.SetActive(true);
+    }
+
+    public void CloseBuyCoins() {
+        BuyCoinsView.gameObject.SetActive(false);
+    }
+
+    public void LoadLeaderboard() {
+        connection.Send("leaderboard");
+    }
+
+    public void InspectPlayer(int id) {
+        connection.Send("get_player_model", id.ToString());
+    }
+
+    public void OnInspectPlayer(string json) {
+        List<Item> items = JsonConvert.DeserializeObject<List<Item>>(json);
+
+        Debug.Log(json);
+
+        connection.DressCharacter(items);
+        playerInspectView.gameObject.SetActive(true);
+        rotation.inspectingPlayer = true;
+    }
+
+    public void ClosePlayerInspect() {
+        playerInspectView.gameObject.SetActive(false);
+        rotation.inspectingPlayer = false;
+        connection.DressMyself();
+    }
+
+    public void OnLeaderboard(string json) {
+        PublicUser[] users = JsonConvert.DeserializeObject<PublicUser[]>(json);
+        
+        while(leaderboardContent.childCount > 0) {
+            DestroyImmediate(leaderboardContent.GetChild(0).gameObject);
+        }
+
+        for(int i = 0; i < users.Length; i++) {
+            PublicUser user = users[i];
+
+            Transform entry = Instantiate(leaderboardEntry, leaderboardContent);
+            
+            entry.Find("Username").GetComponent<Text>().text = user.username;
+            entry.Find("Level").GetComponent<Text>().text = "Lvl " + user.lvl;
+            entry.Find("Gold").GetComponent<Text>().text = user.gold.ToString();
+            
+            entry.GetComponent<Button>().onClick.AddListener(() => {
+                InspectPlayer(user.id);
+            });
+
+            if (user.id == connection.user.id) entry.GetComponent<Image>().color = new Color32(20, 20, 20, 255);
+            if (i == 0) entry.Find("Crown").gameObject.SetActive(true);
+            else entry.Find("Position").GetComponent<Text>().text = (i+1).ToString();
+        }
+    }
+
     public void OpenTab(string title) {
         if (countingDown) return;
         rotation.inMainMenu = false;
@@ -89,6 +161,10 @@ public class InventoryNavigation : MonoBehaviour
             if(nav.title == title) {
 
                 if(title == "market") market.UpdateMarketFront();
+                if (title == "leaderboard") LoadLeaderboard();
+                if (title == "inventory") {
+                    rotation.inInventory = true;
+                } else rotation.inInventory = false;
 
                 DisableAllWindows();
                 nav.window.gameObject.SetActive(true);
@@ -108,7 +184,7 @@ public class InventoryNavigation : MonoBehaviour
     public void Close() {
         inventoryAndNavigation.SetActive(false);
         rotation.inMainMenu = true;
-
+        rotation.inInventory = false;
     }
 
     void DisableAllWindows() {
