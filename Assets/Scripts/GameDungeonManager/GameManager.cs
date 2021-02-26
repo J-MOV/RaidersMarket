@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,10 +13,13 @@ public class GameManager : MonoBehaviour
     int amountOfEnemies;
     int enemiesDefeated;
 
+    public OnlineRaidManager onlineRaid;
 
 
     public Text dungeonProgressText;
     public GameObject endScreenPanel;
+
+    [SerializeField] GameObject topDungeonProgress;
 
     public Text dungeonCompleteText;
 
@@ -45,10 +49,21 @@ public class GameManager : MonoBehaviour
 
     DungeonCamera gameCamera;
 
+    public GameObject lootPrefab;
+
+    [SerializeField] Transform lootDropPosition;
+
+    int commonLoot, uncommonLoot, rareLoot, legendaryLoot, mythicLoot;
+
+    [SerializeField] TextMeshProUGUI commonLootText, unCommonLootText, rareLootText, 
+        legendaryLootText, mythicLootText;
+
        
 
     private void Start()
     {
+
+
         enemySpawner = FindObjectOfType<EnemySpawner>();
         dungeonManager = FindObjectOfType<DungeonManager>();
         playerHealth = FindObjectOfType<PlayerHealth>();
@@ -58,10 +73,11 @@ public class GameManager : MonoBehaviour
         dungeonManager.EnemyDead += () => enemiesDefeated++;
         dungeonManager.EnemyDead += () => isFightingEnemy = false;
         dungeonManager.EnemyDead += SpawnNextEnemy;
+        //dungeonManager.EnemyDead += DropLoot;
 
         playerHealth.PlayerDead += StopDungeon;
 
-        endScreenPanel.SetActive(false);
+        dungeonProgressText.gameObject.SetActive(false);
 
         goldManager = FindObjectOfType<GoldObtained>();
     }
@@ -70,7 +86,9 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = true;
         dungeonLevel = level;
-        endScreenPanel.SetActive(false);
+
+
+        dungeonProgressText.gameObject.SetActive(true);
 
         gameCamera.EnterRaid();
 
@@ -81,6 +99,10 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public bool isEnding() {
+        return enemiesDefeated == amountOfEnemies;
+    }
+
     private void Update()
     {
         if (isPlaying)
@@ -88,12 +110,10 @@ public class GameManager : MonoBehaviour
             playerHealthSlider.SetActive(true);
             enemyHealthSlider.SetActive(true);
 
-            dungeonProgressText.text = enemiesDefeated + "/" + amountOfEnemies;
+            dungeonProgressText.text = (enemiesDefeated + 1) + "/" + amountOfEnemies;
             //Do stuff when playing
 
-            if (enemiesDefeated == amountOfEnemies)
-                EndDungeon(true);
-
+            
             //Spawn enemies
 
             if (timeSinceLastEnemy < timeBetweenEnemies && !isFightingEnemy)
@@ -101,7 +121,7 @@ public class GameManager : MonoBehaviour
                 timeSinceLastEnemy += Time.deltaTime;
                 if (canPan && isPlaying)
                 {
-                    gameCamera.PanNext();
+                    //gameCamera.PanNext();
                     canPan = false;
                 }
             }
@@ -137,12 +157,71 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void DropLoot(ItemRarity rarity)
+    {
+        //if (ShouldDropLoot() == false) return;
+        Debug.Log("Dropped loot with rarity: " + rarity);
+
+        //TO DO: get random item stats
+        Loot newLoot = Instantiate(lootPrefab, lootDropPosition.position, Quaternion.identity).GetComponent<Loot>();
+
+        newLoot.itemStatsSO.itemRarity = rarity;
+        newLoot.SetRarityColor(rarity);
+
+        //TO DO: apply : newLoot.itemStats = random item stats
+        /*ItemRarity itemRarity = ItemRarity.Common; //Replace with actual item rarity
+
+        newLoot.itemStatsSO.itemRarity = 0;*/
+        
+
+        /*ItemRarity[] itemRarities = new ItemRarity[] {ItemRarity.Common, ItemRarity.}
+
+        if (itemRarity == ItemRarity.Common)
+            commonLoot++;
+        else if (itemRarity == ItemRarity.Uncommon)
+            uncommonLoot++;
+        else if (itemRarity == ItemRarity.Rare)
+            rareLoot++;
+        else if (itemRarity == ItemRarity.Legendary)
+            legendaryLoot++;
+        else if (itemRarity == ItemRarity.Mythic)
+            mythicLoot++;*/
+    }
+
+    bool ShouldDropLoot()
+    {
+        //somehow determine if loot should drop or not
+        return true;
+    }
+
 
     public void EndDungeon(bool completed)
     {
         isPlaying = false;
+        dungeonProgressText.gameObject.SetActive(false);
+
+        onlineRaid.EndRaid(completed);
+
+
+        WeakPoint[] weakPoints = FindObjectsOfType<WeakPoint>();
+
+        WeakPointsManager[] enemies = FindObjectsOfType<WeakPointsManager>();
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            Destroy(enemies[i].gameObject);
+        }
+
+
+        for (int i = 0; i < weakPoints.Length; i++)
+        {
+            Destroy(weakPoints[i].gameObject);
+        }
+
+        return;
         endScreenPanel.SetActive(true);
-        
+
+        UpdateLootText();
 
         if (completed)
         {
@@ -159,8 +238,6 @@ public class GameManager : MonoBehaviour
 
             PlayerPrefs.SetInt("currentLevel", dungeonLevel + 1);
 
-            goldManager.FinishedDungeon();
-
 
             Analytics.CustomEvent("LevelCompleted");
         }
@@ -173,7 +250,23 @@ public class GameManager : MonoBehaviour
             Analytics.CustomEvent("LevelLost");
         }
 
-        
+    }
+
+    void UpdateLootText()
+    {
+        commonLootText.text = commonLoot.ToString();
+        unCommonLootText.text = uncommonLoot.ToString();
+        rareLootText.text = rareLoot.ToString();
+        legendaryLootText.text = legendaryLoot.ToString();
+        mythicLootText.text = mythicLoot.ToString();
+
+        //reset loot count for next dungeon
+        commonLoot = 0;
+        uncommonLoot = 0;
+        rareLoot = 0;
+        legendaryLoot = 0;
+        mythicLoot = 0;
+
     }
 }
 

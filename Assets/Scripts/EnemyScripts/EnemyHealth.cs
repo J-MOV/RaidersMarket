@@ -34,7 +34,7 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
        
-        Debug.Log("Enemy took damage");
+
         enemyHealth -= damage;
 
         ParticleSystem _damageParticle = Instantiate(damageParticle, transform.position, Quaternion.identity);
@@ -44,11 +44,8 @@ public class EnemyHealth : MonoBehaviour
         {
             enemiesKilled++;
             PlayerPrefs.SetInt("enemiesKilled", enemiesKilled);
-            AnalyticsResult results = Analytics.CustomEvent("Enemies Killed", new Dictionary<string, object>
-    {
-        {"Total Enemies Killed: ", enemiesKilled },
-    });
-            Debug.Log(results);
+            AnalyticsResult results = Analytics.CustomEvent("Enemies Killed");
+
 
             
             ParticleSystem _deathParticle = Instantiate(deathParticle, transform.position, Quaternion.identity);

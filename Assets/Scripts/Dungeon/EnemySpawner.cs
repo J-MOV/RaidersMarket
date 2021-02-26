@@ -13,6 +13,8 @@ public class EnemySpawner : MonoBehaviour
     EnemyHealth _enemy1, _enemy2;
     int totalHealth;
 
+    public DungeonCamera dungeonCamera;
+
     private void Start()
     {
         FindObjectOfType<DungeonManager>().onWeakPointDestroyed += UpdateHealthBar;
@@ -21,15 +23,20 @@ public class EnemySpawner : MonoBehaviour
     public void SpawnEnemy(EnemySO _enemyStats)
     {
         totalHealth = 0;
-        GameObject enemy = Instantiate(enemyPrefab, tempSpawnPoint.position, Quaternion.identity);
+        GameObject enemy = Instantiate(enemyPrefab, Vector3.zero, Quaternion.identity);
         enemy.GetComponent<EnemyHealth>().enemyStats = _enemyStats;
         enemy.GetComponent<EnemyBehaviour>().enemyStats = _enemyStats;
         _enemy1 = enemy.GetComponent<EnemyHealth>();
 
-        GameObject enemy2 = Instantiate(enemyPrefab, tempSpawnPoint.position + new Vector3(-4f, 0f, 0f), Quaternion.identity);
+        GameObject enemy2 = Instantiate(enemyPrefab,  new Vector3(-4f, 0f, 0f), Quaternion.identity);
         enemy2.GetComponent<EnemyHealth>().enemyStats = _enemyStats;
         enemy2.GetComponent<EnemyBehaviour>().enemyStats = _enemyStats;
         _enemy2 = enemy2.GetComponent<EnemyHealth>();
+
+        enemy.transform.SetParent(enemy2.transform);
+
+        dungeonCamera.PanNext(enemy2.transform);
+        
 
         totalHealth = _enemy1.GetComponent<EnemyHealth>().enemyStats.enemyHealth + _enemy2.GetComponent<EnemyHealth>().enemyStats.enemyHealth;
         enemyHealthbar.maxValue = totalHealth;

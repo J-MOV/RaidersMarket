@@ -70,7 +70,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    void HealPlayerToFull()
+    public void HealPlayerToFull()
     {
         currentHealth = maxHealth;
     }
