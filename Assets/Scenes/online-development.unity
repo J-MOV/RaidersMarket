@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.46172708, g: 0.4317774, b: 0.3634297, a: 1}
+  m_IndirectSpecularColor: {r: 0.37661862, g: 0.34757808, b: 0.32425174, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: dbfe861e2c4cb7c4d82cfe1c5d443bdf,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1530,7 +1530,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -176.61, y: 0}
-  m_SizeDelta: {x: 353.22412, y: 4}
+  m_SizeDelta: {x: 353.22412, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &188337369
 MonoBehaviour:
@@ -7364,7 +7364,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &972637807
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7388,8 +7388,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -18.699997}
-  m_SizeDelta: {x: 0, y: -37.825073}
+  m_AnchoredPosition: {x: 0, y: -18.806}
+  m_SizeDelta: {x: 0, y: -37.612152}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &972637808
 MonoBehaviour:
@@ -10033,7 +10033,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0.87792736, y: 2.392105}
+  m_AnchoredPosition: {x: -0.87792736, y: 2.3921204}
   m_SizeDelta: {x: 770.8771, y: 33.25}
   m_Pivot: {x: 0.49890256, y: 1.0065297}
 --- !u!114 &1249431915
@@ -12107,6 +12107,7 @@ MonoBehaviour:
   inMainMenu: 1
   inGame: 0
   inspecting: 0
+  inInventory: 0
   inspectingPlayer: 0
   itemContainer: {fileID: 1957913831}
   playerModel: {fileID: 763954110}
