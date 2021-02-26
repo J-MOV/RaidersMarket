@@ -61,11 +61,24 @@ public class MarketManager : MonoBehaviour
 
         ClearTransform(listingsContent);
 
-        foreach(ItemListing listing in listings.items) {
+        RawImage firstThumb = null;
+
+        for(int i = 0; i < listings.items.Length; i++) {
+
+            ItemListing listing = listings.items[i];
+            
             Transform listingObject = Instantiate(listingPrefab, listingsContent).transform;
 
             RawImage thumbnail = listingObject.Find("Thumbnail").GetComponent<RawImage>();
-            StartCoroutine(renderer.RenderItem(listing.item, thumbnail));
+            if (i == 0) firstThumb = thumbnail;
+
+            if(!origin.pattern && i > 0) {
+                thumbnail.texture = firstThumb.texture;
+            } else {
+                StartCoroutine(renderer.RenderItem(listing.item, thumbnail));
+            }
+
+            
 
             listingObject.Find("Seller").GetComponent<Text>().text = listing.seller;
             listingObject.Find("ListingPrice").GetComponent<Text>().text = listing.item.price.ToString();
