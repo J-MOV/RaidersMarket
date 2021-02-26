@@ -87,6 +87,8 @@ public class OnlineRaidManager : MonoBehaviour
 
         rotate.inGame = true;
         rotate.inMainMenu = false;
+
+        playerRender.rotation = Quaternion.Euler(inGameRotation);
     }
 
     public void EndRaid(bool completed) {
@@ -94,7 +96,7 @@ public class OnlineRaidManager : MonoBehaviour
     }
 
     public void AnimateSwing() {
-        swingAnimationRotation += 10f;
+        //swingAnimationRotation += 10f;
     }
 
     public void KilledEnemy() {
@@ -228,12 +230,7 @@ public class OnlineRaidManager : MonoBehaviour
         void Update()
         {
 
-            if (swingAnimationRotation != 0)
-            {
-                swingAnimationRotation -= 50f * Time.deltaTime;
-                if (swingAnimationRotation < 0) swingAnimationRotation = 0;
-                playerRender.rotation = Quaternion.Euler(inGameRotation + new Vector3(0f, swingAnimationRotation, 0f));
-            }
+            
 
 
             if (goldDispalyed < goldEarned) {
