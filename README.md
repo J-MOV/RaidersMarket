@@ -13,7 +13,7 @@ This game has two parts that are needed to work properly. The Unity game, this r
 
 ### Unity version
 
-Unity version 2019.4.19f1
+Unity version [2019.4.19f1](https://unity3d.com/unity/qa/lts-releases)
 
 ### Game dependencies
 
