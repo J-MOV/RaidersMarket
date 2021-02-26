@@ -245,7 +245,6 @@ public class OnlineConnection : MonoBehaviour
     }
 
     public void ToggleEquip() {
-        Debug.Log("Called toggle equip");
         Send("equip", im.inspectedItemId.ToString());
         im.CloseInspectWindow();
     }

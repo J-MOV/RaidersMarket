@@ -77,7 +77,6 @@ public class PlayerHealth : MonoBehaviour
 
     void PlayerDeath()
     {
-        Debug.Log("Player died");
         amountOfDeaths++;
         PlayerPrefs.SetInt("TotalDeaths", amountOfDeaths);
         ParticleSystem _deathParticle = Instantiate(deathParticle, transform.position, Quaternion.identity);
@@ -89,7 +88,6 @@ public class PlayerHealth : MonoBehaviour
         { "time_elapsed", Time.timeSinceLevelLoad.ToString("F1") },
         { "TotalDeaths", amountOfDeaths }
     });
-        Debug.Log(results);
 
         PlayerDead?.Invoke();
     }
