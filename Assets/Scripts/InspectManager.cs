@@ -173,7 +173,9 @@ public class InspectManager : MonoBehaviour
 
         InputField priceInput = createListingWindow.Find("PriceInput").GetComponent<InputField>();
 
-        priceInput.text = 10.ToString();
+        priceInput.text = null;
+
+        priceInput.contentType = InputField.ContentType.IntegerNumber;
 
         priceInput.onValidateInput = (string input, int index, char character) => {
             if (!char.IsNumber(character)) return '\0';
@@ -190,6 +192,9 @@ public class InspectManager : MonoBehaviour
         });
 
         createListingWindow.gameObject.SetActive(true);
+
+        priceInput.Select();
+        priceInput.ActivateInputField();
     }
 
     public void CancelListing() {
