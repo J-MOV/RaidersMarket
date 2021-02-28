@@ -48,6 +48,11 @@ public class MarketManager : MonoBehaviour
     public int activeItemListing = -1;
 
 
+    /**
+     * OnListings is when the user has clicked on an item on the left side of the market
+     * This will load all items of that type and present them on the right side of the market
+     * view.
+     */
     public void OnListings(string data) {
         ItemListings listings = JsonConvert.DeserializeObject<ItemListings>(data);
         IndexedItem origin = connection.GetIndexedItem(listings.items[0].item.item);
@@ -61,8 +66,6 @@ public class MarketManager : MonoBehaviour
 
         ClearTransform(listingsContent);
 
-        RawImage firstThumb = null;
-
         for(int i = 0; i < listings.items.Length; i++) {
 
             ItemListing listing = listings.items[i];
@@ -70,15 +73,8 @@ public class MarketManager : MonoBehaviour
             Transform listingObject = Instantiate(listingPrefab, listingsContent).transform;
 
             RawImage thumbnail = listingObject.Find("Thumbnail").GetComponent<RawImage>();
-            if (i == 0) firstThumb = thumbnail;
 
-            if(!origin.pattern && i > 0) {
-                thumbnail.texture = firstThumb.texture;
-            } else {
-                StartCoroutine(renderer.RenderItem(listing.item, thumbnail));
-            }
-
-            
+            renderer.SetItemThumbnail(listing.item, thumbnail);
 
             listingObject.Find("Seller").GetComponent<Text>().text = listing.seller;
             listingObject.Find("ListingPrice").GetComponent<Text>().text = listing.item.price.ToString();
@@ -88,6 +84,10 @@ public class MarketManager : MonoBehaviour
         }
     }
 
+    /**
+     * Market front is the left side of the market. This is where all items of the same type
+     * are grouped together.
+     */
 
     public void OnMarketFront(string data) {
 
@@ -99,7 +99,7 @@ public class MarketManager : MonoBehaviour
             Transform entry = Instantiate(marketFrontEntryPrefab, marketFrontScrollContent).transform;
 
             RawImage thumbnail = entry.Find("Thumbnail").GetComponent<RawImage>();
-            StartCoroutine(renderer.RenderItem(frontEntry.item, thumbnail));
+            renderer.SetItemThumbnail(frontEntry.item, thumbnail);
 
             entry.Find("ItemTitle").GetComponent<Text>().text = origin.name;
             entry.Find("ItemBorder").GetComponent<Image>().color = origin.rarity.color;
@@ -111,6 +111,7 @@ public class MarketManager : MonoBehaviour
             });
         }
 
+        // Open the first or last opened item listings
         if(itemFrontData.Length > 0) {
             if (activeItemListing == -1 || !IsItemIndexListed(activeItemListing)) activeItemListing = itemFrontData[0].item.item;
             OpenMarketListings(activeItemListing);
@@ -139,16 +140,5 @@ public class MarketManager : MonoBehaviour
 
     public void UpdateMarketFront() {
         connection.Send("get_market_front");
-    }
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

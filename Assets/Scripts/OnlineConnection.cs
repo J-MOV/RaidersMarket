@@ -1,7 +1,6 @@
 ﻿/**
  * This script manages the websocket connection
  * between the client and server.
- * 
  */
 
 using System.Collections;
@@ -67,6 +66,8 @@ public class OnlineConnection : MonoBehaviour
     async void Start() {
         
         previousGoldAmount = PlayerPrefs.GetInt("gold");
+
+   
         token = PlayerPrefs.GetString("token");
 
         ws = new WebSocket("wss://dungeon.ygstr.com");
@@ -272,7 +273,7 @@ public class OnlineConnection : MonoBehaviour
             // Set color of item border
             itemSlot.transform.Find("Border").GetComponent<Image>().color = origin.rarity.color;
 
-            StartCoroutine(renderer.RenderItem(inventory[i], itemSlot.GetComponentInChildren<RawImage>()));
+            renderer.SetItemThumbnail(inventory[i], itemSlot.GetComponentInChildren<RawImage>());
         }
 
 

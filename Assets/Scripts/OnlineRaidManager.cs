@@ -145,7 +145,7 @@ public class OnlineRaidManager : MonoBehaviour
                     im.Inspect(item, true);
                 });
 
-                StartCoroutine(renderer.RenderItem(item, earnedLootSlot.Find("Thumbnail").GetComponent<RawImage>()));
+                renderer.SetItemThumbnail(item, earnedLootSlot.Find("Thumbnail").GetComponent<RawImage>());
             }
 
             goldDispalyed = 0;
