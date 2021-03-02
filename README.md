@@ -10,12 +10,13 @@ https://github.com/J-MOV/RaidersMarket/releases
 
 ## Game features
 
--   Clicker gameplay, raid dungeons and kill monsters.
+-   Raid dungeons and kill monsters by clicking their weakpoints.
 -   Gather loot and gold from doing raids.
 -   Spend the gold and sell the loot on an open market that all players share without commissions.
--   Every item dropped is unique, with a history and some have one of a kind patterns.
+-   Every item dropped is unique, with a history and some have a random color.
+-   Leaderboard, sorted by gold balance. Inspect other players and see all items they have equipped.
 
-### Server repo
+### Server repo and database structure explanation
 
 https://github.com/J-MOV/RaidersMarket-Server
 
