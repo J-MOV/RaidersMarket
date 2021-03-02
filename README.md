@@ -16,7 +16,7 @@ https://github.com/J-MOV/RaidersMarket/releases
 -   Every item dropped is unique, with a history and some have a random color.
 -   Leaderboard, sorted by gold balance. Inspect other players and see all items they have equipped.
 
-### Server repo and database structure explanation
+## Server repo and database structure explanation
 
 https://github.com/J-MOV/RaidersMarket-Server
 
