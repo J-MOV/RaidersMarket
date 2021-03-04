@@ -20,7 +20,7 @@ https://github.com/J-MOV/RaidersMarket/releases
 
 https://github.com/J-MOV/RaidersMarket-Server
 
-## Github project
+### Github project
 https://github.com/orgs/J-MOV/projects/2
 
 ### Unity version
