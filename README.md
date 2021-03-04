@@ -20,6 +20,9 @@ https://github.com/J-MOV/RaidersMarket/releases
 
 https://github.com/J-MOV/RaidersMarket-Server
 
+## Github project
+https://github.com/orgs/J-MOV/projects/2
+
 ### Unity version
 
 [2019.4.19f1](https://unity3d.com/unity/qa/lts-releases)
